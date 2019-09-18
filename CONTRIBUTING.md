@@ -5,11 +5,11 @@ Note: Pull requests are welcome. For making major changes, please create an issu
 * Familiarize yourself with git commands
 * Fork the group repository into your personal GitHub account
 * Set up this project in IntellijIDEA
-* Familiarize yourself with [gradle](https://github.com/AY1920S1-CS2113T-F11-1/main#tutorials) and [Travis CI](https://docs.travis-ci.com/user/tutorial/)
+* Familiarize yourself with [gradle](https://github.com/AY1920S1-CS2113T-F09-3/main#tutorials) and [Travis CI](https://docs.travis-ci.com/user/tutorial/)
 * Be well aware of the project [scope](https://nuscs2113-ay1920s1.github.io/website/admin/project-scope.html) and [constraints](https://nuscs2113-ay1920s1.github.io/website/admin/project-constraints.html)
 
 ## Definitions
-Main repository: Our group's repository (AY1920S1-CS2113T-F11-1/main)
+Main repository: Our group's repository (AY1920S1-CS2113T-F09-3/main)
 
 Your fork: Your fork of the group's repository
 
