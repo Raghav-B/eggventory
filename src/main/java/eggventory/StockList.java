@@ -32,7 +32,7 @@ public class StockList {
     }
 
     /**
-     * Adds a new Stock object to the list.
+     * Checks whether mentioned stockType already exists.
      * @param stockType A String matching exactly the StockType to add the new Stock object under.
      * @param stockCode A unique String that identifies the Stock.
      * @param quantity Quantity of the stock.
@@ -48,6 +48,7 @@ public class StockList {
 
         // "Uncategorised" is always the first element on stockList.
         stockList.get(0).addStock("Uncategorised", stockCode, quantity, description);
+        this.quantity++;
     }
 
     /**
@@ -57,7 +58,23 @@ public class StockList {
     public void deleteStock(String stockCode) {
         for (StockType stockType : stockList) {
             stockType.deleteStock(stockCode);
+            this.quantity--;
         }
+    }
+
+    /**
+     * Prints every stock within stocklist. Should only be called by Ui.
+     * @return The string of the stocklist.
+     */
+    public String toString() {
+        String ret = "";
+        ret += "CURRENT INVENTORY\n";
+        for (int i = 0; i < quantity; i++) {
+            ret += "------------------------\n";
+            ret += stockList.get(i).toString() + "\n";
+        }
+
+        return ret;
     }
 
     /**
@@ -72,6 +89,21 @@ public class StockList {
         }
 
         return details;
+    }
+
+    /**
+     * Returns a stockType from stockList if it exits else retuns a null StockType.
+     * @param stockType The unique string that identifies a stockType
+     * @return stockType of stockList
+     */
+    public StockType getStockType(String stockType) {
+        StockType nullType = new StockType("NULL", true);
+        for (StockType stType : stockList) {
+            if (stType.getName().equals(stockType)) {
+                return stType;
+            }
+        }
+        return nullType;
     }
 
     public ArrayList<StockType> getList() {
