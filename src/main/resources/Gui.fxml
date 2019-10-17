@@ -31,16 +31,12 @@
                         </content>
                      </ScrollPane>
                      <Separator prefWidth="200.0" />
-                     <ScrollPane fx:id="outputFieldScroll" fitToWidth="true" maxWidth="1.7976931348623157E308" prefHeight="200.0" VBox.vgrow="NEVER">
-                        <content>
-                           <TextArea fx:id="outputField" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true">
-                              <font>
-                                 <Font name="System Bold" size="12.0" />
-                              </font>
-                           </TextArea>
-                        </content>
-                     </ScrollPane>
-                     <TextField fx:id="inputField" />
+                     <TextArea fx:id="outputField" editable="false" prefWidth="200.0" wrapText="true">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </TextArea>
+                     <TextField fx:id="inputField" promptText="Enter your commands here..." />
                   </children>
                </VBox>
             </children>
