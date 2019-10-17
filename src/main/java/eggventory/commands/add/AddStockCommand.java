@@ -1,6 +1,7 @@
-package eggventory.commands;
+package eggventory.commands.add;
 
 import eggventory.StockList;
+import eggventory.commands.Command;
 import eggventory.exceptions.BadInputException;
 import eggventory.items.StockType;
 import eggventory.Ui;
@@ -13,7 +14,7 @@ import java.io.PrintStream;
 /**
  * Command objects for adding Stocks.
  */
-public class AddCommand extends Command {
+public class AddStockCommand extends Command {
 
     private String stockType;
     private String stockCode;
@@ -30,7 +31,7 @@ public class AddCommand extends Command {
      * @param quantity The total quantity of the stock.
      * @param description User input description of the task to add.
      */
-    public AddCommand(CommandType type, String stockType, String stockCode, int quantity, String description) {
+    public AddStockCommand(CommandType type, String stockType, String stockCode, int quantity, String description) {
         super(type);
         this.stockType = stockType;
         this.stockCode = stockCode;
