@@ -15,12 +15,10 @@ public class Gui extends Application {
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
-            //fxmlLoader.setLocation(new URL("file:///D:/App Development/eggventory/src/main/resources/Gui.fxml"));
             Stage ap = fxmlLoader.load();
-
-            //Scene scene = new Scene(ap);
-            //stage.setScene(scene);
             ap.show();
+
+            //fxmlLoader.<Gui>getController().
         } catch (IOException e) {
             e.printStackTrace();
         }
