@@ -1,4 +1,4 @@
-package eggventory.commands;
+package eggventory.commands.add;
 
 import eggventory.StockList;
 import eggventory.Storage;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AddCommandTest {
+public class AddStockCommandTest {
     //    private OutputStream os = new ByteArrayOutputStream();
     //    private PrintStream ps = new PrintStream(os);
     private StockList testStockList = new StockList();
@@ -31,7 +31,7 @@ public class AddCommandTest {
     void testExecute_AddStock_Success() {
         StockList testList = new StockList();
         testList.addStockType("testStockType");
-        String output = new AddCommand(CommandType.ADD, "testStockType", "t0000", 100,
+        String output = new AddStockCommand(CommandType.ADD, "testStockType", "t0000", 100,
                 "testDescription").execute(testList, testCli, testStorage);
 
         //Check whether a stock is added to the list correctly
