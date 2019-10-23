@@ -21,7 +21,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class Gui extends Application {
+/**
+ * This is a controller class used to control the Gui.fxml from the entry point for
+ * our application, the Eggventory class.
+ */
+public class Gui {
     @FXML
     private TextField inputField;
     @FXML
@@ -46,16 +50,17 @@ public class Gui extends Application {
         outputField.appendText(logo + "Hello! I'm Humpty Dumpty\n" + "What can I do for you?");
     }
 
+    /**
+     * Initializer function to be called by Eggventory for setting the keypress event
+     * handler for inputField
+     */
+    public void initInputField() {
+
+    }
+
     @Override
     public void start(Stage stage) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
-            fxmlLoader.setController(this);
-            Stage ap = fxmlLoader.load();
-            ap.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/data/saved_tasks.txt";

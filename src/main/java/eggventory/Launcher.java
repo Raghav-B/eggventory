@@ -4,10 +4,9 @@ import eggventory.ui.Gui;
 import javafx.application.Application;
 
 
-public class Start {
+public class Launcher {
     /**
-     * Main function that sets the save path and runs Eggventory.
-     * Starts the CLI and GUI in separate threads so they can run simultaneously.
+     * Entry point for program that launches GUI
      */
     public static void main(String[] args) {
         String currentDir = System.getProperty("user.dir");
