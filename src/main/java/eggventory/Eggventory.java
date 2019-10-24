@@ -3,10 +3,13 @@ package eggventory;
 import eggventory.commands.Command;
 import eggventory.enums.CommandType;
 import eggventory.parsers.Parser;
-import eggventory.ui.Cli;
 import eggventory.ui.Gui;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,23 +20,35 @@ import java.io.IOException;
  * Tasks are loaded from and saved to file.
  */
 
+/**
+ * Sets up the frontend, the Gui and the event handlers. This will create an instance of the
+ * backend, the Eggventory class, and will use that to control the Gui.
+ */
 public class Eggventory extends Application {
+    @FXML
+    private TextField inputField;
+    @FXML
+    private TextArea outputField;
+    @FXML
+    private TableView outputTable;
+    @FXML
+    private ScrollPane outputTableScroll;
+
     private static Storage storage;
     private static Parser parser;
+    private static Gui gui;
     private static StockList stockList;
-    private static Cli cli;
-    private Gui gui;
 
-    /**
-     * Eggventory does somethings.
-     * @param filePath which stores path of persistent storage
-     */
-    public Eggventory(String filePath) {
+    public static void main(String[] args) {
+        String currentDir = System.getProperty("user.dir");
+        String filePath = currentDir + "/data/saved_tasks.txt";
+
         storage = new Storage(filePath);
-        stockList = storage.load(); //Will always return the right object even if empty.
         parser = new Parser();
-        cli = new Cli();
         gui = new Gui();
+        stockList = storage.load();
+
+        Application.launch(args);
     }
 
     @Override
@@ -41,34 +56,44 @@ public class Eggventory extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
             fxmlLoader.setController(this);
-            Stage ap = fxmlLoader.load();
-            ap.show();
+            stage = fxmlLoader.load();
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Event handler for pressing ENTER
+        inputField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                handleUserInput();
+            }
+        });
+
+        // Event handler for pressing TAB
+        inputField.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent ->  {
+            if (keyEvent.getCode() == KeyCode.TAB) {
+                inputField.appendText("Tab has been pressed! ");
+                keyEvent.consume();
+            }
+        });
     }
 
+    private void handleUserInput() {
+        String userInput = inputField.getText();
 
-
-
-
-
-    public void run() {
-        cli.printIntro();
-        String userInput;
-
-        while (true) {
-            userInput = cli.read();
+        if (!userInput.equals("")) { // Check for blank input
+            inputField.setText("");
+            outputField.appendText("\n" + userInput);
 
             try {
                 Command command = parser.parse(userInput);
-                command.execute(stockList, cli, storage);
+                command.execute(stockList, gui, storage);
 
                 if (command.getType() == CommandType.BYE) {
-                    break;
+                    System.exit(0);
                 }
             } catch (Exception e) {
-                cli.printError(e);
+                // something
             }
         }
     }

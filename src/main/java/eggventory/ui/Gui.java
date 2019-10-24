@@ -1,99 +1,30 @@
 package eggventory.ui;
 
 import eggventory.StockList;
-import eggventory.Storage;
-import eggventory.commands.Command;
-import eggventory.enums.CommandType;
 import eggventory.items.Stock;
-import eggventory.parsers.Parser;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import java.io.IOException;
 
 /**
  * This is a controller class used to control the Gui.fxml from the entry point for
  * our application, the Eggventory class.
  */
 public class Gui {
-    @FXML
     private TextField inputField;
-    @FXML
     private TextArea outputField;
-    @FXML
     private TableView outputTable;
-    @FXML
     private ScrollPane outputTableScroll;
 
-    /**
-     * Prints eggventory introduction message.
-     */
-    public void printIntro() {
-        String logo = "  _      __    __                     __         ____         _   __         __               \n"
-                + " | | /| / /__ / /______  __ _  ___   / /____    / __/__ ____ | | / /__ ___  / /____  ______ __\n"
-                + " | |/ |/ / -_) / __/ _ \\/  ' \\/ -_) / __/ _ \\  / _// _ `/ _ `/ |/ / -_) _ \\/ __/ _ \\/"
-                + " __/ // /\n"
-                + " |__/|__/\\__/_/\\__/\\___/_/_/_/\\__/  \\__/\\___/ /___/\\_, /\\_, /|___/\\__/_//_/\\__/\\___/_/"
-                + "  \\_, / \n"
-                + "                                                  /___//___/                           /___/  \n";
-
-        outputField.appendText(logo + "Hello! I'm Humpty Dumpty\n" + "What can I do for you?");
-    }
-
-    /**
-     * Initializer function to be called by Eggventory for setting the keypress event
-     * handler for inputField
-     */
-    public void initInputField() {
-
-    }
-
-    @Override
-    public void start(Stage stage) {
-
-
-        String currentDir = System.getProperty("user.dir");
-        String filePath = currentDir + "/data/saved_tasks.txt";
-
-        Cli cli = new Cli();
-        Storage storage = new Storage(filePath);
-        StockList stockList = storage.load();
-        Parser parser = new Parser();
-        printIntro();
-
-        // Event handler for user pressing enter in the text input.
-        inputField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER) {
-                    String userInput = inputField.getText();
-                    inputField.setText("");
-                    outputField.appendText("\n" + userInput);
-
-                    try {
-                        Command command = parser.parse(userInput);
-                        command.execute(stockList, cli, storage);
-                        //drawTable(stockList);
-
-                        if (command.getType() == CommandType.BYE) {
-                            System.exit(0);
-                        }
-                    } catch (Exception e) {
-                        printError(e);
-                    }
-                }
-            }
-        });
+    public Gui(TextField inputField, TextArea outputField, TableView outputTable,
+               ScrollPane outputTableScroll) {
+        this.inputField = inputField;
+        this.outputField = outputField;
+        this.outputTable = outputTable;
+        this.outputTableScroll = outputTableScroll;
     }
 
     /**
@@ -127,31 +58,77 @@ public class Gui {
     }
 
     /**
-     * Prints text output in the outputField TextArea to essentially replace the Cli.print()
-     * command.
+     * Prints text output in the outputField TextArea.
      * @param printString The raw String to be printed out, after some extra formatting.
      */
     public void print(String printString) {
-        String line = "____________________________________________________________";
         String output;
-        output = addIndent() + line + "\n";
+        output = addIndent() + addLine() + "\n";
 
         String[] linesToPrint = printString.split("\n", 0);
         for (int i = 0; i < linesToPrint.length; i++) {
             output += (addIndent() + linesToPrint[i]) + "\n";
         }
-        output += addIndent() + line + "\n";
+        output += addIndent() + addLine() + "\n";
 
         //outputField.setText(outputField.getText() + "\n" + output);
         //outputField.setScrollTop(Integer.MAX_VALUE);
         outputField.appendText("\n" + output);
     }
 
+    /**
+     * Print an error message in the outputField TextArea.
+     * @param e Exception caught in main Eggventory class.
+     */
     public void printError(Exception e) {
         print("Parser error: \n" + e);
     }
 
-    public static String addIndent() {
+    /**
+     * Prints opening message.
+     */
+    public void printIntro() {
+        String logo = "  _      __    __                     __         ____         _   __         __               \n"
+                + " | | /| / /__ / /______  __ _  ___   / /____    / __/__ ____ | | / /__ ___  / /____  ______ __\n"
+                + " | |/ |/ / -_) / __/ _ \\/  ' \\/ -_) / __/ _ \\  / _// _ `/ _ `/ |/ / -_) _ \\/ __/ _ \\/"
+                + " __/ // /\n"
+                + " |__/|__/\\__/_/\\__/\\___/_/_/_/\\__/  \\__/\\___/ /___/\\_, /\\_, /|___/\\__/_//_/\\__/\\___/_/"
+                + "  \\_, / \n"
+                + "                                                  /___//___/                           /___/  \n";
+
+        outputField.appendText(logo + "Hello! I'm Humpty Dumpty\n" + "What can I do for you?");
+    }
+
+    /**
+     * Prints the Eggventory exit message.
+     */
+    public void printExitMessage() {
+        print("Bye! Your stonks are safe with me!");
+        System.exit(0);
+    }
+
+    private static String addIndent() {
         return "        ";
     }
+
+    private static String addLine() {
+        return "____________________________________________________________";
+    }
+
+    //    public PrintType printCommand(PrintType printType, String ... statement) {
+    //        String output;
+    //        switch(printType){
+    //            case SUCCESS_ADD_COMMAND:
+    //                output = (addIndent() + "Nice! I have successfully added the stock: StockType: " + statement[0]);
+    //                System.out.println(output);
+    //                return PrintType.SUCCESS_ADD_COMMAND;
+    //            break;
+    //            case FAIL_ADD_COMMAND:
+    //                output = (addIndent() + "Sorry! There seems to be an error: StockType" + statement[0] );
+    //                System.out.println(output);
+    //                break;
+    //            default:
+    //                output = "Nothing done";
+    //        }
+    //    }
 }
