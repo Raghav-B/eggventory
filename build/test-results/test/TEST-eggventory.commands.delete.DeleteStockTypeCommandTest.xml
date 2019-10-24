@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="eggventory.commands.delete.DeleteStockTypeCommandTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-10-24T11:37:41" hostname="RaghavDesktop" time="0.004">
+  <properties/>
+  <testcase name="testExecute_deleteUncategorised_errorMessage()" classname="eggventory.commands.delete.DeleteStockTypeCommandTest" time="0.0"/>
+  <testcase name="testExecute_deleteStocktypeNotFound_errorMessage()" classname="eggventory.commands.delete.DeleteStockTypeCommandTest" time="0.001"/>
+  <testcase name="testExecute_deleteStockType_success()" classname="eggventory.commands.delete.DeleteStockTypeCommandTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

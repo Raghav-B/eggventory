@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="eggventory.StockTypeTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2019-10-24T11:37:41" hostname="RaghavDesktop" time="0.004">
+  <properties/>
+  <testcase name="setStock_Loaned_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="deleteStock()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="setStock_Minimum_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="addStock_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="setStock_Quantity_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="getQuantity()" classname="eggventory.StockTypeTest" time="0.001"/>
+  <testcase name="setStock_Lost_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="setStock_Description_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="getStock()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <testcase name="setStock_StockCode_Success()" classname="eggventory.StockTypeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

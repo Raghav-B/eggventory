@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.23">
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\Eggventory.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\StockList.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\Storage.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\Command.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\FindCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\ListCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\add\AddStockCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\add\AddStockTypeCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\delete\DeleteStockCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\delete\DeleteStockTypeCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\edit\EditStockCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\edit\EditStockTypeCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\commands\help\HelpCommand.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\enums\CommandType.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\enums\Property.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\exceptions\BadInputException.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\exceptions\InsufficientInfoException.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\CollectiveStock.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\DateTime.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\Item.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\Stock.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\StockType.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\items\UniqueStock.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\parsers\ParseAdd.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\parsers\ParseDelete.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\parsers\ParseEdit.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\parsers\Parser.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\ui\Cli.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\ui\Gui.java">
+</file>
+<file name="D:\software_dev\eggventory\src\main\java\eggventory\ui\Ui.java">
+</file>
+</checkstyle>
