@@ -1,4 +1,5 @@
 //@@author Raghav-B
+
 package eggventory.ui;
 
 public abstract class Ui {
@@ -9,6 +10,12 @@ public abstract class Ui {
 
     public abstract String print(String printString);
 
+    /**
+     * Formats the a String of input into the appropriate output Format with
+     * indentation and lines.
+     * @param printString String to format.
+     * @return Formatted String.
+     */
     String printFormatter(String printString) {
         String output = addIndent() + addLine() + "\n";
 

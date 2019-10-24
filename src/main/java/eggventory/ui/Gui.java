@@ -1,4 +1,5 @@
 //@@author Raghav-B
+
 package eggventory.ui;
 
 import eggventory.StockList;
@@ -34,57 +35,54 @@ public class Gui extends Ui  {
     @FXML
     private ScrollPane outputTableScroll;
 
-    /**
-     * Takes in references to some of the nodes in the JavaFX Gui, so that they can be
-     * controlled by Command.execute() functions and changes can be represented in the Gui
-     * instead of Cli.
-     */
     public Gui() {
     }
 
-    public void start(Stage stage, Runnable runMethod) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
-            fxmlLoader.setController(this);
-            stage = fxmlLoader.load();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        printIntro();
-
-        // Event handler for pressing ENTER
-        inputField.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                runMethod.run();
-            }
-        });
-
-        // Event handler for pressing TAB
-        inputField.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent ->  {
-            if (keyEvent.getCode() == KeyCode.TAB) {
-                inputField.appendText("Tab has been pressed! ");
-                keyEvent.consume();
-            }
-        });
-    }
-
+    /**
+     * Starts the REPL loop and creates the JavaFX window.
+     * @param runMethod Function passed in for REPL loop.
+     */
     public void initialize(Runnable runMethod) {
         Platform.startup(() -> {
-            Stage stage = new Stage();
-            start(stage, runMethod);
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
+                fxmlLoader.setController(this);
+                Stage stage = fxmlLoader.load();
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            printIntro();
+
+            // Event handler for pressing ENTER
+            inputField.setOnKeyPressed(keyEvent -> {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    runMethod.run();
+                }
+            });
+
+            // Event handler for pressing TAB
+            inputField.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent ->  {
+                if (keyEvent.getCode() == KeyCode.TAB) {
+                    inputField.appendText("Tab has been pressed! ");
+                    keyEvent.consume();
+                }
+            });
         });
     }
 
+    /**
+     * Reads in user input from inputField TextBox and outputs to outputField
+     * TextArea.
+     * @return Returns String to be used by Parser in REPL loop.
+     */
     public String read() {
         String userInput = inputField.getText();
 
         if (!userInput.equals("")) { // Check for blank input
             inputField.setText("");
             outputField.appendText("\n" + userInput);
-        } else {
-
         }
 
         return userInput;

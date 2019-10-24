@@ -7,17 +7,10 @@ import eggventory.ui.Cli;
 import eggventory.ui.Ui;
 import eggventory.ui.Gui;
 
-import java.util.Arrays;
-
 /**
  * Eggventory is a task list that supports 3 types of classes - Todos, deadlines and events.
  * Tasks can be added, marked as done, searched for, and deleted.
  * Tasks are loaded from and saved to file.
- */
-
-/**
- * Sets up the frontend, the Gui and the event handlers. This will create an instance of the
- * backend, the Eggventory class, and will use that to control the Gui.
  */
 public class Eggventory {
     private static Storage storage;
@@ -25,6 +18,11 @@ public class Eggventory {
     private static Ui ui;
     private static StockList stockList;
 
+    /**
+     * Sets up the frontend, the Gui and the event handlers. This will create an instance of the
+     * backend, the Eggventory class, and will use that to control the Gui.
+     * @param args Can input `--args=cli` after `gradlew run` to startup in Cli mode.
+     */
     public static void main(String[] args) {
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/data/saved_tasks.txt";
@@ -42,7 +40,10 @@ public class Eggventory {
         ui.initialize(Eggventory::userInteraction);
     }
 
-    public static void userInteraction() {
+    /**
+     * Main REPL loop.
+     */
+    private static void userInteraction() {
         try {
             String userInput = ui.read();
 
