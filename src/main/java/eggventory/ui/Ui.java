@@ -5,8 +5,6 @@ public interface Ui {
 
     void initialize(Runnable runMethod);
 
-    void mainLoop();
-
     String read();
 
     String print(String printString);
