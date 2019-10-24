@@ -1,10 +1,9 @@
 //@@author Raghav-B
 package eggventory.ui;
 
-import eggventory.Eggventory;
 import eggventory.StockList;
 import eggventory.items.Stock;
-import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 /**
@@ -26,7 +24,7 @@ import java.io.IOException;
  * Cli implementation. Overrides some Cli functionality to interface with the Gui instead
  * of Cli.
  */
-public class Gui extends Application implements Ui  {
+public class Gui extends Ui  {
     @FXML
     private TextField inputField;
     @FXML
@@ -36,8 +34,6 @@ public class Gui extends Application implements Ui  {
     @FXML
     private ScrollPane outputTableScroll;
 
-    private Eggventory.MainLoop runMethod;
-
     /**
      * Takes in references to some of the nodes in the JavaFX Gui, so that they can be
      * controlled by Command.execute() functions and changes can be represented in the Gui
@@ -46,13 +42,7 @@ public class Gui extends Application implements Ui  {
     public Gui() {
     }
 
-    public void initialize(Runnable runMethod) {
-        this.runMethod = runMethod;
-        Application.launch(this.getClass());
-    }
-
-    @Override
-    public void start(Stage stage) {
+    public void start(Stage stage, Runnable runMethod) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
             fxmlLoader.setController(this);
@@ -62,13 +52,12 @@ public class Gui extends Application implements Ui  {
             e.printStackTrace();
         }
 
-        System.out.println(runMethod.dick);
+        printIntro();
 
         // Event handler for pressing ENTER
         inputField.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                //runMethod.run();
-                System.out.println("hmm");
+                runMethod.run();
             }
         });
 
@@ -79,8 +68,13 @@ public class Gui extends Application implements Ui  {
                 keyEvent.consume();
             }
         });
+    }
 
-        printIntro();
+    public void initialize(Runnable runMethod) {
+        Platform.startup(() -> {
+            Stage stage = new Stage();
+            start(stage, runMethod);
+        });
     }
 
     public String read() {
@@ -101,7 +95,7 @@ public class Gui extends Application implements Ui  {
      * @param printString The raw String to be printed out, after some extra formatting.
      */
     public String print(String printString) {
-        String output = Ui.super.printFormatter(printString);
+        String output = printFormatter(printString);
         outputField.appendText("\n" + output);
 
         return output;

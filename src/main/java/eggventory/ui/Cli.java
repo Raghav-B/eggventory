@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Prints intro and exit messages, and the standard newline.
  */
 
-public class Cli implements Ui {
+public class Cli extends Ui {
 
     private Scanner in;
 

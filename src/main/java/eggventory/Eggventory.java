@@ -3,9 +3,11 @@ package eggventory;
 import eggventory.commands.Command;
 import eggventory.enums.CommandType;
 import eggventory.parsers.Parser;
-import eggventory.ui.Ui;
 import eggventory.ui.Cli;
+import eggventory.ui.Ui;
 import eggventory.ui.Gui;
+
+import java.util.Arrays;
 
 /**
  * Eggventory is a task list that supports 3 types of classes - Todos, deadlines and events.
@@ -23,26 +25,6 @@ public class Eggventory {
     private static Ui ui;
     private static StockList stockList;
 
-    public static class MainLoop implements Runnable {
-        @Override
-        public void run() {
-            try {
-                String userInput = ui.read();
-
-                Command command = parser.parse(userInput);
-                command.execute(stockList, ui, storage);
-
-                if (command.getType() == CommandType.BYE) {
-                    System.exit(0);
-                }
-            } catch (Exception e) {
-                ui.printError(e);
-            }
-        }
-
-        public String dick = "dick";
-    }
-
     public static void main(String[] args) {
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/data/saved_tasks.txt";
@@ -51,9 +33,27 @@ public class Eggventory {
         parser = new Parser();
         stockList = storage.load();
 
-        //ui = new Gui();
-        ui = new Cli();
+        if (args.length >= 1 && args[0].equals("cli")) {
+            ui = new Cli();
+        } else {
+            ui = new Gui();
+        }
 
-        ui.initialize(new MainLoop());
+        ui.initialize(Eggventory::userInteraction);
+    }
+
+    public static void userInteraction() {
+        try {
+            String userInput = ui.read();
+
+            Command command = parser.parse(userInput);
+            command.execute(stockList, ui, storage);
+
+            if (command.getType() == CommandType.BYE) {
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            ui.printError(e);
+        }
     }
 }

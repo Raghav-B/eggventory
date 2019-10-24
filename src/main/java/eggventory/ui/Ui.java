@@ -1,15 +1,15 @@
 //@@author Raghav-B
 package eggventory.ui;
 
-public interface Ui {
+public abstract class Ui {
 
-    void initialize(Runnable runMethod);
+    public abstract void initialize(Runnable runMethod);
 
-    String read();
+    public abstract String read();
 
-    String print(String printString);
+    public abstract String print(String printString);
 
-    default String printFormatter(String printString) {
+    String printFormatter(String printString) {
         String output = addIndent() + addLine() + "\n";
 
         String[] linesToPrint = printString.split("\n", 0);
@@ -23,7 +23,7 @@ public interface Ui {
     /**
      * Prints eggventory introduction message.
      */
-    default void printIntro() {
+    void printIntro() {
         String logo = "  _      __    __                     __         ____         _   __         __               \n"
                 + " | | /| / /__ / /______  __ _  ___   / /____    / __/__ ____ | | / /__ ___  / /____  ______ __\n"
                 + " | |/ |/ / -_) / __/ _ \\/  ' \\/ -_) / __/ _ \\  / _// _ `/ _ `/ |/ / -_) _ \\/ __/ _ \\/"
@@ -39,14 +39,14 @@ public interface Ui {
     /**
      * Prints error message to CLI.
      */
-    default void printError(Exception e) {
+    public void printError(Exception e) {
         print("Parser error: \n" + e);
     }
 
     /**
      * Prints the EggVentory exit message.
      */
-    default void printExitMessage() {
+    public void printExitMessage() {
         print("Bye! Your stonks are safe with me!");
     }
 
@@ -54,7 +54,7 @@ public interface Ui {
      * Adds indent for formatting Eggventory text output.
      * @return Returns String with indentation.
      */
-    default String addIndent() {
+    String addIndent() {
         return "        ";
     }
 
@@ -62,7 +62,7 @@ public interface Ui {
      * Prints the standard newline.
      * @return Returns String with newline.
      */
-    default String addLine() {
+    String addLine() {
         return "____________________________________________________________";
     }
 }
