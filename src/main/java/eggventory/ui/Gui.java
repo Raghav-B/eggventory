@@ -96,7 +96,8 @@ public class Gui {
                 + "  \\_, / \n"
                 + "                                                  /___//___/                           /___/  \n";
 
-        outputField.appendText(logo + "Hello! I'm Humpty Dumpty\n" + "What can I do for you?");
+        outputField.appendText(logo);
+        print("Hello! I'm Humpty Dumpty\n" + "What can I do for you?");
     }
 
     /**

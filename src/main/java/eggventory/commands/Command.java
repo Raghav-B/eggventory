@@ -1,6 +1,6 @@
 package eggventory.commands;
 
-import eggventory.ui.Cli;
+import eggventory.ui.Gui;
 import eggventory.StockList;
 import eggventory.Storage;
 import eggventory.exceptions.BadInputException;
@@ -38,7 +38,7 @@ public class Command {
     public String execute(StockList list, Gui gui, Storage storage) throws BadInputException {
         if (type == CommandType.BYE) {
             storage.save(list);
-            cli.printExitMessage();
+            gui.printExitMessage();
         }
         return null;
     }

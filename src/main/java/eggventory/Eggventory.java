@@ -40,14 +40,6 @@ public class Eggventory extends Application {
     private static StockList stockList;
 
     public static void main(String[] args) {
-        String currentDir = System.getProperty("user.dir");
-        String filePath = currentDir + "/data/saved_tasks.txt";
-
-        storage = new Storage(filePath);
-        parser = new Parser();
-        gui = new Gui();
-        stockList = storage.load();
-
         Application.launch(args);
     }
 
@@ -76,6 +68,20 @@ public class Eggventory extends Application {
                 keyEvent.consume();
             }
         });
+
+        initialize();
+    }
+
+    private void initialize() {
+        String currentDir = System.getProperty("user.dir");
+        String filePath = currentDir + "/data/saved_tasks.txt";
+
+        storage = new Storage(filePath);
+        parser = new Parser();
+        gui = new Gui(inputField, outputField, outputTable, outputTableScroll);
+        stockList = storage.load();
+
+        gui.printIntro();
     }
 
     private void handleUserInput() {
@@ -93,7 +99,7 @@ public class Eggventory extends Application {
                     System.exit(0);
                 }
             } catch (Exception e) {
-                // something
+                gui.printError(e);
             }
         }
     }
