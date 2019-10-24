@@ -2,7 +2,7 @@ package eggventory.commands;
 
 import eggventory.StockList;
 import eggventory.Storage;
-import eggventory.ui.Gui;
+import eggventory.ui.Cli;
 import eggventory.enums.CommandType;
 
 public class ListCommand extends Command {
@@ -14,7 +14,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public String execute(StockList list, Gui gui, Storage storage) {
+    public String execute(StockList list, Cli cli, Storage storage) {
         String output = "";
 
         if (this.query.equals("stock")) { //list stock command
@@ -23,28 +23,28 @@ public class ListCommand extends Command {
             String listString = "";
             if (max == 0) {
                 output = "The list is currently empty.";
-                gui.print(output);
+                cli.print(output);
                 return output;
             }
 
             listString = list.toString(); //Should contain all the stockTypes already, need not iterate.
             output = listString;
-            gui.print(output);
+            cli.print(output);
 
         } else if (this.query.equals("stocktype")) { //list stocktype command
             String listString = "";
             listString = list.toStocktypeString(); //Should contain all the stockTypes already, need not iterate.
             output = listString;
-            gui.print(output);
+            cli.print(output);
 
         } else { // list <stocktype> command
             String listString = "";
             listString = list.findStock(this.query);
             output = listString;
             if (listString.equals("")) {
-                gui.print("Invalid command: No such stocktype. list stock / list stocktype/ list <stocktype>");
+                cli.print("Invalid command: No such stocktype. list stock / list stocktype/ list <stocktype>");
             } else {
-                gui.print(output);
+                cli.print(output);
             }
         }
         return output;

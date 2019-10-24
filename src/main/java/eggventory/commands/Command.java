@@ -1,6 +1,6 @@
 package eggventory.commands;
 
-import eggventory.ui.Gui;
+import eggventory.ui.Cli;
 import eggventory.StockList;
 import eggventory.Storage;
 import eggventory.exceptions.BadInputException;
@@ -13,7 +13,6 @@ import eggventory.enums.CommandType;
  */
 
 public class Command {
-
 
     protected CommandType type;
 
@@ -35,10 +34,10 @@ public class Command {
      * Prints the list or saves the list and sends exit message.
      * Might need to separate into bye and list commands.
      */
-    public String execute(StockList list, Gui gui, Storage storage) throws BadInputException {
+    public String execute(StockList list, Cli cli, Storage storage) throws BadInputException {
         if (type == CommandType.BYE) {
             storage.save(list);
-            gui.printExitMessage();
+            cli.printExitMessage();
         }
         return null;
     }

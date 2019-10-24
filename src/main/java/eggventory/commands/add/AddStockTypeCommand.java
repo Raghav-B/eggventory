@@ -2,7 +2,7 @@ package eggventory.commands.add;
 
 import eggventory.StockList;
 import eggventory.Storage;
-import eggventory.ui.Gui;
+import eggventory.ui.Cli;
 import eggventory.commands.Command;
 import eggventory.enums.CommandType;
 
@@ -23,17 +23,17 @@ public class AddStockTypeCommand extends Command {
     /**
      * Executes actual adding of StockType.
      * @param list StockType to add the item to.
-     * @param gui Gui object to display output to.
+     * @param cli Cli object to display output to.
      * @param storage Storage object to handle saving and loading of any data.
      */
     @Override
-    public String execute(StockList list, Gui gui, Storage storage) {
+    public String execute(StockList list, Cli cli, Storage storage) {
         String output;
 
         list.addStockType(name);
         output = String.format("Nice! I have successfully added the stocktype: %s", name);
 
-        gui.print(output);
+        cli.print(output);
 
         return output;
     }
