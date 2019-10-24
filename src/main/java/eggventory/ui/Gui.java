@@ -13,7 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * This is a controller class used to control the Gui.fxml from the entry point for
  * our application, the Eggventory class. Inherits most of its functionality from Cli
  * to ensure backwards compatibility with testing and if we choose to fall back to a
- * Cli implementation
+ * Cli implementation. Overrides some Cli functionality to interface with the Gui instead
+ * of Cli.
  */
 public class Gui extends Cli {
     private TextField inputField;
@@ -21,6 +22,15 @@ public class Gui extends Cli {
     private TableView outputTable;
     private ScrollPane outputTableScroll;
 
+    /**
+     * Takes in references to some of the nodes in the JavaFX Gui, so that they can be
+     * controlled by Command.execute() functions and changes can be represented in the Gui
+     * instead of Cli.
+     * @param inputField Where the user can place input.
+     * @param outputField Where the user will see Eggventory's text output.
+     * @param outputTable User will see Eggventory's table output here.
+     * @param outputTableScroll Scroll node to control outputTable scroll property.
+     */
     public Gui(TextField inputField, TextArea outputField, TableView outputTable,
                ScrollPane outputTableScroll) {
         this.inputField = inputField;
@@ -29,11 +39,11 @@ public class Gui extends Cli {
         this.outputTableScroll = outputTableScroll;
     }
 
-    @Override
     /**
      * Prints text output in the outputField TextArea.
      * @param printString The raw String to be printed out, after some extra formatting.
      */
+    @Override
     public String print(String printString) {
         String output; //= super.print(printString);
         output = addIndent() + addLine() + "\n";
@@ -50,10 +60,10 @@ public class Gui extends Cli {
         return output;
     }
 
-    @Override
     /**
      * Prints opening message.
      */
+    @Override
     public void printIntro() {
         String logo = "  _      __    __                     __         ____         _   __         __               \n"
                 + " | | /| / /__ / /______  __ _  ___   / /____    / __/__ ____ | | / /__ ___  / /____  ______ __\n"
