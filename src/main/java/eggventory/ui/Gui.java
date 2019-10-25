@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -27,7 +28,7 @@ import java.io.IOException;
  */
 public class Gui extends Ui  {
     @FXML
-    private TextField inputField;
+    private TextFlow inputField;
     @FXML
     private TextArea outputField;
     @FXML
@@ -36,6 +37,7 @@ public class Gui extends Ui  {
     private ScrollPane outputTableScroll;
 
     public Gui() {
+
     }
 
     /**
@@ -62,10 +64,12 @@ public class Gui extends Ui  {
                 }
             });
 
+            inputField.setOnKey
+
             // Event handler for pressing TAB
             inputField.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent ->  {
                 if (keyEvent.getCode() == KeyCode.TAB) {
-                    inputField.appendText("Tab has been pressed! ");
+                    //inputField.appendText("Tab has been pressed! ");
                     keyEvent.consume();
                 }
             });
