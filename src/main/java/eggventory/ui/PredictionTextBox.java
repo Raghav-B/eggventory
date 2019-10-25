@@ -66,14 +66,16 @@ public class PredictionTextBox {
     public String getAllText() {
         StringBuilder sb = new StringBuilder();
         for (Text text : textList) {
-            sb.append(text);
+            sb.append(text.getText());
         }
         return sb.toString();
     }
 
     public void clearAllText() {
+        textFlow.getChildren().removeAll(textList);
         textList.clear();
-        appendWord();
-        updateTextFlow();
+        textList.add(new Text(""));
+        curWordIndex = 0;
+        textFlow.getChildren().addAll(textList);
     }
 }

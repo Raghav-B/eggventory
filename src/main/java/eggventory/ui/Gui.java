@@ -60,79 +60,41 @@ public class Gui extends Ui  {
             inputField = new PredictionTextBox(textFlow);
             printIntro();
 
-            /*
             stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-                switch(keyEvent.getCode()) {
-                case ENTER:
-                    //System.out.println("ENTER");
-                    // Runs the read method and parses input
-                    //runMethod.run();
-                    break;
-                case UP:
-                    //System.out.println("UP");
-                    // Used for predictive search
-                    break;
-                case DOWN:
-                    //System.out.println("DOWN");
-                    // Used for predictive search
-                    break;
-                case SPACE:
-                    //System.out.println("SPACE");
-                    //inputField.appendWord();
-                    break;
-                case BACK_SPACE:
-                    //System.out.println("BACK");
-                    //inputField.removeFromWord();
-                    break;
-                case TAB:
-                    System.out.println("TAB");
-                    // Used for predictive search
-                    //inputField.appendText("Tab has been pressed! ");
-                    //keyEvent.consume();
-                    break;
+                if (keyEvent.getCode() == KeyCode.UP) {
+                    System.out.println("UP");
+                    // Predictive search code
+                } else if (keyEvent.getCode() == KeyCode.DOWN) {
+                    System.out.println("DOWN");
+                    // Predictive search code
+                } else {
+                    // Do nothing!
                 }
             });
-            */
 
             // Event handler for pressing keys
             stage.addEventFilter(KeyEvent.KEY_TYPED, keyEvent ->  {
                 switch (keyEvent.getCharacter()) {
-                    case "\r":
-                        System.out.println("ENTER");
-                        // Run REPL loop here
+                    case "\r": // ENTER
+                        if (inputField.getAllText().equals("")) {
+                            break;
+                        }
+                        runMethod.run();
                         break;
-                    /*
-                    case UP:
-                        System.out.println("UP");
-                        keyEvent.consume();
-                        break;
-                    case DOWN:
-                        System.out.println("DOWN");
-                        keyEvent.consume();
-                        break;
-
-                     */
-                    case " ":
-                        System.out.println("SPACE");
+                    case " ": // SPACE
                         inputField.appendWord();
                         break;
-                    case "\b":
-                        System.out.println("BACK");
+                    case "\b": // BACK_SPACE
                         inputField.removeFromWord();
-                        keyEvent.consume();
                         break;
-                    case "\t":
-                        System.out.println("TAB");
+                    case "\t": // TAB
                         // Do prediction search algo here.
                         keyEvent.consume();
                         break;
-                    default:
+                    default: // All other characters
                         inputField.appendToWord(keyEvent.getCharacter());
-                        System.out.println(inputField.getArrSize());
                         break;
                 }
-
-
             });
         });
     }
@@ -144,12 +106,8 @@ public class Gui extends Ui  {
      */
     public String read() {
         String userInput = inputField.getAllText();
-
-        if (!userInput.equals("")) { // Check is not blank input
-            inputField.clearAllText();
-            outputField.appendText("\n" + userInput);
-        }
-
+        inputField.clearAllText();
+        outputField.appendText("\n" + userInput);
         return userInput;
     }
 
