@@ -1,14 +1,10 @@
 package eggventory.items;
 
-import eggventory.items.CollectiveStock;
-import eggventory.items.UniqueStock;
+import eggventory.enums.Property;
 
 import java.util.ArrayList;
 
-import eggventory.exceptions.BadInputException;
-import eggventory.items.Stock;
-import eggventory.items.CollectiveStock;
-
+//@@author Deculsion
 /**
  * Manages the list of (different types of classes),
  * including all the methods to modify the list:
@@ -18,8 +14,8 @@ import eggventory.items.CollectiveStock;
 public class StockType {
     private String name;
     private ArrayList<Stock> stocks;
-    private int quantity;
-    private boolean isUniqueStock;
+    //private int quantity;
+    //private boolean isUniqueStock;
 
     /**
      * Creates a new StockType object. This overload should only be called from a Storage class.
@@ -29,8 +25,6 @@ public class StockType {
     public StockType(String name, ArrayList<Stock> savedFile) {
         this.name = name;
         stocks = savedFile;
-        quantity = savedFile.size();
-        isUniqueStock = isUniqueStock();
     }
 
     /**
@@ -41,8 +35,6 @@ public class StockType {
     public StockType(String name, boolean isUniqueStock) {
         this.name = name;
         this.stocks = new ArrayList<>();
-        this.quantity = 0;
-        this.isUniqueStock = isUniqueStock;
     }
 
     /**
@@ -52,20 +44,6 @@ public class StockType {
     public StockType(String name) {
         this.name = name;
         this.stocks = new ArrayList<>();
-        this.quantity = 0;
-        this.isUniqueStock = false;
-    }
-
-    /**
-     * Determines whether this StockType is a collection of UniqueStock or CollectiveStock.
-     */
-    private boolean isUniqueStock() {
-        for (Stock stock : stocks) {
-            if (stock instanceof CollectiveStock) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -74,7 +52,6 @@ public class StockType {
      */
     public boolean addStock(String stockType, String stockCode, int quantity, String description) {
         stocks.add(new CollectiveStock(stockType, stockCode, quantity, description));
-        this.quantity++;
         return true;
     }
 
@@ -82,14 +59,178 @@ public class StockType {
      * Deletes a stock of the user's choice.
      *
      * @param stockCode The code of the stock to be deleted.
+     * @return true if some stockCode was found and the corresponding stock removed. false if none were found.
      */
-    public void deleteStock(String stockCode) {
-        stocks.removeIf(stock -> stock.getStockCode().equals(stockCode));
-        this.quantity--;
+    public Stock deleteStock(String stockCode) {
+
+        Stock deletedStock;
+
+        for (Stock stock : stocks) {
+            if (stockCode.equals(stock.getStockCode())) {
+                deletedStock = stock; //Not sure if this is a copy or not. Assumes unique stockCodes.
+                stocks.remove(stock);
+                return deletedStock;
+            }
+        }
+        return null;
     }
 
     /**
-     * A string of all the stock objects within this stocktype. Should only be called by Ui and StockList.
+     * Accesses and sets a new stockCode of a stock.
+     * @param oldStockCode The current stockcode referring to this stock.
+     * @param newStockCode The new stockcode to change to.
+     */
+    public void setStockCode(String oldStockCode, String newStockCode) {
+        for (Stock stock : stocks) {
+            if (stock.getStockCode().equals(oldStockCode)) {
+                stock.setStockCode(newStockCode);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Accesses and sets the quantity of a Stock.
+     * @param stockCode StockCode of the stock to change
+     * @param quantity New quantity of the stock to change
+     */
+    public void setStockQuantity(String stockCode, int quantity) {
+        for (Stock stock : stocks) {
+            if (stock.getStockCode().equals(stockCode)) {
+                stock.setQuantity(quantity);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Accesses and sets the description of a Stock.
+     * @param stockCode StockCode of the stock to change
+     * @param description New description of the stock to change
+     */
+    public void setStockDescription(String stockCode, String description) {
+        for (Stock stock : stocks) {
+            if (stock.getStockCode().equals(stockCode)) {
+                stock.setDescription(description);
+                return;
+            }
+        }
+    }
+
+    //@@author
+    /**
+     * Returns the entire stockList.
+     * @return the stockList.
+     */
+    public ArrayList<Stock> getStockList() {
+        return stocks;
+    }
+
+    /**
+     * Returns a stock of the user's choice.
+     * @param i the index of the stock selected.
+     */
+    public Stock getStock(int i) {
+        return stocks.get(i);
+    }
+
+    /**
+     * Returns a stock of the user's choice.
+     * @param stockCode String which uniquely identifies a Stock.
+     * @return If Stock exits, the Stock otherwise null.
+     */
+    public Stock getStock(String stockCode) {
+        for (Stock stock: stocks) {
+            if (stockCode.equals(stock.getStockCode())) {
+                return stock;
+            }
+        }
+        return null;
+    }
+
+    //@@author Deculsion
+    /**
+     * Gets the total number of stocks.
+     * @return the number of stocks in this stockType.
+     */
+    public int getQuantity() {
+        return stocks.size();
+    }
+
+    /**
+     * Gets the name of this stockType.
+     * @return the name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Updates the name of the StockType.
+     * @param newName String which uniquely identifies a StockType.
+     */
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    //@@author
+    /**
+     * Updates the values of properties of a Stock.
+     * @param stockCode String which uniquely identifies a Stock.
+     * @param property The attribute of a Stock we want to update.
+     * @param newValue The new value of the attribute to be updated.
+     * @return The unedited Stock, for printing purpose.
+     */
+    public Stock setStock(String stockCode, Property property, String newValue) {
+        Stock uneditedStock;
+        for (Stock stock: stocks) {
+            if (stockCode.equals(stock.getStockCode())) {
+                uneditedStock = stock;
+                switch (property) {
+                case STOCKCODE:
+                    stock.setStockCode(newValue);
+                    break;
+                case QUANTITY:
+                    stock.setQuantity(Integer.parseInt(newValue));
+                    break;
+                case LOANED:
+                    stock.setLoaned(Integer.parseInt(newValue));
+                    break;
+                case LOST:
+                    stock.setLost(Integer.parseInt(newValue));
+                    break;
+                case DESCRIPTION:
+                    stock.setDescription(newValue);
+                    break;
+                case MINIMUM:
+                    stock.setMinimum(Integer.parseInt(newValue));
+                    break;
+                default:
+                }
+                return uneditedStock;
+            }
+        }
+        return null;
+    }
+
+    //@@author cyanoei
+    /**
+     * Determines if any of the stocks in this stockType have the same stockCode.
+     * @param stockCode the queried stockCode.
+     * @return true if a stock in this stockType has that stockCode and false if none of the stocks have this stockCode.
+     */
+    public boolean isExistingStockCode(String stockCode) {
+        for (Stock stock : stocks) {
+            if (stock.getStockCode().equals(stockCode)) {
+                return true;
+            }
+        }
+        return false; //If none of the stocks had the same code.
+    }
+
+    //@@author Deculsion
+    /**
+     * A string of all the stock objects within this stocktype. Should only be called by Cli and StockList.
      * @return A string list of all the stock objects and their details.
      */
     public String toString() {
@@ -104,7 +245,6 @@ public class StockType {
 
     }
 
-
     /**
      * Creates a String of all Stock objects under this StockType.
      * @return The String of all Stock objects.
@@ -112,41 +252,9 @@ public class StockType {
     public String saveDetailsString() {
         String details = "";
         for (Stock stock : stocks) {
-            details += stock.saveDetailsString() + " ";
+            details += stock.saveDetailsString() + "\n";
         }
         return details;
     }
 
-    /**
-     * Returns the entire stockList.
-     * @return the stockList.
-     */
-    public ArrayList<Stock> getStockList() {
-        return stocks;
-    }
-
-    /**
-     * Returns a stock of the user's choice.
-     *
-     * @param i the index of the stock selected.
-     */
-    public Stock getStock(int i) {
-        return stocks.get(i);
-    }
-
-    /**
-     * Gets the number of stocks in the stockList.
-     * @return the number of stocks in the stockList.
-     */
-    public int getSize() {
-        return stocks.size();
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

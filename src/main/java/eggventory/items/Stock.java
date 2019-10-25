@@ -1,5 +1,7 @@
 package eggventory.items;
 
+import eggventory.enums.Property;
+
 /**
  * An abstract class representing a type of item that the lab keeps and is able to loan out.
  * Children classes are CollectiveStock and UniqueStock.
@@ -154,7 +156,7 @@ public class Stock {
     }
 
     /**
-     * Formats all stock details appropriately for Ui output. Should only be called by Ui and StockType.
+     * Formats all stock details appropriately for Cli output. Should only be called by Cli and StockType.
      * @return the stock details string.
      */
     @Override
@@ -208,5 +210,6 @@ public class Stock {
     public void printLost() {
         System.out.println(description + ": " + lost + " lost.");
     }
+
 
 }

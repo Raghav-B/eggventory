@@ -1,33 +1,52 @@
 package eggventory.commands;
 
 import eggventory.StockList;
-import eggventory.items.StockType;
-import eggventory.Ui;
 import eggventory.Storage;
+import eggventory.ui.Ui;
 import eggventory.enums.CommandType;
 
 public class ListCommand extends Command {
-    public ListCommand(CommandType type) {
+    private String query;
+
+    public ListCommand(CommandType type, String query) {
         super(type);
+        this.query = query;
     }
 
     @Override
     public String execute(StockList list, Ui ui, Storage storage) {
-        String output;
-        int max = list.getQuantity();
-        String listString = "";
-        if (max == 0) {
-            output = "The list is currently empty.";
-            ui.print(output);
-            return output;
-        }
+        String output = "";
 
-        for (int i = 0; i < max; i++) { //Index starts from 0.
-            // TODO: Change to StringBuilder - Raghav
-            listString += (i + 1 + ". " + list.toString() + "\n");
+        if (this.query.equals("stock")) { //list stock command
+            //Outstanding case when list is empty
+            int max = list.getStockQuantity();
+            String listString = "";
+            if (max == 0) {
+                output = "The list is currently empty.";
+                ui.print(output);
+                return output;
+            }
+
+            listString = list.toString(); //Should contain all the stockTypes already, need not iterate.
+            output = listString;
+            ui.print(output);
+
+        } else if (this.query.equals("stocktype")) { //list stocktype command
+            String listString = "";
+            listString = list.toStocktypeString(); //Should contain all the stockTypes already, need not iterate.
+            output = listString;
+            ui.print(output);
+
+        } else { // list <stocktype> command
+            String listString = "";
+            listString = list.findStock(this.query);
+            output = listString;
+            if (listString.equals("")) {
+                ui.print("Invalid command: No such stocktype. list stock / list stocktype/ list <stocktype>");
+            } else {
+                ui.print(output);
+            }
         }
-        output = listString;
-        ui.print(output);
         return output;
     }
 }
