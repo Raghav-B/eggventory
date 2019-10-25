@@ -20,8 +20,13 @@ public class PredictionTextBox {
         curWordIndex = 0;
     }
 
+    // TEST METHOD
+    public int getArrSize() {
+        return textList.size();
+    }
+
     private void updateTextFlow() {
-        textFlow.getChildren().removeAll();
+        textFlow.getChildren().removeAll(textList);
         textFlow.getChildren().addAll(textList);
     }
 
@@ -44,14 +49,17 @@ public class PredictionTextBox {
     public void removeFromWord() {
         String curText = textList.get(curWordIndex).getText();
 
-        if (curText.length() - 1 <= 0) {
+        if (curText.length() - 1 < 0) {
+            if (curWordIndex == 0) {
+                return;
+            }
             textList.remove(curWordIndex);
             curWordIndex--;
             return;
         }
 
-        curText = curText.substring(0, curText.length() - 1);
-        textList.get(curWordIndex).setText(curText);
+        String newText = curText.substring(0, curText.length() - 1);
+        textList.get(curWordIndex).setText(newText);
         updateTextFlow();
     }
 

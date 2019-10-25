@@ -60,50 +60,79 @@ public class Gui extends Ui  {
             inputField = new PredictionTextBox(textFlow);
             printIntro();
 
-            // Event handler for pressing keys
-            stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent ->  {
+            /*
+            stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
                 switch(keyEvent.getCode()) {
                 case ENTER:
-                    System.out.println("ENTER");
+                    //System.out.println("ENTER");
                     // Runs the read method and parses input
-
                     //runMethod.run();
                     break;
                 case UP:
-                    System.out.println("UP");
-
+                    //System.out.println("UP");
                     // Used for predictive search
                     break;
                 case DOWN:
-
-                    System.out.println("DOWN");
-
+                    //System.out.println("DOWN");
                     // Used for predictive search
                     break;
                 case SPACE:
-                    System.out.println("SPACE");
-
+                    //System.out.println("SPACE");
                     //inputField.appendWord();
                     break;
                 case BACK_SPACE:
-                    System.out.println("BACK");
-
-
+                    //System.out.println("BACK");
                     //inputField.removeFromWord();
                     break;
                 case TAB:
                     System.out.println("TAB");
-
                     // Used for predictive search
                     //inputField.appendText("Tab has been pressed! ");
                     //keyEvent.consume();
                     break;
-                default: // Normal text input
-                    System.out.println("char");
-
-                    //inputField.appendToWord(keyEvent.getCharacter());
-                    break;
                 }
+            });
+            */
+
+            // Event handler for pressing keys
+            stage.addEventFilter(KeyEvent.KEY_TYPED, keyEvent ->  {
+                switch (keyEvent.getCharacter()) {
+                    case "\r":
+                        System.out.println("ENTER");
+                        // Run REPL loop here
+                        break;
+                    /*
+                    case UP:
+                        System.out.println("UP");
+                        keyEvent.consume();
+                        break;
+                    case DOWN:
+                        System.out.println("DOWN");
+                        keyEvent.consume();
+                        break;
+
+                     */
+                    case " ":
+                        System.out.println("SPACE");
+                        inputField.appendWord();
+                        break;
+                    case "\b":
+                        System.out.println("BACK");
+                        inputField.removeFromWord();
+                        keyEvent.consume();
+                        break;
+                    case "\t":
+                        System.out.println("TAB");
+                        // Do prediction search algo here.
+                        keyEvent.consume();
+                        break;
+                    default:
+                        inputField.appendToWord(keyEvent.getCharacter());
+                        System.out.println(inputField.getArrSize());
+                        break;
+                }
+
+
             });
         });
     }
