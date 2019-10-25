@@ -16,6 +16,7 @@ public class PredictionTextBox {
     public PredictionTextBox(TextFlow textFlow) {
         this.textFlow = textFlow;
         textList = new ArrayList<>();
+        textList.add(new Text(""));
         curWordIndex = 0;
     }
 
@@ -26,7 +27,8 @@ public class PredictionTextBox {
 
     // Triggers when user presses the spacebar
     public void appendWord() {
-        textList.add(new Text(" "));
+        appendToWord(" ");
+        textList.add(new Text(""));
         curWordIndex++;
         updateTextFlow();
     }
@@ -50,6 +52,20 @@ public class PredictionTextBox {
 
         curText = curText.substring(0, curText.length() - 1);
         textList.get(curWordIndex).setText(curText);
+        updateTextFlow();
+    }
+
+    public String getAllText() {
+        StringBuilder sb = new StringBuilder();
+        for (Text text : textList) {
+            sb.append(text);
+        }
+        return sb.toString();
+    }
+
+    public void clearAllText() {
+        textList.clear();
+        appendWord();
         updateTextFlow();
     }
 }
