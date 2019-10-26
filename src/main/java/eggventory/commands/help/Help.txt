@@ -5,6 +5,7 @@ A star (*) next to the name means that the command is not enabled.
 add
     add stock <Stock Type> <Stock Code> <Quantity> <Description>
     add stocktype <Stock Type>
+    add person <Matric No.> <Name>
 
 delete
     delete stock <Stock Code>
