@@ -75,25 +75,25 @@ public class Gui extends Ui  {
             // Event handler for pressing keys
             stage.addEventFilter(KeyEvent.KEY_TYPED, keyEvent ->  {
                 switch (keyEvent.getCharacter()) {
-                    case "\r": // ENTER
-                        if (inputField.getAllText().equals("")) {
-                            break;
-                        }
-                        runMethod.run();
+                case "\r": // ENTER
+                    if (inputField.getAllText().equals("")) {
                         break;
-                    case " ": // SPACE
-                        inputField.appendWord();
-                        break;
-                    case "\b": // BACK_SPACE
-                        inputField.removeFromWord();
-                        break;
-                    case "\t": // TAB
-                        // Do prediction search algo here.
-                        keyEvent.consume();
-                        break;
-                    default: // All other characters
-                        inputField.appendToWord(keyEvent.getCharacter());
-                        break;
+                    }
+                    runMethod.run();
+                    break;
+                case " ": // SPACE
+                    inputField.appendWord();
+                    break;
+                case "\b": // BACK_SPACE
+                    inputField.removeFromWord();
+                    break;
+                case "\t": // TAB
+                    // Do prediction search algo here.
+                    keyEvent.consume();
+                    break;
+                default: // All other characters
+                    inputField.appendToWord(keyEvent.getCharacter());
+                    break;
                 }
             });
         });
