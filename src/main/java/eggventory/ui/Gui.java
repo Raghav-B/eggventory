@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -17,7 +16,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-//@@author: Raghav-B
+//@@author Raghav-B
 /**
  * This is a controller class used to control the Gui.fxml from the entry point for
  * our application, the Eggventory class. Inherits most of its functionality from Cli
@@ -63,9 +62,11 @@ public class Gui extends Ui  {
                 if (keyEvent.getCode() == KeyCode.UP) {
                     System.out.println("UP");
                     // Predictive search code
+                    inputField.appendText("", -1);
                 } else if (keyEvent.getCode() == KeyCode.DOWN) {
                     System.out.println("DOWN");
                     // Predictive search code
+                    inputField.appendText("", 1);
                 } else {
                     // Do nothing!
                 }
@@ -80,18 +81,19 @@ public class Gui extends Ui  {
                     }
                     runMethod.run();
                     break;
-                case " ": // SPACE
-                    inputField.appendWord();
-                    break;
+                //case " ": // SPACE
+                //    inputField.appendToWord(keyEvent.getCharacter());
+                //    break;
                 case "\b": // BACK_SPACE
                     inputField.removeFromWord();
                     break;
                 case "\t": // TAB
                     // Do prediction search algo here.
+                    inputField.acceptSearchText();
                     keyEvent.consume();
                     break;
                 default: // All other characters
-                    inputField.appendToWord(keyEvent.getCharacter());
+                    inputField.appendText(keyEvent.getCharacter(), 0);
                     break;
                 }
             });

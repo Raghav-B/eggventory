@@ -4,7 +4,7 @@ import eggventory.commands.CommandDictionary;
 import eggventory.exceptions.BadInputException;
 import java.util.ArrayList;
 
-//@@author: Raghav-B
+//@@author Raghav-B
 public class InputPredictor {
 
     private CommandDictionary commandDictionary;
