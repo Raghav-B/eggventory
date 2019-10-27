@@ -11,12 +11,15 @@ public class PredictionTextBox {
     private TextFlow textFlow;
     private ArrayList<Text> textList;
     private int curWordIndex;
+    private InputPredictor inputPredictor;
 
     public PredictionTextBox(TextFlow textFlow) {
         this.textFlow = textFlow;
         textList = new ArrayList<>();
         textList.add(new Text(""));
         curWordIndex = 0;
+
+        this.inputPredictor = new InputPredictor();
     }
 
     // TEST METHOD
@@ -40,7 +43,12 @@ public class PredictionTextBox {
     // Triggers when user types a character
     public void appendToWord(String appendChar) {
         String curText = textList.get(curWordIndex).getText();
-        textList.get(curWordIndex).setText(curText + appendChar);
+        String finalText = curText + appendChar;
+
+        String searchResultText = inputPredictor.getPrediction(finalText, 0);
+        System.out.println(String.format("%s %s", getAllText(), searchResultText));
+
+        textList.get(curWordIndex).setText(finalText);
         updateTextFlow();
     }
 

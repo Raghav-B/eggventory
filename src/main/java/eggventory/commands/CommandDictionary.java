@@ -7,15 +7,14 @@ import javafx.util.Pair;
 public class CommandDictionary {
 
     // ArrayList of Pairs of format (commands, arguments)
-    private static ArrayList<Pair<String, String>> commandDict = new ArrayList<>();
+    private ArrayList<Pair<String, String>> commandDict = new ArrayList<>();
 
     public CommandDictionary() {
         // Add Commands
         commandDict.add(new Pair<>("add stock", "<Stock Type> <Stock Code> <Quantity> <Description>"));
         commandDict.add(new Pair<>("add stocktype", "<Stock Type>"));
         commandDict.add(new Pair<>("add person", "<Matric No.> <Name>"));
-        //commandDict.add(new ArrayList<>(Arrays.asList("add", "template",
-        //        "<Template Name>")));
+        commandDict.add(new Pair<>("add template", "<Template Name>"));
 
         // Delete Commands
         commandDict.add(new Pair<>("delete stock", "<Stock Code>"));
@@ -53,7 +52,9 @@ public class CommandDictionary {
      * Takes in a command query and returns the full command that might match what
      * has been input so far.
      * @param query Input command to search matches for.
-     * @return Returns ArrayList of all commands that match
+     * @return Returns ArrayList of all commands that match.
+     *         Returns exactly one
+     *         Returns an empty ArrayList if no matches have been found.
      */
     public ArrayList<String> searchDictCommands(String query) {
         ArrayList<String> curSearch = new ArrayList<>();
@@ -63,6 +64,7 @@ public class CommandDictionary {
             // Checking if current Dictionary key matches what
             // the user has entered so far.
             if (commandDict.get(i).getKey().startsWith(query)) {
+                //System.out.println("Detected");
                 curSearch.add(commandDict.get(i).getKey());
             }
         }
@@ -75,6 +77,8 @@ public class CommandDictionary {
      * Precondition: Expects command String to be a completely valid command.
      * @param command Valid command String
      * @return ArrayList of all possible arguments that match the entered command.
+     *         Returns an empty ArrayList if no matches have been found.
+     *         Returns
      */
     public ArrayList<String> searchDictArguments(String command) {
         ArrayList<String> curSearch = new ArrayList<>();
@@ -85,6 +89,7 @@ public class CommandDictionary {
             }
         }
 
+        // Returns an empty ArrayList if no match has been found.
         return curSearch;
     }
 }

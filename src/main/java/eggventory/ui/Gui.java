@@ -1,5 +1,3 @@
-//@@author Raghav-B
-
 package eggventory.ui;
 
 import eggventory.StockList;
@@ -19,6 +17,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+//@@author: Raghav-B
 /**
  * This is a controller class used to control the Gui.fxml from the entry point for
  * our application, the Eggventory class. Inherits most of its functionality from Cli
