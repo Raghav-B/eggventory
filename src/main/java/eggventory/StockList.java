@@ -268,4 +268,36 @@ public class StockList {
         return details.toString();
     }
 
+    /**
+     * Returns ArrayList of all stocks contained by StockList to be read by
+     * GUI table. Requires table title to be created as the 1st row of ArrayList and
+     * headers to be created as the 2nd row of the ArrayList.
+     * @return ArrayList of all stocks containing data on StockType, StockCode,
+     * Quantity & Description, etc..
+     */
+    public ArrayList<ArrayList<String>> getTableFormat() {
+        ArrayList<ArrayList<String>> tableFormat = new ArrayList<>();
+
+        // Remember that 0-th row only has one element, the title of the
+        // table to be printed.
+        ArrayList<String> tableTitle = new ArrayList<>();
+        tableTitle.add("Stock List");
+
+        // Ensure that number of columns is consistent with columns
+        // created using Stock.getTableFormat()
+        ArrayList<String> columnHeaders = new ArrayList<>();
+        columnHeaders.add("Stock Type");
+        columnHeaders.add("Stock Code");
+        columnHeaders.add("Quantity");
+        columnHeaders.add("Description");
+
+        // Adding all rows before returning
+        tableFormat.add(tableTitle);
+        tableFormat.add(columnHeaders);
+        for (StockType stockType : stockList) {
+            tableFormat.addAll(stockType.getTableFormat());
+        }
+        return tableFormat;
+    }
+
 }

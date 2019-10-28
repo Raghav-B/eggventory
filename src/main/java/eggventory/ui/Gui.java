@@ -1,20 +1,20 @@
 package eggventory.ui;
 
 import eggventory.StockList;
-import eggventory.items.Stock;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 //@@author Raghav-B
 /**
@@ -30,7 +30,7 @@ public class Gui extends Ui  {
     @FXML
     private TextArea outputField;
     @FXML
-    private TableView outputTable;
+    private TableView<ArrayList<String>> outputTable;
     @FXML
     private ScrollPane outputTableScroll;
 
@@ -54,6 +54,7 @@ public class Gui extends Ui  {
             }
 
             inputField = new InputTextBox(textFlow);
+            outputTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
             printIntro();
 
             // Event handler for UP and DOWN arrow keys.
@@ -133,28 +134,26 @@ public class Gui extends Ui  {
      * that it uses to redraw the entire table.
      * @param stockList Input StockList object to be used to draw the table.
      */
-    public void drawTable(StockList stockList) {
-        TableColumn<String, Stock> stockTypeCol = new TableColumn<>("Stock Type");
-        stockTypeCol.setCellValueFactory(new PropertyValueFactory<>("stockType"));
+    public void drawTable(StockList stockList) { // TODO: Change to master list...
+        ArrayList<ArrayList<String>> tableFormat = stockList.getTableFormat();
 
-        TableColumn<String, Stock> stockCodeCol = new TableColumn<>("Stock Code");
-        stockCodeCol.setCellValueFactory(new PropertyValueFactory<>("stockCode"));
-
-        TableColumn<Integer, Stock> quantityCol = new TableColumn<>("Quantity");
-        quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-        TableColumn<String, Stock> descriptionCol = new TableColumn<>("Description");
-        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        /*for (int i = 0; i < stockList.getStockQuantity(); i++) {
-            for (int i = 0; i < stockList.getStockType().getQuantity(); i++) {
-                outputTable.getItems().add(stockList.getStockType())
-            }
+        outputTable.getColumns().clear();
+        TableColumn mainColumn = new TableColumn(tableFormat.get(0).get(0));
+        outputTable.getColumns().add(mainColumn);
+        // Iterating through columns to setup all columns.
+        for (int i = 1; i < tableFormat.get(1).size(); i++) {
+            // Creating column with header
+            TableColumn<ArrayList<String>, String> column = new TableColumn<>(tableFormat.get(1).get(i));
+            // Assigning column to take row values from data stores in tableFormat ArrayList.
+            int finalI = i;
+            column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(cell.getValue().get(finalI)));
+            // Adding column to table to be visualized.
+            mainColumn.getColumns().add(column);
         }
-        // TODO: Can add more columns for loaned, lost, and minimum later...
-        */
 
-        outputTable.getColumns().removeAll();
-        outputTable.getColumns().addAll(stockTypeCol, stockCodeCol, quantityCol, descriptionCol);
+        // Adding data from tableFormat ArrayList
+        for (int i = 2; i < tableFormat.size(); i++) {
+            outputTable.getItems().add(tableFormat.get(i));
+        }
     }
 }

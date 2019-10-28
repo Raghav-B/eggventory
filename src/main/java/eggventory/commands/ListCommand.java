@@ -30,6 +30,7 @@ public class ListCommand extends Command {
             listString = list.toString(); //Should contain all the stockTypes already, need not iterate.
             output = listString;
             ui.print(output);
+            ui.drawTable(list);
 
         } else if (this.query.equals("stocktype")) { //list stocktype command
             String listString = "";
