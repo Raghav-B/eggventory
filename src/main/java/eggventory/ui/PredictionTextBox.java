@@ -69,10 +69,15 @@ public class PredictionTextBox {
      * Appends the searchText to the normalText.
      */
     public void acceptSearchText() {
+        if (inputPredictor.isCommandFound) {
+            return;
+        }
+
         String newText = normalText.getText() + searchText.getText();
         normalText.setText(newText);
         searchText.setText("");
 
+        inputPredictor.reset();
         String searchResultText = inputPredictor.getPrediction(newText, 0);
         searchText.setText(searchResultText);
 

@@ -61,12 +61,14 @@ public class Gui extends Ui  {
             // Event handler for UP and DOWN arrow keys.
             stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.UP) {
-                    System.out.println("UP");
-                    // Predictive search code
+                    if (inputField.getAllText().equals("")) {
+                        return;
+                    }
                     inputField.appendText("", -1);
                 } else if (keyEvent.getCode() == KeyCode.DOWN) {
-                    System.out.println("DOWN");
-                    // Predictive search code
+                    if (inputField.getAllText().equals("")) {
+                        return;
+                    }
                     inputField.appendText("", 1);
                 }
             });

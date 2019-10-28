@@ -1,7 +1,6 @@
 package eggventory.ui;
 
 import eggventory.commands.CommandDictionary;
-import eggventory.exceptions.BadInputException;
 import java.util.ArrayList;
 
 //@@author Raghav-B
@@ -11,9 +10,8 @@ public class InputPredictor {
     // Stores all results that match the current prediction.
     private static ArrayList<String> curSearch;
     private int curSearchIndex = 0; // Used to iterate through curSearch
-    private boolean isCommandFound = false;
+    public boolean isCommandFound = false;
     private String foundCommand = "";
-    private String commandArguments = "";
 
     /**
      * Initialize current prediction for user's input String. Initializes the
@@ -30,7 +28,6 @@ public class InputPredictor {
         curSearchIndex = 0;
         isCommandFound = false;
         foundCommand = "";
-        commandArguments = "";
     }
 
     /**
@@ -42,49 +39,25 @@ public class InputPredictor {
      * @return Returns requested String that matches prediction.
      */
     public String getPrediction(String query, int direction) {
-        String remainString = getCommandPrediction(query, direction);
+        String remainString = "";
+
+        if (isCommandFound) {
+            if (query.length() > foundCommand.length()) {
+                remainString = argumentPredictionHandler(query, direction);
+            } else {
+                System.out.println("Reset called");
+                reset();
+                remainString = commandPredictionHandler(query, direction);
+            }
+        } else {
+            remainString = commandPredictionHandler(query, direction);
+        }
+
         return remainString;
     }
 
-    private String getCommandPrediction(String query, int direction) {
-        String remainString = "";
-
-        if (isCommandFound && query.length() > foundCommand.length()) {
-            String inputArgs = query.substring(foundCommand.length());
-
-            // Check if user has not properly entered a space after typing command.
-            if (inputArgs.charAt(0) != ' ') {
-                return "";
-            }
-            inputArgs = inputArgs.substring(1); // Make String ""
-
-            remainString = getArgumentPrediction(foundCommand, direction);
-            String[] remainStringArr = remainString.split("(?<=>) (?=<)");
-            String[] inputArgsArr = inputArgs.split(" ");
-            StringBuilder sb = new StringBuilder();
-
-            int argsToExclude = inputArgsArr.length;
-            if (inputArgsArr[0].equals("")) { // When String is only "";
-                argsToExclude = 0;
-                //sb.append(" ");
-            } else {
-                if (inputArgs.charAt(inputArgs.length() - 1) != ' ') {
-                    sb.append(" ");
-                }
-            }
-            for (int i = argsToExclude; i < remainStringArr.length; i++) {
-                sb.append(remainStringArr[i]);
-                sb.append(" ");
-            }
-            remainString = sb.toString();
-
-            System.out.println(remainString);
-
-            return remainString;
-        } else {
-            reset();
-        }
-
+    private String commandPredictionHandler(String query, int direction) {
+        String returnString = "";
         curSearch = commandDictionary.searchDictCommands(query);
 
         // Checking if no result is found from search. If so, we return
@@ -94,7 +67,6 @@ public class InputPredictor {
         }
 
         curSearchIndex = moduloIndex(direction);
-
         /* Checks if the user has completed a Command entry by comparing
         the input length with the returned Command length. This works because it is already
         guaranteed that curSearch has a valid Command available because of the curSearch.empty()
@@ -110,13 +82,47 @@ public class InputPredictor {
             isCommandFound = true;
             curSearchIndex = 0;
 
-            remainString = " " + getArgumentPrediction(query, direction);
+            returnString = " " + getArgumentPrediction(query, direction);
         }
         else {
-            remainString = getRemainString(query, curSearch.get(curSearchIndex));
+            returnString = getRemainString(query, curSearch.get(curSearchIndex));
         }
 
-        return remainString;
+        return returnString;
+    }
+
+    private String argumentPredictionHandler(String command, int direction) {
+        String returnString = "";
+        String inputArgs = command.substring(foundCommand.length());
+
+        // Check if user has not properly entered a space after typing command.
+        if (inputArgs.charAt(0) != ' ') {
+            reset();
+            return commandPredictionHandler(command, direction);
+            //return "";
+        }
+        inputArgs = inputArgs.substring(1); // Make String ""
+
+        returnString = getArgumentPrediction(foundCommand, direction);
+        String[] remainStringArr = returnString.split("(?<=>) (?=<)");
+        String[] inputArgsArr = inputArgs.split(" ");
+        StringBuilder sb = new StringBuilder();
+
+        int argsToExclude = inputArgsArr.length;
+        if (inputArgsArr[0].equals("")) { // When String is only "";
+            argsToExclude = 0;
+        } else {
+            if (inputArgs.charAt(inputArgs.length() - 1) != ' ') {
+                sb.append(" ");
+            }
+        }
+        for (int i = argsToExclude; i < remainStringArr.length; i++) {
+            sb.append(remainStringArr[i]);
+            sb.append(" ");
+        }
+        returnString = sb.toString();
+
+        return returnString;
     }
 
     private String getArgumentPrediction(String command, int direction) {
@@ -126,9 +132,18 @@ public class InputPredictor {
 
         curSearchIndex = moduloIndex(direction);
 
+        returnString = curSearch.get(curSearchIndex);
+        if (returnString == null) {
+            return "";
+        }
         return curSearch.get(curSearchIndex);
     }
 
+    /**
+     *
+     * @param direction
+     * @return
+     */
     private int moduloIndex(int direction) {
         if (direction == -1) {
             curSearchIndex -= 1;

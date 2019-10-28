@@ -28,8 +28,8 @@ public class CommandDictionary {
 
         // List Commands
         commandDict.add(new Pair<>("list stock", null));
-        commandDict.add(new Pair<>("list stocktypes", null));
         commandDict.add(new Pair<>("list stocktype", "<Stock Type>"));
+        commandDict.add(new Pair<>("list stocktypes", null));
         commandDict.add(new Pair<>("list loan", null));
         commandDict.add(new Pair<>("list template", null));
         commandDict.add(new Pair<>("list lost", null));
