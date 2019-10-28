@@ -209,19 +209,19 @@ public class StockList {
      * @return The string of the stocklist whose stocktype matches query.
      */
     public String findStock(String query) {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         boolean found = false;
         for (StockType stocktype : stockList) {
             if (stocktype.getName().equals(query)) {
-                if (found == false) {
-                    ret += query + " INVENTORY\n";
-                    ret += "------------------------\n";
+                if (!found) {
+                    ret.append(query).append(" INVENTORY\n");
+                    ret.append("------------------------\n");
                     found = true;
                 }
-                ret += stocktype.toString() + "\n";
+                ret.append(stocktype.toString()).append("\n");
             }
         }
-        return ret;
+        return ret.toString();
     }
 
     /**
@@ -229,13 +229,13 @@ public class StockList {
      * @return The string of all the stocktypes
      */
     public String toStocktypeString() {
-        String ret = "";
-        ret += "QUERY INVENTORY\n";
+        StringBuilder ret = new StringBuilder();
+        ret.append("QUERY INVENTORY\n");
         for (StockType stocktype : stockList) {
-            ret += "------------------------\n";
-            ret += stocktype.getName() + "\n";
+            ret.append("------------------------\n");
+            ret.append(stocktype.getName()).append("\n");
         }
-        return ret;
+        return ret.toString();
     }
 
     /**
@@ -243,15 +243,15 @@ public class StockList {
      * @return The string of the stocklist.
      */
     public String toString() {
-        String ret = "";
-        ret += "CURRENT INVENTORY\n";
+        StringBuilder ret = new StringBuilder();
+        ret.append("CURRENT INVENTORY\n");
 
         for (StockType stocktype : stockList) {
-            ret += "------------------------\n";
-            ret += stocktype.toString() + "\n";
+            ret.append("------------------------\n");
+            ret.append(stocktype.toString()).append("\n");
         }
 
-        return ret;
+        return ret.toString();
     }
 
     /**
@@ -259,13 +259,13 @@ public class StockList {
      * @return The String that will be directly saved into file.
      */
     public String saveDetailsString() {
-        String details = "";
+        StringBuilder details = new StringBuilder();
 
         for (StockType stocktype : stockList) {
-            details += stocktype.saveDetailsString() + "\n";
+            details.append(stocktype.saveDetailsString()).append("\n");
         }
 
-        return details;
+        return details.toString();
     }
 
 }

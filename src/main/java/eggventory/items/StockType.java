@@ -234,14 +234,14 @@ public class StockType {
      * @return A string list of all the stock objects and their details.
      */
     public String toString() {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         int i = 1;
 
         for (Stock stock : stocks) {
-            ret += String.format("%d. ", i++) + stock.toString() + "\n";
+            ret.append(String.format("%d. ", i++)).append(stock.toString()).append("\n");
         }
 
-        return ret;
+        return ret.toString();
 
     }
 
@@ -250,11 +250,11 @@ public class StockType {
      * @return The String of all Stock objects.
      */
     public String saveDetailsString() {
-        String details = "";
+        StringBuilder details = new StringBuilder();
         for (Stock stock : stocks) {
-            details += stock.saveDetailsString() + "\n";
+            details.append(stock.saveDetailsString()).append("\n");
         }
-        return details;
+        return details.toString();
     }
 
 }
