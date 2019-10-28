@@ -3,6 +3,7 @@ package eggventory.ui;
 import eggventory.StockList;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
@@ -13,6 +14,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -132,28 +135,30 @@ public class Gui extends Ui  {
     /**
      * Can be called to redraw the table output as and when needed. Takes in a StockList object
      * that it uses to redraw the entire table.
-     * @param stockList Input StockList object to be used to draw the table.
+     * @param tableStruct Structure that holds all data to be displayed.
      */
-    public void drawTable(StockList stockList) { // TODO: Change to master list...
-        ArrayList<ArrayList<String>> tableFormat = stockList.getTableFormat();
-
+    public void drawTable(TableStruct tableStruct) { // TODO: Change to master list...
         outputTable.getColumns().clear();
-        TableColumn mainColumn = new TableColumn(tableFormat.get(0).get(0));
+        outputTable.getItems().clear();
+        outputTable.refresh();
+        TableColumn mainColumn = new TableColumn(tableStruct.getTableName());
         outputTable.getColumns().add(mainColumn);
+
         // Iterating through columns to setup all columns.
-        for (int i = 1; i < tableFormat.get(1).size(); i++) {
+        for (int i = 0; i < tableStruct.getTableColumnSize(); i++) {
             // Creating column with header
-            TableColumn<ArrayList<String>, String> column = new TableColumn<>(tableFormat.get(1).get(i));
+            TableColumn<ArrayList<String>, String> column = new TableColumn<>(tableStruct.getColumnName(i));
             // Assigning column to take row values from data stores in tableFormat ArrayList.
             int finalI = i;
             column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(cell.getValue().get(finalI)));
+
             // Adding column to table to be visualized.
             mainColumn.getColumns().add(column);
         }
 
-        // Adding data from tableFormat ArrayList
-        for (int i = 2; i < tableFormat.size(); i++) {
-            outputTable.getItems().add(tableFormat.get(i));
+        // Adding data from tableStruct to outputTable row by row.
+        for (int i = 0; i < tableStruct.getTableRowSize(); i++) {
+            outputTable.getItems().add(tableStruct.getRowData(i));
         }
     }
 }

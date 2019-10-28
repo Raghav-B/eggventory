@@ -3,8 +3,10 @@ package eggventory;
 import eggventory.enums.StockProperty;
 import eggventory.items.Stock;
 import eggventory.items.StockType;
+import eggventory.ui.TableStruct;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 //@@author Deculsion
 public class StockList {
@@ -268,36 +270,62 @@ public class StockList {
         return details.toString();
     }
 
+    //@@author Raghav-B
     /**
-     * Returns ArrayList of all stocks contained by StockList to be read by
-     * GUI table. Requires table title to be created as the 1st row of ArrayList and
-     * headers to be created as the 2nd row of the ArrayList.
-     * @return ArrayList of all stocks containing data on StockType, StockCode,
-     * Quantity & Description, etc..
+     * Returns TableStruct containing data on all stocks contained by StockList. This
+     * TableStruct is read by the GUI table.
+     * @return TableStruct with data.
      */
-    public ArrayList<ArrayList<String>> getTableFormat() {
-        ArrayList<ArrayList<String>> tableFormat = new ArrayList<>();
+    public TableStruct getAllStocksStruct() {
+        TableStruct tableStruct = new TableStruct("Stock List");
+        tableStruct.setTableColumns("Stock Type", "Stock Code", "Quantity", "Description");
 
-        // Remember that 0-th row only has one element, the title of the
-        // table to be printed.
-        ArrayList<String> tableTitle = new ArrayList<>();
-        tableTitle.add("Stock List");
-
-        // Ensure that number of columns is consistent with columns
-        // created using Stock.getTableFormat()
-        ArrayList<String> columnHeaders = new ArrayList<>();
-        columnHeaders.add("Stock Type");
-        columnHeaders.add("Stock Code");
-        columnHeaders.add("Quantity");
-        columnHeaders.add("Description");
-
-        // Adding all rows before returning
-        tableFormat.add(tableTitle);
-        tableFormat.add(columnHeaders);
+        ArrayList<ArrayList<String>> dataArray = new ArrayList<>();
         for (StockType stockType : stockList) {
-            tableFormat.addAll(stockType.getTableFormat());
+            dataArray.addAll(stockType.getDataAsArray());
         }
-        return tableFormat;
+        tableStruct.setTableData(dataArray);
+
+        return tableStruct;
     }
 
+    /**
+     * Returns TableStruct containing data on all stocktypes contained by StockList. This
+     * TableStruct is read by the GUI table.
+     * @return TableStruct with data.
+     */
+    public TableStruct getAllStockTypesStruct() {
+        TableStruct tableStruct = new TableStruct("Stocktype List");
+        tableStruct.setTableColumns("Stock Type");
+
+        ArrayList<ArrayList<String>> dataArray = new ArrayList<>();
+        for (StockType stockType : stockList) {
+            dataArray.add(new ArrayList<>(Collections.singletonList(stockType.getName())));
+        }
+        tableStruct.setTableData(dataArray);
+
+        return tableStruct;
+    }
+
+    /**
+     * Returns TableStruct containing data on all stocks under a specific stocktype. This
+     * TableStruct is read by the GUI table.
+     * @param stockTypeName Name of stocktype under which all stocks will be listed.
+     * @return TableStruct with data.
+     */
+    public TableStruct getAllStocksInStockTypeStruct(String stockTypeName) {
+        TableStruct tableStruct = new TableStruct("Stock List: " + stockTypeName);
+        tableStruct.setTableColumns("Stock Type", "Stock Code", "Quantity", "Description");
+
+        ArrayList<ArrayList<String>> dataArray = new ArrayList<>();
+        for (StockType stockType : stockList) {
+            if (stockType.getName().equals(stockTypeName)) {
+                dataArray.addAll(stockType.getDataAsArray());
+            }
+        }
+        tableStruct.setTableData(dataArray);
+
+        return tableStruct;
+    }
+    //@@author
 }

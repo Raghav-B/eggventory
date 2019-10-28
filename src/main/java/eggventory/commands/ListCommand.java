@@ -30,13 +30,16 @@ public class ListCommand extends Command {
             listString = list.toString(); //Should contain all the stockTypes already, need not iterate.
             output = listString;
             ui.print(output);
-            ui.drawTable(list);
+            // Drawing stock data in GUI table.
+            ui.drawTable(list.getAllStocksStruct());
 
         } else if (this.query.equals("stocktype")) { //list stocktype command
             String listString = "";
             listString = list.toStocktypeString(); //Should contain all the stockTypes already, need not iterate.
             output = listString;
             ui.print(output);
+            // Drawing stock data in GUI table.
+            ui.drawTable(list.getAllStockTypesStruct());
 
         } else { // list <stocktype> command
             String listString = "";
@@ -46,6 +49,8 @@ public class ListCommand extends Command {
                 ui.print("Invalid command: No such stocktype. list stock / list stocktype/ list <stocktype>");
             } else {
                 ui.print(output);
+                // Drawing data on stocks under specific stocktype in GUI table.
+                ui.drawTable(list.getAllStocksInStockTypeStruct(this.query));
             }
         }
         return output;

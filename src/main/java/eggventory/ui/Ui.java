@@ -74,6 +74,6 @@ public abstract class Ui {
         return "____________________________________________________________";
     }
 
-    public void drawTable(StockList stockList) {
+    public void drawTable(TableStruct tableStruct) {
     }
 }

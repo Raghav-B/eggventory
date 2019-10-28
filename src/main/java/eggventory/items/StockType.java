@@ -257,16 +257,21 @@ public class StockType {
         return details.toString();
     }
 
+    //@@author Raghav-B
     /**
      * Returns ArrayList of data of all stocks within this stocktype to be read
      * by GUI table.
      * @return ArrayList of data of stocks in this stocktype.
      */
-    public ArrayList<ArrayList<String>> getTableFormat() {
-        ArrayList<ArrayList<String>> tableFormat = new ArrayList<>();
+    public ArrayList<ArrayList<String>> getDataAsArray() {
+        ArrayList<ArrayList<String>> dataArray = new ArrayList<>();
         for (Stock stock : stocks) {
-            tableFormat.add(stock.getTableFormat());
+            dataArray.add(stock.getDataAsArray());
         }
-        return tableFormat;
+        return dataArray;
     }
+
+
+
+    //@@author
 }
