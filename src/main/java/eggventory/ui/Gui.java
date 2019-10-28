@@ -34,14 +34,12 @@ public class Gui extends Ui  {
     @FXML
     private ScrollPane outputTableScroll;
 
-    private PredictionTextBox inputField;
-
-    public Gui() {
-    }
+    private InputTextBox inputField;
 
     /**
-     * Starts the REPL loop and creates the JavaFX window.
-     * @param runMethod Function passed in for REPL loop.
+     * Starts the REPL loop and creates the JavaFX window along with other JavaFX controls
+     * and event handlers.
+     * @param runMethod Function passed in for REPL loop that is called by some event handlers.
      */
     public void initialize(Runnable runMethod) {
         Platform.startup(() -> {
@@ -55,18 +53,22 @@ public class Gui extends Ui  {
                 e.printStackTrace();
             }
 
-            inputField = new PredictionTextBox(textFlow);
+            inputField = new InputTextBox(textFlow);
             printIntro();
 
             // Event handler for UP and DOWN arrow keys.
             stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.UP) {
                     if (inputField.getAllText().equals("")) {
+                        // Can't cycle through command possibilities when
+                        // inputField is empty.
                         return;
                     }
                     inputField.appendText("", -1);
                 } else if (keyEvent.getCode() == KeyCode.DOWN) {
                     if (inputField.getAllText().equals("")) {
+                        // Can't cycle through command possibilities when
+                        // inputField is empty.
                         return;
                     }
                     inputField.appendText("", 1);
@@ -78,6 +80,8 @@ public class Gui extends Ui  {
                 switch (keyEvent.getCharacter()) {
                 case "\r": // ENTER
                     if (inputField.getAllText().equals("")) {
+                        // No input is parsed if there is no text input
+                        // in inputField.
                         break;
                     }
                     runMethod.run();
@@ -98,7 +102,7 @@ public class Gui extends Ui  {
     }
 
     /**
-     * Reads in user input from inputField TextBox and outputs to outputField
+     * Reads in user input from inputField and outputs to outputField
      * TextArea.
      * @return Returns String to be used by Parser in REPL loop.
      */

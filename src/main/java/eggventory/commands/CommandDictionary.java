@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 
 //@@author Raghav-B
+/**
+ * Contains all possible valid commands that can be used by the user.
+ */
 public class CommandDictionary {
 
     // ArrayList of Pairs of format (commands, arguments)
@@ -46,6 +49,9 @@ public class CommandDictionary {
 
         // Lost Commands
         commandDict.add(new Pair<>("lost", "<Stock Code> <Quantity>"));
+
+        // Bye Commands
+        commandDict.add(new Pair<>("bye", null));
     }
 
     /**
@@ -69,6 +75,7 @@ public class CommandDictionary {
             }
         }
 
+        // Returns an empty ArrayList if no match has been found.
         return curSearch;
     }
 
