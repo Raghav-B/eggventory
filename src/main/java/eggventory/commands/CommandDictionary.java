@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 
 //@@author Raghav-B
-/**
- * Contains all possible valid commands that can be used by the user.
- */
+
 public class CommandDictionary {
 
     // ArrayList of Pairs of format (commands, arguments)
     private ArrayList<Pair<String, String>> commandDict = new ArrayList<>();
 
+    /**
+     * Contains all possible valid commands that can be used by the user. Can add new commands here
+     * and they will be automatically used by the predictive search.
+     */
     public CommandDictionary() {
         // Add Commands
         commandDict.add(new Pair<>("add stock", "<Stock Type> <Stock Code> <Quantity> <Description>"));

@@ -36,7 +36,7 @@ public class InputPredictor {
     /**
      * Returns rest of String that matches prediction. Has two states:
      *  1. Searching for command, e.g. add stock
-     *  2. Searching for arguments for said command, e.g. <Stock Type> <Stock Code> etc..
+     *  2. Searching for arguments for said command, e.g. < Stock Type > < Stock Code > etc..
      * @param query User's input so far that will be used for prediction.
      * @param direction -1 = previous result.
      *                  0 = current result.
@@ -53,10 +53,9 @@ public class InputPredictor {
             // the case.
             if (query.length() > foundCommand.length()) {
                 remainString = argumentPredictionHandler(query, direction);
-            }
-            // Else, the user input is invalid, or the user is inputting a longer
-            // command. E.g. from `add stock` to `add stocktype`
-            else {
+            } else {
+                // Else, the user input is invalid, or the user is inputting a longer
+                // command. E.g. from `add stock` to `add stocktype`
                 reset(); // Reset because user could be inputting another command.
                 remainString = commandPredictionHandler(query, direction); // Try to predict new input.
                 // remainString will be "" if user input is invalid and no prediction could be found.
@@ -109,8 +108,7 @@ public class InputPredictor {
 
             // Appends blank space to returned arguments so UX is more seamless.
             returnString = " " + getArgumentPrediction(query, direction);
-        }
-        else {
+        } else {
             // At this point, user input for command is still incomplete.
             returnString = getRemainCommand(query, curSearch.get(curSearchIndex));
         }
@@ -179,8 +177,7 @@ public class InputPredictor {
             if (curSearchIndex < 0) {
                 curSearchIndex = curSearch.size() - 1;
             }
-        }
-        else if (direction == 1) {
+        } else if (direction == 1) {
             curSearchIndex += 1;
             if (curSearchIndex >= curSearch.size()) {
                 curSearchIndex = 0;
