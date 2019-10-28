@@ -3,7 +3,6 @@ package eggventory.parsers;
 import eggventory.commands.Command;
 import eggventory.commands.FindCommand;
 import eggventory.commands.help.HelpCommand;
-import eggventory.commands.ListCommand;
 import eggventory.commands.ByeCommand;
 import eggventory.enums.CommandType;
 import eggventory.exceptions.BadInputException;
@@ -55,12 +54,12 @@ public class Parser {
         switch (inputArr[0]) {
         //Commands which are single words.
         case "list":
-            if (inputArr.length != 2) {
-                throw new BadInputException("Usage of list: list stock, list stocktype all or "
-                        + "list stocktype <Stock Type>");
+            if (inputArr.length <= 1) {
+                // TODO: Interface this with HELP feature or CommandDictionary.
+                throw new BadInputException("Usage of list: 'list stock', 'list stocktype all' or "
+                        + "'list stocktype <Stock Type>'");
             } else {
                 command = listParser.parse(inputArr[1]);
-                //command = new ListCommand(CommandType.LIST, inputArr[1]);
             }
             break;
         case "bye":
