@@ -58,6 +58,7 @@ public class Gui extends Ui  {
             inputField = new PredictionTextBox(textFlow);
             printIntro();
 
+            // Event handler for UP and DOWN arrow keys.
             stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.UP) {
                     System.out.println("UP");
@@ -67,12 +68,10 @@ public class Gui extends Ui  {
                     System.out.println("DOWN");
                     // Predictive search code
                     inputField.appendText("", 1);
-                } else {
-                    // Do nothing!
                 }
             });
 
-            // Event handler for pressing keys
+            // Event handler for all other keys.
             stage.addEventFilter(KeyEvent.KEY_TYPED, keyEvent ->  {
                 switch (keyEvent.getCharacter()) {
                 case "\r": // ENTER
@@ -81,14 +80,10 @@ public class Gui extends Ui  {
                     }
                     runMethod.run();
                     break;
-                //case " ": // SPACE
-                //    inputField.appendToWord(keyEvent.getCharacter());
-                //    break;
                 case "\b": // BACK_SPACE
                     inputField.removeFromWord();
                     break;
                 case "\t": // TAB
-                    // Do prediction search algo here.
                     inputField.acceptSearchText();
                     keyEvent.consume();
                     break;

@@ -12,7 +12,8 @@ public class InputPredictor {
     private static ArrayList<String> curSearch;
     private int curSearchIndex = 0; // Used to iterate through curSearch
     private boolean isCommandFound = false;
-    private String commandArguments;
+    private String foundCommand = "";
+    private String commandArguments = "";
 
     /**
      * Initialize current prediction for user's input String. Initializes the
@@ -21,13 +22,15 @@ public class InputPredictor {
      */
     public InputPredictor() {
         this.commandDictionary = new CommandDictionary();
-        curSearch = new ArrayList<>();
+        reset();
     }
 
     public void reset() {
         curSearch = new ArrayList<>();
         curSearchIndex = 0;
         isCommandFound = false;
+        foundCommand = "";
+        commandArguments = "";
     }
 
     /**
@@ -44,10 +47,6 @@ public class InputPredictor {
             remainString = commandArguments;
         } else {
             remainString = getCommandPrediction(query, direction);
-            //remainString = getArgumentPrediction(query, direction);
-
-            //String[] queryArr = query.split(" ");
-            //String[] remainStringArr = query.split(" ");
         }
         return remainString;
     }
@@ -55,19 +54,23 @@ public class InputPredictor {
     private String getCommandPrediction(String query, int direction) {
         String remainString = "";
         curSearch = commandDictionary.searchDictCommands(query);
-        //if (curSearch.isEmpty()) {
-        //    throw new BadInputException("No valid command could be found.");
-        //}
+
+        // Checking if no result is found from search. If so, we return
+        // a blank String, "".
+        if (curSearch.isEmpty()) {
+            return "";
+        }
 
         curSearchIndex = moduloIndex(direction);
 
-        try {
+        if (query.length() == curSearch.get(curSearchIndex).length()) {
+            System.out.println("Command completed");
+            //isCommandFound = true;
+            //curSearchIndex = 0;
+            //remainString = getArgumentPrediction(query, 0);
+            //commandArguments = remainString;
+        } else {
             remainString = getRemainString(query, curSearch.get(curSearchIndex));
-        } catch (IndexOutOfBoundsException e) {
-            isCommandFound = true;
-            curSearchIndex = 0;
-            remainString = getArgumentPrediction(query, 0);
-            commandArguments = remainString;
         }
 
         return remainString;
@@ -100,7 +103,7 @@ public class InputPredictor {
         return curSearchIndex;
     }
 
-    private String getRemainString(String query, String match) throws IndexOutOfBoundsException {
+    private String getRemainString(String query, String match) {
         String remainString = null;
         remainString = match.substring(query.length());
         return remainString;

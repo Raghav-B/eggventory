@@ -24,7 +24,12 @@ public class PredictionTextBox {
         this.inputPredictor = new InputPredictor();
     }
 
-    // Triggers when user types a character
+    /**
+     * Appends a character to normalText when a key is pressed.
+     * @param appendChar Character to append.
+     * @param searchDirection Only used when method is used for cycling through
+     *                        command search results.
+     */
     public void appendText(String appendChar, int searchDirection) {
         String curText = normalText.getText();
         String finalText = curText + appendChar;
@@ -36,9 +41,21 @@ public class PredictionTextBox {
         textFlow.getChildren().setAll(normalText, searchText);
     }
 
-    // Triggers when user presses backspace
+    /**
+     * Deletes tail character from normalText when backspace is pressed.
+     */
     public void removeFromWord() {
         String curText = normalText.getText();
+
+        if (curText.length() - 1 <= 0) {
+            inputPredictor.reset();
+            normalText.setText("");
+            searchText.setText("");
+
+            textFlow.getChildren().setAll(normalText, searchText);
+            return;
+        }
+
         String newText = curText.substring(0, curText.length() - 1);
         normalText.setText(newText);
 
@@ -48,6 +65,9 @@ public class PredictionTextBox {
         textFlow.getChildren().setAll(normalText, searchText);
     }
 
+    /**
+     * Appends the searchText to the normalText.
+     */
     public void acceptSearchText() {
         String newText = normalText.getText() + searchText.getText();
         normalText.setText(newText);
@@ -56,13 +76,23 @@ public class PredictionTextBox {
         textFlow.getChildren().setAll(normalText, searchText);
     }
 
+    /**
+     * Gets all normalText.
+     * @return all normalText as a String.
+     */
     public String getAllText() {
         return normalText.getText();
     }
 
+    /**
+     * Clears both normalText and searchText.
+     */
     public void clearAllText() {
         normalText.setText("");
         searchText.setText("");
         textFlow.getChildren().setAll(normalText, searchText);
+
+        // Resets internal search parameters.
+        inputPredictor.reset();
     }
 }
