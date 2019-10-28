@@ -19,7 +19,7 @@ edit
 
 *list
     list stock
-    list stocktypes
+    list stocktype all
     list stocktype <Stock Type>
     list loan
     list template
