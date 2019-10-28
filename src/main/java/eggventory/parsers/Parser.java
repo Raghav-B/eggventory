@@ -18,6 +18,7 @@ public class Parser {
     private ParseAdd addParser;
     private ParseDelete deleteParser;
     private ParseEdit editParser;
+    private ParseList listParser;
 
     /**
      * Parser object contains submodules for parsing commands with many different options.
@@ -26,6 +27,7 @@ public class Parser {
         addParser = new ParseAdd();
         deleteParser = new ParseDelete();
         editParser = new ParseEdit();
+        listParser = new ParseList();
     }
 
     /**
@@ -54,9 +56,11 @@ public class Parser {
         //Commands which are single words.
         case "list":
             if (inputArr.length != 2) {
-                throw new BadInputException("Usage of list: list stock, list stocktypes or list <stocktype>");
+                throw new BadInputException("Usage of list: list stock, list stocktype all or "
+                        + "list stocktype <Stock Type>");
             } else {
-                command = new ListCommand(CommandType.LIST, inputArr[1]);
+                command = listParser.parse(inputArr[1]);
+                //command = new ListCommand(CommandType.LIST, inputArr[1]);
             }
             break;
         case "bye":
