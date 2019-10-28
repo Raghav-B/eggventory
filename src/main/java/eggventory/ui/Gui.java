@@ -152,7 +152,8 @@ public class Gui extends Ui  {
             // Assigning column to take row values from data stores in tableFormat ArrayList.
             int finalI = i;
             if (finalI == 0) {
-                column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(outputTable.getItems().indexOf(cell.getValue()) + 1));
+                column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(
+                        outputTable.getItems().indexOf(cell.getValue()) + 1));
             } else {
                 column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(cell.getValue().get(finalI - 1)));
             }

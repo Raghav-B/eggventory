@@ -8,11 +8,18 @@ import eggventory.enums.CommandType;
 import eggventory.exceptions.BadInputException;
 import eggventory.exceptions.InsufficientInfoException;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 //@@author cyanoei
 /**
  * Interprets command strings by the user, and converts them to command objects that can be executed.
  */
 public class Parser {
+
+    private static HashSet<String> reservedNames = new HashSet<>(Arrays.asList(
+            "all" // Add more when needed
+    ));
 
     private ParseAdd addParser;
     private ParseDelete deleteParser;
@@ -27,6 +34,16 @@ public class Parser {
         deleteParser = new ParseDelete();
         editParser = new ParseEdit();
         listParser = new ParseList();
+    }
+
+    /**
+     * Checks if input String is an invalid String based on the reserved keywords in the
+     * reservedNames HashSet.
+     * @param input input String to check.
+     * @return True if invalid, false otherwise.
+     */
+    public static boolean isReserved(String input) {
+        return reservedNames.contains(input);
     }
 
     /**
