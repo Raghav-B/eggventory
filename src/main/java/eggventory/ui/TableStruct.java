@@ -2,6 +2,7 @@ package eggventory.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 //@@author Raghav-B
 public class TableStruct {
@@ -16,6 +17,7 @@ public class TableStruct {
      */
     public TableStruct(String tableName) {
         this.tableName = tableName;
+        this.tableColumns = new ArrayList<>();
     }
 
     /**
@@ -24,7 +26,8 @@ public class TableStruct {
      * @param tableColumns Varargs for columns to create.
      */
     public void setTableColumns(String... tableColumns) {
-        this.tableColumns = new ArrayList<>(Arrays.asList(tableColumns));
+        this.tableColumns.add("No.");
+        this.tableColumns.addAll(Arrays.asList(tableColumns));
     }
 
     /**

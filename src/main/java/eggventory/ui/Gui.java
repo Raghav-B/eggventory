@@ -145,12 +145,17 @@ public class Gui extends Ui  {
         outputTable.getColumns().add(mainColumn);
 
         // Iterating through columns to setup all columns.
+        System.out.println(tableStruct.getTableColumnSize());
         for (int i = 0; i < tableStruct.getTableColumnSize(); i++) {
             // Creating column with header
             TableColumn<ArrayList<String>, String> column = new TableColumn<>(tableStruct.getColumnName(i));
             // Assigning column to take row values from data stores in tableFormat ArrayList.
             int finalI = i;
-            column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(cell.getValue().get(finalI)));
+            if (finalI == 0) {
+                column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(outputTable.getItems().indexOf(cell.getValue()) + 1));
+            } else {
+                column.setCellValueFactory(cell -> new ReadOnlyObjectWrapper(cell.getValue().get(finalI - 1)));
+            }
 
             // Adding column to table to be visualized.
             mainColumn.getColumns().add(column);

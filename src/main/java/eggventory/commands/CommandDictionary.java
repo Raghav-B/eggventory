@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 
 //@@author Raghav-B
-
 public class CommandDictionary {
 
     // ArrayList of Pairs of format (commands, arguments)
