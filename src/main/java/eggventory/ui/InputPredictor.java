@@ -42,17 +42,49 @@ public class InputPredictor {
      * @return Returns requested String that matches prediction.
      */
     public String getPrediction(String query, int direction) {
-        String remainString = "";
-        if (isCommandFound) {
-            remainString = commandArguments;
-        } else {
-            remainString = getCommandPrediction(query, direction);
-        }
+        String remainString = getCommandPrediction(query, direction);
         return remainString;
     }
 
     private String getCommandPrediction(String query, int direction) {
         String remainString = "";
+
+        if (isCommandFound && query.length() > foundCommand.length()) {
+            String inputArgs = query.substring(foundCommand.length());
+
+            // Check if user has not properly entered a space after typing command.
+            if (inputArgs.charAt(0) != ' ') {
+                return "";
+            }
+            inputArgs = inputArgs.substring(1); // Make String ""
+
+            remainString = getArgumentPrediction(foundCommand, direction);
+            String[] remainStringArr = remainString.split("(?<=>) (?=<)");
+            String[] inputArgsArr = inputArgs.split(" ");
+            StringBuilder sb = new StringBuilder();
+
+            int argsToExclude = inputArgsArr.length;
+            if (inputArgsArr[0].equals("")) { // When String is only "";
+                argsToExclude = 0;
+                //sb.append(" ");
+            } else {
+                if (inputArgs.charAt(inputArgs.length() - 1) != ' ') {
+                    sb.append(" ");
+                }
+            }
+            for (int i = argsToExclude; i < remainStringArr.length; i++) {
+                sb.append(remainStringArr[i]);
+                sb.append(" ");
+            }
+            remainString = sb.toString();
+
+            System.out.println(remainString);
+
+            return remainString;
+        } else {
+            reset();
+        }
+
         curSearch = commandDictionary.searchDictCommands(query);
 
         // Checking if no result is found from search. If so, we return
@@ -63,13 +95,24 @@ public class InputPredictor {
 
         curSearchIndex = moduloIndex(direction);
 
+        /* Checks if the user has completed a Command entry by comparing
+        the input length with the returned Command length. This works because it is already
+        guaranteed that curSearch has a valid Command available because of the curSearch.empty()
+        check above.
+        */
         if (query.length() == curSearch.get(curSearchIndex).length()) {
-            System.out.println("Command completed");
-            //isCommandFound = true;
-            //curSearchIndex = 0;
-            //remainString = getArgumentPrediction(query, 0);
-            //commandArguments = remainString;
-        } else {
+            /* Once we're at this point, we will only be interested in the remaining Arguments
+            corresponding to the entered Command.
+            */
+
+            // Storing query so that we can search for it to get the corresponding arguments.
+            foundCommand = query;
+            isCommandFound = true;
+            curSearchIndex = 0;
+
+            remainString = " " + getArgumentPrediction(query, direction);
+        }
+        else {
             remainString = getRemainString(query, curSearch.get(curSearchIndex));
         }
 

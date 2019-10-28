@@ -73,6 +73,9 @@ public class PredictionTextBox {
         normalText.setText(newText);
         searchText.setText("");
 
+        String searchResultText = inputPredictor.getPrediction(newText, 0);
+        searchText.setText(searchResultText);
+
         textFlow.getChildren().setAll(normalText, searchText);
     }
 
