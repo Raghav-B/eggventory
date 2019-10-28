@@ -90,6 +90,10 @@ public class Gui extends Ui  {
                     inputField.removeFromWord();
                     break;
                 case "\t": // TAB
+                    if (inputField.getAllText().equals("")) {
+                        // Prevents autocompletion when user has not even input anything.
+                        return;
+                    }
                     inputField.acceptSearchText();
                     keyEvent.consume();
                     break;
