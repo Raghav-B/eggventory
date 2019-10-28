@@ -48,7 +48,7 @@ public class Gui extends Ui  {
         Platform.startup(() -> {
             Stage stage = new Stage();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Gui.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gui.fxml"));
                 fxmlLoader.setController(this);
                 stage = fxmlLoader.load();
                 stage.show();
