@@ -10,6 +10,7 @@ public class PredictionTextBox {
 
     private TextFlow textFlow;
     private Text normalText;
+    private Text caretText;
     private Text searchText;
 
     private InputPredictor inputPredictor;
@@ -17,9 +18,11 @@ public class PredictionTextBox {
     public PredictionTextBox(TextFlow textFlow) {
         this.textFlow = textFlow;
         normalText = new Text("");
+        caretText = new Text("|");
+        caretText.setFill(Color.BLUE);
         searchText = new Text("");
         searchText.setFill(Color.LIGHTGRAY);
-        textFlow.getChildren().setAll(normalText, searchText);
+        textFlow.getChildren().setAll(normalText, caretText, searchText);
 
         this.inputPredictor = new InputPredictor();
     }
@@ -31,14 +34,12 @@ public class PredictionTextBox {
      *                        command search results.
      */
     public void appendText(String appendChar, int searchDirection) {
-        String curText = normalText.getText();
-        String finalText = curText + appendChar;
-        normalText.setText(finalText);
-
+        String finalText = normalText.getText() + appendChar;
         String searchResultText = inputPredictor.getPrediction(finalText, searchDirection);
         searchText.setText(searchResultText);
+        normalText.setText(finalText);
 
-        textFlow.getChildren().setAll(normalText, searchText);
+        textFlow.getChildren().setAll(normalText, caretText, searchText);
     }
 
     /**
@@ -52,17 +53,16 @@ public class PredictionTextBox {
             normalText.setText("");
             searchText.setText("");
 
-            textFlow.getChildren().setAll(normalText, searchText);
+            textFlow.getChildren().setAll(normalText, caretText, searchText);
             return;
         }
 
         String newText = curText.substring(0, curText.length() - 1);
-        normalText.setText(newText);
-
         String searchResultText = inputPredictor.getPrediction(newText, 0);
+        normalText.setText(newText);
         searchText.setText(searchResultText);
 
-        textFlow.getChildren().setAll(normalText, searchText);
+        textFlow.getChildren().setAll(normalText, caretText, searchText);
     }
 
     /**
@@ -81,7 +81,7 @@ public class PredictionTextBox {
         String searchResultText = inputPredictor.getPrediction(newText, 0);
         searchText.setText(searchResultText);
 
-        textFlow.getChildren().setAll(normalText, searchText);
+        textFlow.getChildren().setAll(normalText, caretText, searchText);
     }
 
     /**
@@ -98,7 +98,7 @@ public class PredictionTextBox {
     public void clearAllText() {
         normalText.setText("");
         searchText.setText("");
-        textFlow.getChildren().setAll(normalText, searchText);
+        textFlow.getChildren().setAll(normalText, caretText, searchText);
 
         // Resets internal search parameters.
         inputPredictor.reset();
