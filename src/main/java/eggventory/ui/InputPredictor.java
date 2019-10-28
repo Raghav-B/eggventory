@@ -132,6 +132,12 @@ public class InputPredictor {
         // Getting arguments entered by user so far by removing the valid command that has been
         // previously entered (stores in foundCommand).
         String inputArgs = command.substring(foundCommand.length());
+        // Check if user has not properly entered a space after typing command.
+        if (inputArgs.charAt(0) != ' ') {
+            reset();
+            return commandPredictionHandler(command, direction);
+        }
+
         // Remove " " character from front of user argument input.
         inputArgs = inputArgs.substring(1);
 
