@@ -21,20 +21,8 @@ public class ParseAdd {
      * @return an array consisting of StockType, StockCode, Quantity and Description.
      * @throws InsufficientInfoException If any of the required attributes is missed out.
      */
-    private Command processAddStock(String input) throws InsufficientInfoException {
-
+    private Command processAddStock(String input) {
         String[] addInput = input.split(" +", 4); //There are 4 attributes for now.
-
-        /*
-        if (addInput.length < 4) {
-            throw new InsufficientInfoException("Please enter stock information after the 'add' command in"
-                    + " this format:\nadd stock <StockType> <StockCode> <Quantity> <Description>");
-        } else if (addInput[0].isBlank() | addInput[1].isBlank() | addInput[2].isBlank() | addInput[3].isBlank()) {
-            throw new InsufficientInfoException("Please enter stock information after the 'add' command in"
-                    + " this format:\nadd stock <StockType> <StockCode> <Quantity> <Description>");
-        }
-         */
-
         return new AddStockCommand(CommandType.ADD, addInput[0], addInput[1],
                 Integer.parseInt(addInput[2]), addInput[3]);
     }
@@ -49,15 +37,8 @@ public class ParseAdd {
      * @return the command to execute.
      * @throws InsufficientInfoException if there are insufficient details provided.
      */
-    private Command processAddStockType(String input) throws InsufficientInfoException, BadInputException {
+    private Command processAddStockType(String input) throws BadInputException {
         String[] addInput = input.split(" +");
-
-        /*
-        if (addInput[0].isBlank()) {
-            throw new InsufficientInfoException("Please enter stock information after the 'add' command in"
-                    + " this format:\nadd stocktype <StockType> OR add stocktype all");
-        }
-         */
 
         if (Parser.isReserved(addInput[0])) {
             throw new BadInputException("'" + addInput[0] + "' is an invalid name as it is a keyword"
@@ -68,19 +49,8 @@ public class ParseAdd {
     }
 
     //@@author cyanoei
-    private Command processAddLoan(String input) throws InsufficientInfoException {
+    private Command processAddLoan(String input) {
         String[] addInput = input.split(" +");
-
-        /*
-        if (addInput.length < 3) {
-            throw new InsufficientInfoException("Please enter loan information after the 'add' command in"
-                    + " this format:\nadd loan <StockCode> <MatricNo> <Quantity>");
-        } else if (addInput[0].isBlank() | addInput[1].isBlank() | addInput[2].isBlank()) {
-            throw new InsufficientInfoException("Please enter loan information after the 'add' command in"
-                    + " this format:\nadd loan <StockCode> <MatricNo> <Quantity>");
-        }
-        */
-
         return new AddLoanCommand(CommandType.ADD, addInput[0], addInput[1], Integer.parseInt(addInput[2]));
     }
 

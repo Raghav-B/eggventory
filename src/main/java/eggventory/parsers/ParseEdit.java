@@ -10,18 +10,8 @@ import eggventory.exceptions.InsufficientInfoException;
 
 
 public class ParseEdit {
-    private Command processEditStock(String input) throws InsufficientInfoException, BadInputException {
+    private Command processEditStock(String input) throws BadInputException {
         String[] addInput = input.split(" +", 3); //<stockCode> <property> <newValue>
-
-        /*
-        if (addInput.length < 2) {
-            throw new InsufficientInfoException("Please enter the edit information after the 'edit' command in"
-                    + "this format:\nedit Stock <stockCode> <property> <newValue>");
-        } else if (addInput[0].isBlank() | addInput[1].isBlank() | addInput[2].isBlank()) {
-            throw new InsufficientInfoException("Please enter the edit information after the 'edit' command in"
-                    + "this format:\nedit Stock <stockCode> <property> <newValue>");
-        }
-         */
 
         String stockCode = addInput[0];
         switch (addInput[1]) {
@@ -42,7 +32,7 @@ public class ParseEdit {
         }
     }
 
-    private Command processEditStockType(String input) throws InsufficientInfoException, BadInputException {
+    private Command processEditStockType(String input) throws BadInputException {
         String[] addInput = input.split(" +", 2);
 
         if (Parser.isReserved(addInput[1])) {

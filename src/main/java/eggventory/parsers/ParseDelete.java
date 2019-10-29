@@ -11,21 +11,8 @@ import eggventory.exceptions.InsufficientInfoException;
 //@@author cyanoei
 public class ParseDelete {
 
-    private Command processDeleteLoan(String input) throws InsufficientInfoException {
-
+    private Command processDeleteLoan(String input) {
         String[] deleteInput = input.split(" +");
-
-        /*
-        if (deleteInput.length < 2) {
-            throw new InsufficientInfoException("Please enter information after the 'delete' command in"
-                    + " this format:\ndelete loan <StockCode> <MatricNo>");
-        } else if (deleteInput[0].isBlank() | deleteInput[1].isBlank()) {
-            throw new InsufficientInfoException("Please enter information after the 'delete' command in"
-                    + " this format:\ndelete loan <StockCode> <MatricNo>");
-        }
-
-         */
-
         return new DeleteLoanCommand(CommandType.DELETE, deleteInput[0], deleteInput[1]);
     }
 
