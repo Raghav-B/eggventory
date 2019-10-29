@@ -32,6 +32,7 @@ public class ParseEdit {
         }
     }
 
+    // TODO Add prevention of renaming Uncategorised stocktype
     private Command processEditStockType(String input) throws BadInputException {
         String[] addInput = input.split(" +", 2);
 

@@ -1,9 +1,13 @@
-Directly modifies the value of a property of a stock.
+Directly modifies the value of a property of an object.
 
-edit:       edit stock (<Stock Type>| <Stock Code> | <Quantity> | <Description> ) <New Value>
+edit:       edit stock <Stock Code> <Property> <New Value>
+            edit stocktype <Stock Type> <New Stock Type Name>
+            edit person <MatricNo> <Property> <New Value>
 
-<Stock Type>        The category name of the stock
 <Stock Code>        The model number of the existing stock
-<Quantity>          The number of stock in the inventory
-<Description>       The description of the stock
+<Stock Type>        
+<Property>          The property of the object to change
+<New Value>
+
+
 <New Value>         The value of the property mentioned will be replaced by this new value

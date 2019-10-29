@@ -81,8 +81,8 @@ public class Gui extends Ui  {
 
             // Event handler for all other keys.
             stage.addEventFilter(KeyEvent.KEY_TYPED, keyEvent ->  {
-                switch (keyEvent.getCharacter()) {
-                case "\r": // ENTER
+                switch ((int) keyEvent.getCharacter().charAt(0)) {
+                case 13: // ENTER
                     if (inputField.getAllText().equals("")) {
                         // No input is parsed if there is no text input
                         // in inputField.
@@ -90,10 +90,11 @@ public class Gui extends Ui  {
                     }
                     runMethod.run();
                     break;
-                case "\b": // BACK_SPACE
+                case 127:
+                case 8: // BACK_SPACE
                     inputField.removeFromWord();
                     break;
-                case "\t": // TAB
+                case 9: // TAB
                     if (inputField.getAllText().equals("")) {
                         // Prevents autocompletion when user has not even input anything.
                         return;
@@ -145,7 +146,6 @@ public class Gui extends Ui  {
         outputTable.getColumns().add(mainColumn);
 
         // Iterating through columns to setup all columns.
-        System.out.println(tableStruct.getTableColumnSize());
         for (int i = 0; i < tableStruct.getTableColumnSize(); i++) {
             // Creating column with header
             TableColumn<ArrayList<String>, String> column = new TableColumn<>(tableStruct.getColumnName(i));
