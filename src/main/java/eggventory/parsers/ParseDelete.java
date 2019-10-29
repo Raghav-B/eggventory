@@ -15,6 +15,7 @@ public class ParseDelete {
 
         String[] deleteInput = input.split(" +");
 
+        /*
         if (deleteInput.length < 2) {
             throw new InsufficientInfoException("Please enter information after the 'delete' command in"
                     + " this format:\ndelete loan <StockCode> <MatricNo>");
@@ -22,6 +23,8 @@ public class ParseDelete {
             throw new InsufficientInfoException("Please enter information after the 'delete' command in"
                     + " this format:\ndelete loan <StockCode> <MatricNo>");
         }
+
+         */
 
         return new DeleteLoanCommand(CommandType.DELETE, deleteInput[0], deleteInput[1]);
     }
@@ -45,15 +48,27 @@ public class ParseDelete {
         switch (deleteInput[0]) {
 
         case "stock":
+            if (!Parser.checkIfCommandComplete(inputString, 1)) {
+                throw new InsufficientInfoException("Please enter information after the 'delete' command in"
+                        + " this format:\ndelete stock <StockCode>");
+            }
             deleteInput[1] = deleteInput[1].strip();
             deleteCommand = new DeleteStockCommand(CommandType.DELETE, deleteInput[1]);
             break;
 
         case "stocktype":
+            if (!Parser.checkIfCommandComplete(inputString, 1)) {
+                throw new InsufficientInfoException("Please enter information after the 'delete' command in"
+                        + " this format:\ndelete stocktype <StockType>");
+            }
             deleteCommand = new DeleteStockTypeCommand(CommandType.DELETE, deleteInput[1]);
             break;
 
         case "loan":
+            if (!Parser.checkIfCommandComplete(inputString, 2)) {
+                throw new InsufficientInfoException("Please enter information after the 'delete' command in"
+                        + " this format:\ndelete loan <StockCode> <MatricNo>");
+            }
             deleteCommand = processDeleteLoan(deleteInput[1]);
             break;
 
