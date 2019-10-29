@@ -6,7 +6,7 @@ import eggventory.Storage;
 import eggventory.enums.CommandType;
 
 /**
- * Command objects for searching for stocks by name.
+ * Command objects for searching for Stocks by //TODO SPLIT INTO DIFFERENT PROPERTIES WE CAN FIND BY.
  */
 public class FindCommand extends Command {
     private String search;
@@ -17,8 +17,8 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Allows the user to search for stock descriptions that match a given string.
-     * Prints the list of stocks that match. Alternatively prints a message if none are found.
+     * Allows the user to search for Stock Descriptions that match a given string.
+     * Prints the list of Stocks that match. Alternatively prints a message if none are found.
      */
     @Override
     public String execute(StockList list, Ui ui, Storage storage) {
@@ -39,7 +39,7 @@ public class FindCommand extends Command {
         }
 
         if (!found) {
-            output = "Sorry, I could not find any tasks containing the description \""
+            output = "Sorry, I could not find any Stocks containing the Description \""
                     + search + "\".\nPlease try a different search string.";
             ui.print(output);
         } else {

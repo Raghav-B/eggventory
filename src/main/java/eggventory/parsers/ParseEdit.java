@@ -14,8 +14,8 @@ public class ParseEdit {
         String[] addInput = input.split(" +", 3); //<stockCode> <property> <newValue>
 
         String stockCode = addInput[0];
-        switch (addInput[1]) {
-        case "stockCode":
+        switch (addInput[1].toLowerCase()) {
+        case "stockcode":
             return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.STOCKCODE, addInput[2]);
         case "quantity":
             return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.QUANTITY, addInput[2]);

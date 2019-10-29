@@ -15,16 +15,16 @@ public class LoanPair {
     }
 
     /**
-     * Gets the stockCode of this pair.
-     * @return the stockCode.
+     * Gets the StockCode of this pair.
+     * @return the StockCode.
      */
     public String getStockCode() {
         return stockCode;
     }
 
     /**
-     * Gets the matricNo of this pair.
-     * @return the matric number.
+     * Gets the MatricNo of this pair.
+     * @return the MatricNo.
      */
     public String getMatricNo() {
         return matricNo;
@@ -33,7 +33,7 @@ public class LoanPair {
     /**
      * Custom .equals method to compare two LoanPairs.
      * @param other the LoanPair to compare to.
-     * @return true if their stockCode and matricNo are the same, false otherwise.
+     * @return true if their StockCode and MatricNo are the same, false otherwise.
      */
     public boolean equals(LoanPair other) {
         return this.stockCode.equals(other.getStockCode()) && this.matricNo.equals(other.getMatricNo());

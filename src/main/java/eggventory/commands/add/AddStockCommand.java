@@ -20,12 +20,12 @@ public class AddStockCommand extends Command {
     private DateTime[] dateTimes = new DateTime[2];
 
     /**
-     * Initialises all the attributes of the details of the stock to be added.
-     * @param type The type of command.
-     * @param stockType The category/type of the stock.
-     * @param stockCode The unique identifier code for the stock.
-     * @param quantity The total quantity of the stock.
-     * @param description User input description of the task to add.
+     * Initialises all the attributes of the details of the Stock to be added.
+     * @param type The type of Command.
+     * @param stockType The StockType of the Stock.
+     * @param stockCode The unique identifier code for the Stock.
+     * @param quantity The total Quantity of the Stock.
+     * @param description User input Description of the Stock to add.
      */
     public AddStockCommand(CommandType type, String stockType, String stockCode, int quantity, String description) {
         super(type);
@@ -36,8 +36,8 @@ public class AddStockCommand extends Command {
     }
 
     /**
-     * Executes the actual adding of stock to the StockType.
-     * @param list StockType to add the item to.
+     * Executes the actual adding of Stock to the StockType.
+     * @param list StockType to add the Stock to.
      * @param ui Ui implementation to display output to.
      * @param storage Storage object to handle saving and loading of any data.
      */
@@ -46,13 +46,13 @@ public class AddStockCommand extends Command {
         String output;
 
         if (list.isExistingStockCode(stockCode)) {
-            output = String.format("Sorry, the stock code \"%s\" is already assigned to a stock in the system. "
-                    + "Please enter a different stock code.", stockCode);
+            output = String.format("Sorry, the StockCode \"%s\" is already assigned to a Stock in the system. "
+                    + "Please enter a different StockCode.", stockCode);
 
         } else {
             list.addStock(stockType, stockCode, quantity, description);
             storage.save(list);
-            output = String.format("Nice! I have successfully added the stock: StockType: %s StockCode: %s "
+            output = String.format("Nice! I have successfully added the Stock: StockType: %s StockCode: %s "
                     + "Quantity: %d Description: %s", stockType, stockCode, quantity, description);
         }
 
@@ -63,9 +63,9 @@ public class AddStockCommand extends Command {
     }
 
     /**
-     * Executes the actual adding of task to the StockType.
+     * Executes the actual adding of a Stock to the StockType.
      * Only to be used by Storage.load() - handles the adding without showing UI output.
-     * @param list StockType to add the item to.
+     * @param list StockType to add the Stock to.
      */
     public void execute(StockList list) {
         list.addStock(stockType, stockCode, quantity, description);

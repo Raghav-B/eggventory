@@ -3,25 +3,25 @@ Type 'help <name>' to find out more about the command <name>. This only works fo
 A star (*) next to the name means that the command is not enabled.
 
 add
-    add stock <Stock Type> <Stock Code> <Quantity> <Description>
-    add stocktype <Stock Type>
-    add person <Matric No.> <Name>
+    add stock <StockType> <StockCode> <Quantity> <Description>
+    add stocktype <StockType>
+    add person <MatricNo> <Name>
 
 delete
-    delete stock <Stock Code>
-    delete stocktype <Stock Type>
-    delete template <Template Name>
-    delete person <Matric No.>
+    delete stock <StockCode>
+    delete stocktype <StockType>
+    delete template <TemplateName>
+    delete person <MatricNo>
 
 edit
-    edit stock <Stock Code> <Property> <New Value>
-    edit stocktype <Stock Type> <New Stock Type Name>
-    edit person <MatricNo> <Property> <New Value>
+    edit stock <StockCode> <Property> <NewValue>
+    edit stocktype <StockType> <NewStockTypeName>
+    edit person <MatricNo> <Property> <NewValue>
 
 *list
     list stock
     list stocktype all
-    list stocktype <Stock Type>
+    list stocktype <StockType>
     list loan
     list template
     list lost
@@ -31,16 +31,18 @@ edit
     find stocktype <Query>
 
 *loan
-    loan add <Matric No.> {<Stock Code> <Quantity>}
+    loan add <MatricNo> {<StockCode> <Quantity>}
     OR
-    loan add <Matric No.> <Template Name>
-    loan returned <Matric No.> {<Stock Code> <Quantity>}
+    loan add <MatricNo> <TemplateName>
+    loan returned <MatricNo> {<StockCode> <Quantity>}
     OR
-    loan returned <Matric No.> <Template Name>
+    loan returned <MatricNo> <TemplateName>
 
 *lost
-    lost <Stock Code> <Quantity>
+    lost <StockCode> <Quantity>
+
 *undo
     undo
+
 *redo
     redo

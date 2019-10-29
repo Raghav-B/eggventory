@@ -33,8 +33,8 @@ public class ListStockTypeCommand extends Command {
             output = listString;
 
             if (listString.equals("")) {
-                ui.print("Invalid command: No such stocktype. list stock / list stocktype all / "
-                        + "list stocktype <Stock Type>");
+                ui.print("Invalid command: No such StockType. list stock / list stocktype all / "
+                        + "list stocktype <StockType>");
             } else {
                 ui.print(output);
                 // Drawing data on stocks under specific stocktype in GUI table.

@@ -15,11 +15,11 @@ public class AddLoanCommand extends Command {
     private int quantity;
 
     /**
-     * Constructor for addLoanCommand.
-     * @param type the type of command.
-     * @param stockCode the stockCode of the loan to be added.
-     * @param matricNo the matric number of the person making the loan.
-     * @param quantity the quantity loaned.
+     * Constructor for AddLoanCommand.
+     * @param type the type of Command.
+     * @param stockCode the StockCode of the Loan to be added.
+     * @param matricNo the MatricNo of the Person making the Loan.
+     * @param quantity the Quantity loaned.
      */
     public AddLoanCommand(CommandType type, String stockCode, String matricNo, int quantity) {
         super(type);
@@ -30,8 +30,8 @@ public class AddLoanCommand extends Command {
 
     /**
      * Method to execute the AddLoanCommand.
-     * @param list the stockList.
-     * @param ui the ui for printing to cli/gui.
+     * @param list the StockList.
+     * @param ui the Ui for printing to Cli/Gui.
      * @param storage the storage.
      * @return the print string for assertion in testing.
      */

@@ -13,9 +13,9 @@ public class Loan {
 
     /**
      * Temporary shorter constructor used to test the non-date attributes.
-     * @param stockCode the stockCode of the stock being loaned.
-     * @param matricNo the matric number of the person making the loan.
-     * @param quantity the quantity being loaned out.
+     * @param stockCode the StockCode of the Stock being loaned.
+     * @param matricNo the MatricNo of the Person making the Loan.
+     * @param quantity the Quantity being loaned out.
      */
     public Loan(String stockCode, String matricNo, int quantity) {
         //AddLoanCommand should have determined beforehand that the Person and Stock being referred to
@@ -27,10 +27,10 @@ public class Loan {
 
     /**
      * Constructor for Loan class.
-     * @param stockCode the stockCode of the stock being loaned.
-     * @param matricNo the matric number of the person making the loan.
-     * @param quantity the quantity being loaned out.
-     * @param loanDate the date the loan was processed.
+     * @param stockCode the StockCode of the Stock being loaned.
+     * @param matricNo the MatricNo of the Person making the Loan.
+     * @param quantity the Quantity being loaned out.
+     * @param loanDate the date the Loan was processed.
      * @param returnDate the date the loans have to be returned by.
      */
     public Loan(String stockCode, String matricNo, int quantity, Calendar loanDate, Calendar returnDate) {
@@ -44,31 +44,31 @@ public class Loan {
     }
 
     /**
-     * Gets the stockcode of the Stock being loaned.
-     * @return the stockcode.
+     * Gets the StockCode of the Stock being loaned.
+     * @return the StockCode.
      */
     public String getStockCode() {
         return stockCode;
     }
 
     /**
-     * Gets the matric number of the person loaning the stock.
-     * @return the matric number.
+     * Gets the MatricNo of the Person loaning the Stock.
+     * @return the MatricNo.
      */
     public String getMatricNo() {
         return matricNo;
     }
 
     /**
-     * Gets the quantity of Stock that this Person loaned.
-     * @return the quantity
+     * Gets the Quantity of Stock that this Person loaned.
+     * @return the Quantity.
      */
     public int getQuantity() {
         return quantity;
     }
 
     /**
-     * Sets the new quantity of the Stock loaned.
+     * Sets the new Quantity of the Stock loaned.
      * @param quantity the new amount that is loaned.
      */
     public void setQuantity(int quantity) {

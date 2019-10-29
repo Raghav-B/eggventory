@@ -1,7 +1,7 @@
 package eggventory.items;
 
 /**
- * An item of unique stock. Has its own index (unique among items of that stock), loan and lost status.
+ * An item of UniqueStock. Has its own index (unique among items of that Stock), loan and lost status.
  */
 
 public class Item {

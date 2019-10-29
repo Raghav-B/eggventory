@@ -15,14 +15,14 @@ import eggventory.commands.Command;
 import eggventory.enums.CommandType;
 
 /**
- * Command object for all help command.
+ * Command object for all HelpCommand.
  */
 public class HelpCommand extends Command {
     private String options;
 
     /**
-     * Constructor for command: "help".
-     * @param type The type of the command
+     * Constructor for Command: "help".
+     * @param type The type of the Command
      */
     public HelpCommand(CommandType type) {
         super(type);
@@ -31,7 +31,7 @@ public class HelpCommand extends Command {
 
     /**
      * Constructor for command: "help xyz" where xyz are first parsed.
-     * @param type The type of the command
+     * @param type The type of the Command
      * @param options The command syntax for which detailed help is required
      */
     public HelpCommand(CommandType type, String options) {

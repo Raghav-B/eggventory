@@ -19,7 +19,7 @@ public class EditStockTypeCommand extends Command {
      * Initializes the attributes of StockType.
      * @param type The type of Command.
      * @param stockType The String that uniquely identifies a StockType.
-     * @param newValue The new value of the property of StockType.
+     * @param newValue The new value of the Property of StockType.
      */
     public EditStockTypeCommand(CommandType type, String stockType, String newValue) {
         super(type);
@@ -39,11 +39,11 @@ public class EditStockTypeCommand extends Command {
         String output;
 
         if (list.isExistingStockType(newName)) {
-            output = String.format("Sorry, \"%s\" is already an existing stock type.", newName);
+            output = String.format("Sorry, \"%s\" is already an existing StockType.", newName);
 
         } else {
             StockType edited = list.setStockType(stockType, newName);
-            output = String.format("Awesome! I have successfully updated the following stockType name: %s\n",
+            output = String.format("Awesome! I have successfully updated the following StockType name: %s\n",
                     edited.getName());
             storage.save(list);
         }

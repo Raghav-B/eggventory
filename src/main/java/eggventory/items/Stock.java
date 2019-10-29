@@ -7,8 +7,8 @@ import java.util.ArrayList;
 /**
  * An abstract class representing a type of item that the lab keeps and is able to loan out.
  * Children classes are CollectiveStock and UniqueStock.
- * A stock is first added with its stockType, stockCode, description and quantity.
- * Within a stock, some of the items may be marked as 'on loan', or 'lost'.
+ * A Stock is first added with its StockType, StockCode, Description and Quantity.
+ * Within a Stock, some of the items may be marked as 'on loan', or 'lost'.
  * TODO: Finish up the comments on this class after finalising the glossary.
  */
 public class Stock {
@@ -24,14 +24,14 @@ public class Stock {
     private ArrayList<Loan> stockLoans;
 
     /**
-     * An stock is first added with its stockType, stockCode, description and quantity.
+     * An Stock is first added with its StockType, StockCode, Description and Quantity.
      * By default the loaned and lost numbers are 0. They can be updated later.
-     * By default the minimum quantity is 0. This can be updated later.
+     * By default the minimum Quantity is 0. This can be updated later.
      *
-     * @param stockType The category the stock belongs to.
-     * @param stockCode The unique code that identifies the stock. (eg. 500ohm resistors are called 'R500')
-     * @param quantity The quantity (number of items) of this stock.
-     * @param description The name of the stock. (eg. 500ohm resistor, mini breadboard.
+     * @param stockType The StockType the Stock belongs to.
+     * @param stockCode The unique code that identifies the Stock. (eg. 500ohm resistors are called 'R500')
+     * @param quantity The Quantity (number of items) of this Stock.
+     * @param description The name of the Stock. (eg. 500ohm resistor, mini breadboard.
      */
     public Stock(String stockType, String stockCode, int quantity, String description) {
         this.stockType = stockType;
@@ -44,8 +44,8 @@ public class Stock {
     }
 
     /**
-     * Gets the stock type (category) of the stock.
-     * @return the stock type.
+     * Gets the StockType (category) of the Stock.
+     * @return the StockType as a String.
      */
     public String getStockType() {
         return stockType;
@@ -53,32 +53,32 @@ public class Stock {
 
     //Should not allow updating of stockType for now (so no setter)
 
-    /** Gets the stock code.
-     * @return the stock code.
+    /** Gets the StockCode.
+     * @return the StockCode as a String.
      */
     public String getStockCode() {
         return stockCode;
     }
 
     /**
-     * Changes the stock code (if there was an error in entry).
-     * @param stockCode the new stock code
+     * Changes the StockCode (if there was an error in entry).
+     * @param stockCode the new StockCode
      */
     public void setStockCode(String stockCode) {
         this.stockCode = stockCode;
     }
 
     /**
-     * Gets the name of the stock.
-     * @return the name of the stock.
+     * Gets the name of the Stock.
+     * @return the name (Description) of the Stock.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Sets the name of the stock.
-     * @param description the name of the stock.
+     * Sets the name of the Stock.
+     * @param description the name of the Stock.
      */
     public void setDescription(String description) {
         this.description = description;
@@ -87,15 +87,15 @@ public class Stock {
     //Note: The access to the quantity attribute might have to be changed in the future.
 
     /**
-     * Gets the total number of this stock. Includes items lost and on loan.
-     * @return total the total quantity of that stock.
+     * Gets the total number of this Stock. Includes items lost and on loan.
+     * @return the total Quantity of that Stock.
      */
     public int getQuantity() {
         return quantity;
     }
 
     /**
-     * Sets the new total number of this stock. To be used by 'change' or 'qty' commands to modify the number.
+     * Sets the new total number of this Stock. To be used by 'change' or 'qty' commands to modify the number.
      * @param newTotal the new total number of items.
      */
     protected void setQuantity(int newTotal) {
@@ -103,7 +103,7 @@ public class Stock {
     }
 
     /**
-     * Gets the number of this stock that is on loan.
+     * Gets the number of this Stock that is on loan.
      * @return loaned the number of loaned items.
      */
     public int getLoaned() {
@@ -111,7 +111,7 @@ public class Stock {
     }
 
     /**
-     * Sets the number of this stock on loan. To be used by the 'loan' command.
+     * Sets the number of this Stock on loan. To be used by the 'loan' command.
      * @param loaned the number of items on loan.
      */
     public void setLoaned(int loaned) {
@@ -119,7 +119,7 @@ public class Stock {
     }
 
     /**
-     * Gets the number of this stock that is lost.
+     * Gets the number of this Stock that is lost.
      * @return lost the number of lost items.
      */
     public int getLost() {
@@ -127,7 +127,7 @@ public class Stock {
     }
 
     /**
-     * Sets the number of this stock that have been lost. To be used by the 'lost' command.
+     * Sets the number of this Stock that have been lost. To be used by the 'lost' command.
      * @param lost the number of items lost.
      */
     public void setLost(int lost) {
@@ -135,7 +135,7 @@ public class Stock {
     }
 
     /**
-     * Gets the minimum quantity of stock that the lab wishes to maintain.
+     * Gets the minimum quantity of Stock that the lab wishes to maintain.
      * @return The minimum quantity.
      */
     public int getMinimum() {
@@ -143,7 +143,7 @@ public class Stock {
     }
 
     /**
-     * Updates the minimum quantity of stock that the lab wishes to maintain. To be implemented in the future.
+     * Updates the minimum quantity of Stock that the lab wishes to maintain. To be implemented in the future.
      * @param minimum The minimum quantity.
      */
     public void setMinimum(int minimum) {
@@ -151,7 +151,7 @@ public class Stock {
     }
 
     /**
-     * Calculates and returns the number of this stock available to the lab (not lost, not on loan).
+     * Calculates and returns the number of this Stock available to the lab (not lost, not on loan).
      * @return the number of available items.
      */
     public int numAvailable() {
@@ -159,8 +159,8 @@ public class Stock {
     }
 
     /**
-     * Formats all stock details appropriately for Cli output. Should only be called by Cli and StockType.
-     * @return the stock details string.
+     * Formats all Stock details appropriately for Cli output. Should only be called by Cli and StockType.
+     * @return the Stock details string.
      */
     @Override
     public String toString() {
@@ -168,7 +168,7 @@ public class Stock {
     }
 
     /**
-     * Formats all stock details appropriately to be saved to file.
+     * Formats all Stock details appropriately to be saved to file.
      * @return the string to save.
      */
     public String saveDetailsString() {

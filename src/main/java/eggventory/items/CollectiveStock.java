@@ -7,13 +7,13 @@ package eggventory.items;
  */
 public class CollectiveStock extends Stock {
     /**
-     * A stock is first added with its stockType, stockCode, description and quantity.
+     * A Stock is first added with its StockType, StockCode, Description and Quantity.
      * By default the loaned and lost numbers are 0.
      *
-     * @param stockType The category the stock belongs to.
+     * @param stockType The StockType the Stock belongs to.
      * @param stockCode The unique code that identifies the stock. (eg. 500ohm resistors are called 'R500')
-     * @param quantity  The quantity (number of items) of this stock.
-     * @param description The name of the stock. (eg. 500ohm resistor, mini breadboard)
+     * @param quantity  The Quantity (number of items) of this stock.
+     * @param description The name of the Stock. (eg. 500ohm resistor, mini breadboard)
      */
     public CollectiveStock(String stockType, String stockCode, int quantity, String description) {
         super(stockType, stockCode, quantity, description);

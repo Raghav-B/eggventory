@@ -23,7 +23,7 @@ public class DeleteStockTypeCommand extends Command {
         String output;
 
         if (stockTypeName.equals("Uncategorised")) {
-            output = "Sorry, Uncategorised is the default category, and cannot be deleted.";
+            output = "Sorry, Uncategorised is the default StockType, and cannot be deleted.";
             ui.print(output);
             return output;
         }
@@ -31,18 +31,17 @@ public class DeleteStockTypeCommand extends Command {
         StockType deleted = list.deleteStockType(stockTypeName);
 
         if (deleted == null) {
-            output = String.format("Sorry, I cannot find the stock type \"%s\" refers to. "
+            output = String.format("Sorry, I cannot find the Stock that StockType \"%s\" refers to. "
                     + "Please try again.", stockTypeName);
             ui.print(output);
         } else {
-            output = String.format("I deleted the following stockType: %s. "
-                    + "I also deleted the following stocks of that type: \n"
+            output = String.format("I deleted the following StockType: %s. "
+                    + "I also deleted the following Stock of that StockType: \n"
                     + deleted.toString(), stockTypeName);
             storage.save(list);
             ui.print(output);
             // Drawing stock data in GUI table.
             ui.drawTable(list.getAllStocksStruct());
-            //ui.drawTable(list.getAllStockTypesStruct());
         }
 
         return output;

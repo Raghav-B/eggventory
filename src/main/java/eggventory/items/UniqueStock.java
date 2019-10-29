@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * A child of the Stock class.
- * A UniqueStock is a group of many items (eg. Arduino Uno) that share the same stockCode, description etc.,
+ * A UniqueStock is a group of many items (eg. Arduino Uno) that share the same StockCode, Description etc.,
  * but are also tracked individually (eg. Arduino Uno #31).
  * UniqueStock contains and manages a list (uniqueStockList) of its individual items.
  */
@@ -13,15 +13,15 @@ public class UniqueStock extends Stock {
     private ArrayList<Item> uniqueStockList = new ArrayList<>();
 
     /**
-     * A stock is first added with its stockType, stockCode, description and quantity.
-     * For Unique stock, the quantity determines the number of Item objects created.
+     * A Stock is first added with its StockType, StockCode, Description and Quantity.
+     * For UniqueStock, the Quantity determines the number of Item objects created.
      * By default, the index numbers of each UniqueStock are set as 1-quantity for now.
      * By default, the loaned and lost numbers are 0.
      *
-     * @param stockType   The category the stock belongs to.
-     * @param stockCode   The unique code that identifies the stock. (eg. 500ohm resistors are called 'R500')
-     * @param quantity    The quantity (number of items) of this stock.
-     * @param description The name of the stock. (eg. 500ohm resistor, mini breadboard)
+     * @param stockType   The StockType the Stock belongs to.
+     * @param stockCode   The unique code that identifies the Stock. (eg. 500ohm resistors are called 'R500')
+     * @param quantity    The Quantity (number of items) of this Stock.
+     * @param description The name of the Stock. (eg. 500ohm resistor, mini breadboard)
      */
     public UniqueStock(String stockType, String stockCode, int quantity, String description) {
         super(stockType, stockCode, quantity, description);
@@ -31,8 +31,8 @@ public class UniqueStock extends Stock {
     }
 
     /**
-     * Adds multiple unique items of this stock.
-     * @param addQuantity The number of unique stocks being added.
+     * Adds multiple unique items of this Stock.
+     * @param addQuantity The number of unique Stocks being added.
      */
     public void addUniqueMultiple(int addQuantity) {
         int oldTotal = uniqueStockList.size();
@@ -95,7 +95,7 @@ public class UniqueStock extends Stock {
     //TODO: Update both print and save method in Item class, and iterate through all of them here.
     //  Should be similar to StockType printing methods.
     /**
-     * Formats all stock details appropriately to be saved to file.
+     * Formats all Stock details appropriately to be saved to file.
      * @return the string to save.
      */
     @Override
@@ -115,6 +115,4 @@ public class UniqueStock extends Stock {
             update total quantity --
             check if min, give warning.
      */
-
-
 }

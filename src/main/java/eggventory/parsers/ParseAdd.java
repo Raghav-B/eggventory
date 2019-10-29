@@ -30,10 +30,10 @@ public class ParseAdd {
 
     //@@author Deculsion
     /**
-     * Processes the contents of an add stocktype command (everything after the words "add" and "stocktype").
-     * Splits up the input string into an array containing the various attributes of the stocktype being added.
+     * Processes the contents of an add StockType command (everything after the words "add" and "stocktype").
+     * Splits up the input string into an array containing the various attributes of the StockType being added.
      *
-     * @param input the user input describing the stockType to be added.
+     * @param input the user input describing the StockType to be added.
      * @return the command to execute.
      * @throws InsufficientInfoException if there are insufficient details provided.
      */
@@ -100,10 +100,6 @@ public class ParseAdd {
         }
 
         return addCommand;
-
-    }
-
-    private void checkIfCommandComplete() {
 
     }
 

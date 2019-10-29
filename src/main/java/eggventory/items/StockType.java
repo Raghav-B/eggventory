@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 //@@author Deculsion
 /**
- * Manages the list of (different types of classes),
- * including all the methods to modify the list:
- * Adding each of the 3 types, print, delete, mark as done, search.
+ * Manages the list of Stocks within this StockType.
  */
 
 public class StockType {
@@ -47,7 +45,7 @@ public class StockType {
     }
 
     /**
-     * Adds a stock to the stockList.
+     * Adds a Stock to the StockList.
      * @return True if item was added successfully.
      */
     public boolean addStock(String stockType, String stockCode, int quantity, String description) {
@@ -56,10 +54,10 @@ public class StockType {
     }
 
     /**
-     * Deletes a stock of the user's choice.
+     * Deletes a Stock of the user's choice.
      *
-     * @param stockCode The code of the stock to be deleted.
-     * @return true if some stockCode was found and the corresponding stock removed. false if none were found.
+     * @param stockCode The code of the Stock to be deleted.
+     * @return true if some StockCode was found and the corresponding Stock removed. false if none were found.
      */
     public Stock deleteStock(String stockCode) {
 
@@ -76,9 +74,9 @@ public class StockType {
     }
 
     /**
-     * Accesses and sets a new stockCode of a stock.
-     * @param oldStockCode The current stockcode referring to this stock.
-     * @param newStockCode The new stockcode to change to.
+     * Accesses and sets a new StockCode of a Stock.
+     * @param oldStockCode The current StockCode referring to this Stock.
+     * @param newStockCode The new StockCode to change to.
      */
     public void setStockCode(String oldStockCode, String newStockCode) {
         for (Stock stock : stocks) {
@@ -90,9 +88,9 @@ public class StockType {
     }
 
     /**
-     * Accesses and sets the quantity of a Stock.
-     * @param stockCode StockCode of the stock to change
-     * @param quantity New quantity of the stock to change
+     * Accesses and sets the Quantity of a Stock.
+     * @param stockCode StockCode of the Stock to change
+     * @param quantity New Quantity of the Stock to change
      */
     public void setStockQuantity(String stockCode, int quantity) {
         for (Stock stock : stocks) {
@@ -104,9 +102,9 @@ public class StockType {
     }
 
     /**
-     * Accesses and sets the description of a Stock.
-     * @param stockCode StockCode of the stock to change
-     * @param description New description of the stock to change
+     * Accesses and sets the Description of a Stock.
+     * @param stockCode StockCode of the Stock to change
+     * @param description New Description of the Stock to change
      */
     public void setStockDescription(String stockCode, String description) {
         for (Stock stock : stocks) {
@@ -119,23 +117,23 @@ public class StockType {
 
     //@@author
     /**
-     * Returns the entire stockList.
-     * @return the stockList.
+     * Returns the entire StockList.
+     * @return the StockList.
      */
     public ArrayList<Stock> getStockList() {
         return stocks;
     }
 
     /**
-     * Returns a stock of the user's choice.
-     * @param i the index of the stock selected.
+     * Returns a Stock of the user's choice.
+     * @param i the index of the Stock selected.
      */
     public Stock getStock(int i) {
         return stocks.get(i);
     }
 
     /**
-     * Returns a stock of the user's choice.
+     * Returns a Stock of the user's choice.
      * @param stockCode String which uniquely identifies a Stock.
      * @return If Stock exits, the Stock otherwise null.
      */
@@ -150,15 +148,15 @@ public class StockType {
 
     //@@author Deculsion
     /**
-     * Gets the total number of stocks.
-     * @return the number of stocks in this stockType.
+     * Gets the total number of Stocks.
+     * @return the number of Stocks in this StockType.
      */
     public int getQuantity() {
         return stocks.size();
     }
 
     /**
-     * Gets the name of this stockType.
+     * Gets the name of this StockType.
      * @return the name.
      */
     public String getName() {
@@ -215,9 +213,9 @@ public class StockType {
 
     //@@author cyanoei
     /**
-     * Determines if any of the stocks in this stockType have the same stockCode.
-     * @param stockCode the queried stockCode.
-     * @return true if a stock in this stockType has that stockCode and false if none of the stocks have this stockCode.
+     * Determines if any of the Stocks in this StockType have the same StockCode.
+     * @param stockCode the queried StockCode.
+     * @return true if a Stock in this StockType has that StockCode and false if none of the Stocks have this StockCode.
      */
     public boolean isExistingStockCode(String stockCode) {
         for (Stock stock : stocks) {
@@ -230,8 +228,8 @@ public class StockType {
 
     //@@author Deculsion
     /**
-     * A string of all the stock objects within this stocktype. Should only be called by Cli and StockList.
-     * @return A string list of all the stock objects and their details.
+     * A string of all the Stock objects within this StockType. Should only be called by Cli and StockList.
+     * @return A string list of all the Stock objects and their details.
      */
     public String toString() {
         StringBuilder ret = new StringBuilder();
@@ -259,9 +257,9 @@ public class StockType {
 
     //@@author Raghav-B
     /**
-     * Returns ArrayList of data of all stocks within this stocktype to be read
+     * Returns ArrayList of data of all Stocks within this StockType to be read
      * by GUI table.
-     * @return ArrayList of data of stocks in this stocktype.
+     * @return ArrayList of data of Stocks in this StockType.
      */
     public ArrayList<ArrayList<String>> getDataAsArray() {
         ArrayList<ArrayList<String>> dataArray = new ArrayList<>();
@@ -270,8 +268,5 @@ public class StockType {
         }
         return dataArray;
     }
-
-
-
     //@@author
 }

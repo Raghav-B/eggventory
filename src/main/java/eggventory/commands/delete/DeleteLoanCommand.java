@@ -16,10 +16,10 @@ public class DeleteLoanCommand extends Command {
     private int quantity;
 
     /**
-     * Constructor for deleteLoanCommand.
-     * @param type the type of command.
-     * @param stockCode the stockCode of the Stock in the Loan being deleted.
-     * @param matricNo the matric number of the Person whose Loan is being deleted.
+     * Constructor for DeleteLoanCommand.
+     * @param type the type of Command.
+     * @param stockCode the StockCode of the Stock in the Loan being deleted.
+     * @param matricNo the MatricNo of the Person whose Loan is being deleted.
      */
     public DeleteLoanCommand(CommandType type, String stockCode, String matricNo) {
         super(type);

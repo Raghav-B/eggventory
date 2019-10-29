@@ -8,8 +8,8 @@ import eggventory.enums.CommandType;
 import eggventory.items.Stock;
 
 /**
- * Command objects for deleting stocks.
- * Requires the index (as listed by the system) of the stock. //TODO: Change this to the stock code.
+ * Command objects for deleting Stocks.
+ * Requires the index (as listed by the system) of the Stock. //TODO: Change this to the StockCode.
  */
 public class DeleteStockCommand extends Command {
 
@@ -26,12 +26,12 @@ public class DeleteStockCommand extends Command {
         Stock deleted = list.deleteStock(stockCode);
         String output;
         if (deleted == null) {
-            output = String.format("Sorry, I cannot find the stock that stock code \"%s\" refers to. "
+            output = String.format("Sorry, I cannot find the Stock that StockCode \"%s\" refers to. "
                     + "Please try again.", stockCode);
             ui.print(output);
             return output;
         } else {
-            output = String.format("I deleted the following stock: StockType: %s StockCode: %s Quantity: %d "
+            output = String.format("I deleted the following Stock: StockType: %s StockCode: %s Quantity: %d "
                     + "Description: %s", deleted.getStockType(), stockCode,
                     deleted.getQuantity(), deleted.getDescription());
             storage.save(list);
