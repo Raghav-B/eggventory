@@ -55,7 +55,7 @@ public class Parser {
      * @param reqArguments Least number of arguments required by command in question.
      * @return True if user input matches required number of arguments, false otherwise.
      */
-    public static boolean checkIfCommandComplete(String command, int reqArguments) {
+    public static boolean isCommandComplete(String command, int reqArguments) {
         String[] commandArr = command.split(" ");
         return commandArr.length - 1 >= reqArguments;
     }

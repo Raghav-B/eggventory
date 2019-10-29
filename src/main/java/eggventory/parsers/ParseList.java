@@ -47,7 +47,7 @@ public class ParseList {
             break;
 
         case "stocktype":
-            if (!Parser.checkIfCommandComplete(inputString, 1)) {
+            if (!Parser.isCommandComplete(inputString, 1)) {
                 throw new InsufficientInfoException("Please enter stock information after the 'list' command in"
                         + " this format:\nlist stocktype <StockType> OR list stocktype all");
             }

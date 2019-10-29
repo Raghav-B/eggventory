@@ -72,7 +72,7 @@ public class ParseAdd {
 
         switch (addInput[0]) {
         case "stock":
-            if (!Parser.checkIfCommandComplete(inputString, 4)) {
+            if (!Parser.isCommandComplete(inputString, 4)) {
                 throw new InsufficientInfoException("Please enter stock information after the 'add' command in"
                         + " this format:\nadd stock <StockType> <StockCode> <Quantity> <Description>");
             }
@@ -80,7 +80,7 @@ public class ParseAdd {
             break;
 
         case "stocktype":
-            if (!Parser.checkIfCommandComplete(inputString, 1)) {
+            if (!Parser.isCommandComplete(inputString, 1)) {
                 throw new InsufficientInfoException("Please enter stock information after the 'add' command in"
                         + " this format:\nadd stocktype <StockType>");
             }
@@ -88,7 +88,7 @@ public class ParseAdd {
             break;
 
         case "loan":
-            if (!Parser.checkIfCommandComplete(inputString, 3)) {
+            if (!Parser.isCommandComplete(inputString, 3)) {
                 throw new InsufficientInfoException("Please enter loan information after the 'add' command in"
                         + " this format:\nadd loan <StockCode> <MatricNo> <Quantity>");
             }

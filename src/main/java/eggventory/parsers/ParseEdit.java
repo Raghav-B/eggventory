@@ -56,7 +56,7 @@ public class ParseEdit {
 
         switch (addInput[0]) {
         case "stock":
-            if (!Parser.checkIfCommandComplete(inputString, 3)) {
+            if (!Parser.isCommandComplete(inputString, 3)) {
                 throw new InsufficientInfoException("Please enter the edit information after the 'edit' command in"
                         + "this format:\nedit stock <stockCode> <property> <newValue>");
             }
@@ -64,7 +64,7 @@ public class ParseEdit {
             break;
 
         case "stocktype":
-            if (!Parser.checkIfCommandComplete(inputString, 2)) {
+            if (!Parser.isCommandComplete(inputString, 2)) {
                 throw new InsufficientInfoException("Please enter the edit information after the 'edit' command in"
                         + "this format:\nedit stocktype <StockType> <New StockType Name>");
             }
