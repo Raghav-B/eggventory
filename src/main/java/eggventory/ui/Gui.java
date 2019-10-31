@@ -100,6 +100,9 @@ public class Gui extends Ui  {
                         }
                         inputField.appendText("", 1);
                         break;
+                    default:
+                        // To appease mr. travis
+                        break;
                     }
                 } else if (keyEvent.getEventType() == KeyEvent.KEY_TYPED) {
                     char inputChar = keyEvent.getCharacter().charAt(0);
