@@ -143,7 +143,7 @@ public class Gui extends Ui  {
      * that it uses to redraw the entire table.
      * @param tableStruct Structure that holds all data to be displayed.
      */
-    public void drawTable(TableStruct tableStruct) { // TODO: Change to master list...
+    public void drawTable(TableStruct tableStruct) {
         outputTable.getColumns().clear();
         outputTable.getItems().clear();
         outputTable.refresh();

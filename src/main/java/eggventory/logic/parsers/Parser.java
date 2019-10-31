@@ -110,8 +110,7 @@ public class Parser {
         //Commands which require string input.
         case "add": {
             if (inputArr.length == 1) { //User command only said "add" and nothing else.
-                //TODO: Instead of BadInputException, we should be returning a helpCommand.
-                throw new InsufficientInfoException("'" + inputArr[0] + "' requires 1 or more arguments.");
+                throw new InsufficientInfoException(CommandDictionary.getCommandUsage("add"));
             } else {
                 command = addParser.parse(inputArr[1]);
             }
