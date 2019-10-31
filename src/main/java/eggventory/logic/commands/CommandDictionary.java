@@ -15,25 +15,25 @@ public class CommandDictionary {
      */
     public CommandDictionary() {
         // Add Commands
-        commandDict.add(new Pair<>("add stock", "<Stock Type> <Stock Code> <Quantity> <Description>"));
-        commandDict.add(new Pair<>("add stocktype", "<Stock Type>"));
-        commandDict.add(new Pair<>("add person", "<Matric No.> <Name>"));
-        commandDict.add(new Pair<>("add template", "<Template Name>"));
+        commandDict.add(new Pair<>("add stock", "<StockType> <StockCode> <Quantity> <Description>"));
+        commandDict.add(new Pair<>("add stocktype", "<StockType>"));
+        commandDict.add(new Pair<>("add person", "<MatricNo> <Name>"));
+        commandDict.add(new Pair<>("add template", "<TemplateName>"));
 
         // Delete Commands
-        commandDict.add(new Pair<>("delete stock", "<Stock Code>"));
-        commandDict.add(new Pair<>("delete stocktype", "<Stock Type>"));
-        commandDict.add(new Pair<>("delete person", "<Matric No.>"));
-        commandDict.add(new Pair<>("delete template", "<Template Name>"));
+        commandDict.add(new Pair<>("delete stock", "<StockCode>"));
+        commandDict.add(new Pair<>("delete stocktype", "<StockType>"));
+        commandDict.add(new Pair<>("delete person", "<MatricNo>"));
+        commandDict.add(new Pair<>("delete template", "<TemplateName>"));
 
         // Edit Commands
-        commandDict.add(new Pair<>("edit stock", "<Stock Code> <Property> <New Value>"));
-        commandDict.add(new Pair<>("edit person", "<Property> <New Value>"));
+        commandDict.add(new Pair<>("edit stock", "<StockCode> <Property> <NewValue>"));
+        commandDict.add(new Pair<>("edit person", "<Property> <NewValue>"));
 
         // List Commands
         commandDict.add(new Pair<>("list stock", null));
         commandDict.add(new Pair<>("list stocktype", "all"));
-        commandDict.add(new Pair<>("list stocktype", "<Stock Type>"));
+        commandDict.add(new Pair<>("list stocktype", "<StockType>"));
         commandDict.add(new Pair<>("list loan", null));
         commandDict.add(new Pair<>("list template", null));
         commandDict.add(new Pair<>("list lost", null));
@@ -44,13 +44,13 @@ public class CommandDictionary {
         commandDict.add(new Pair<>("find stocktype", "<Query>"));
 
         // Loan Commands
-        commandDict.add(new Pair<>("loan add", "<Matric No.> <Stock Code> <Quantity>"));
+        commandDict.add(new Pair<>("loan add", "<MatricNo> <StockCode> <Quantity>"));
         commandDict.add(new Pair<>("loan add", "<Template Name>"));
-        commandDict.add(new Pair<>("loan returned", "<Matric No.> <Stock Code> <Quantity>"));
-        commandDict.add(new Pair<>("loan returned", "<Matric No.> <Template Name>"));
+        commandDict.add(new Pair<>("loan returned", "<MatricNo> <StockCode> <Quantity>"));
+        commandDict.add(new Pair<>("loan returned", "<MatricNo> <TemplateName>"));
 
         // Lost Commands
-        commandDict.add(new Pair<>("lost", "<Stock Code> <Quantity>"));
+        commandDict.add(new Pair<>("lost", "<StockCode> <Quantity>"));
 
         // Bye Commands
         commandDict.add(new Pair<>("bye", null));
@@ -101,4 +101,6 @@ public class CommandDictionary {
         // Returns an empty ArrayList if no match has been found.
         return curSearch;
     }
+
+
 }
