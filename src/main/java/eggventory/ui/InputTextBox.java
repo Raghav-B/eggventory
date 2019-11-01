@@ -47,6 +47,7 @@ public class InputTextBox {
     public void appendText(String appendString, int searchDirection) {
         String newLeftString = leftText.getText() + appendString;
         String finalString = newLeftString + rightText.getText();
+
         // Getting updated search result for new text.
         String searchResultText = inputPredictor.getPrediction(finalString, searchDirection);
         searchText.setText(searchResultText);
@@ -66,7 +67,8 @@ public class InputTextBox {
         // Additional check in case the current deletion will make
         // inputField blank.
         if (curLeftString.length() - 1 < 0) {
-            // Handling case where rightText is not empty yet.
+            // Handling case where rightText is not empty yet. In this case, we do not want to
+            // empty the entire text input.
             if (!curRightString.equals("")) {
                 return;
             }
@@ -74,6 +76,7 @@ public class InputTextBox {
             return;
         }
 
+        // Needed to ensure colour of text is displayed properly.
         if (rightText.getText().equals("")) {
             rightText.setFill(Color.LIGHTGRAY);
         }
@@ -103,7 +106,6 @@ public class InputTextBox {
         if (direction == -1 && leftString.length() > 0) { // left caret movement
             rightString = leftString.charAt(leftString.length() - 1) + rightString;
             leftString = leftString.substring(0, leftString.length() - 1);
-            //rightText.setFill(Color.BLACK);
         } else if (direction == 1 && rightString.length() > 0) { // right caret movement
             leftString += rightString.charAt(0);
             rightString = rightString.substring(1);
@@ -112,6 +114,7 @@ public class InputTextBox {
         leftText.setText(leftString);
         rightText.setText(rightString);
 
+        // Needed to ensure colour of text is displayed properly.
         if (!rightText.getText().equals("")) {
             rightText.setFill(Color.BLACK);
         }
