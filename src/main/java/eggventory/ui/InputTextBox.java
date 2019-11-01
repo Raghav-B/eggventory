@@ -35,14 +35,14 @@ public class InputTextBox {
     }
 
     /**
-     * Appends a character to normalText when a key is pressed.
-     * @param appendChar Character to append to text.
+     * Appends text to normalText.
+     * @param appendText Character to append to text.
      * @param searchDirection Only used when method is used for cycling through
      *                        command search results. Default value to be passed
      *                        in is 0.
      */
-    public void appendText(String appendChar, int searchDirection) {
-        String finalText = normalText.getText() + appendChar;
+    public void appendText(String appendText, int searchDirection) {
+        String finalText = normalText.getText() + appendText;
         // Getting updated search result for new text.
         String searchResultText = inputPredictor.getPrediction(finalText, searchDirection);
         searchText.setText(searchResultText);

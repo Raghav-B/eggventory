@@ -1,5 +1,6 @@
 package eggventory.ui;
 
+import eggventory.logic.commands.Command;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
@@ -53,6 +54,7 @@ public class Gui extends Ui  {
                 e.printStackTrace();
             }
 
+
             inputField = new InputTextBox(textFlow);
             outputTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
             printIntro();
@@ -69,6 +71,7 @@ public class Gui extends Ui  {
                             break;
                         }
                         runMethod.run();
+
                         break;
 
                     case BACK_SPACE:
@@ -84,22 +87,30 @@ public class Gui extends Ui  {
                         break;
 
                     case UP:
-                        if (inputField.getAllText().equals("")) {
+                        /*if (inputField.getAllText().equals("")) {
                             // Can't cycle through command possibilities when
                             // inputField is empty.
                             break;
                         }
                         inputField.appendText("", -1);
+                        break;*/
+                        inputField.clearAllText();
+                        inputField.appendText(CommandHistory.getCommand(-1), 0);
                         break;
 
                     case DOWN:
-                        if (inputField.getAllText().equals("")) {
+                        /*if (inputField.getAllText().equals("")) {
                             // Can't cycle through command possibilities when
                             // inputField is empty.
                             break;
                         }
                         inputField.appendText("", 1);
+                        break;*/
+                        inputField.clearAllText();
+                        inputField.appendText(CommandHistory.getCommand(1), 0);
                         break;
+
+
                     default:
                         // To appease mr. travis
                         break;
@@ -123,6 +134,7 @@ public class Gui extends Ui  {
      */
     public String read() {
         String userInput = inputField.getAllText();
+        CommandHistory.addToHistory(userInput);
         inputField.clearAllText();
         outputField.appendText("\n" + userInput);
         return userInput;
