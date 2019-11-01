@@ -8,8 +8,9 @@ import javafx.scene.text.TextFlow;
 public class InputTextBox {
 
     private TextFlow textFlow;
-    private Text normalText; // User's raw input
+    private Text leftText; // User's raw input left of caret
     private Text caretText; // Used to emulate a caret for ease of input
+    private Text rightText; // User's raw input right of caret
     private Text searchText; // Displays predictive text in an autocomplete fashion.
 
     private InputPredictor inputPredictor;
@@ -25,13 +26,14 @@ public class InputTextBox {
         this.textFlow = textFlow;
         this.inputPredictor = new InputPredictor();
 
-        normalText = new Text("");
+        leftText = new Text("");
         caretText = new Text("|");
         caretText.setFill(Color.BLUE);
+        rightText = new Text(null);
         searchText = new Text("");
         searchText.setFill(Color.LIGHTGRAY);
 
-        textFlow.getChildren().setAll(normalText, caretText, searchText);
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
 
     /**
@@ -46,17 +48,17 @@ public class InputTextBox {
         // Getting updated search result for new text.
         String searchResultText = inputPredictor.getPrediction(finalText, searchDirection);
         searchText.setText(searchResultText);
-        normalText.setText(finalText);
+        leftText.setText(finalText);
 
         // Update inputField
-        textFlow.getChildren().setAll(normalText, caretText, searchText);
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
 
     /**
      * Deletes tail character from normalText when backspace is pressed.
      */
     public void removeFromWord() {
-        String curText = normalText.getText();
+        String curText = leftText.getText();
 
         // Additional check in case the current deletion will make
         // inputField blank.
@@ -69,11 +71,34 @@ public class InputTextBox {
         String newText = curText.substring(0, curText.length() - 1);
         // Getting updated search result for new text.
         String searchResultText = inputPredictor.getPrediction(newText, 0);
-        normalText.setText(newText);
+        leftText.setText(newText);
         searchText.setText(searchResultText);
 
         // Update inputField
-        textFlow.getChildren().setAll(normalText, caretText, searchText);
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
+    }
+
+    /**
+     * Moved the caret postion so that user can edit text with more flexibility.
+     * @param direction -1: Move caret towards left.
+     *                  1: Move caret towards right.
+     */
+    public void moveCaret(int direction) {
+        String leftString = leftText.getText();
+        String rightString = rightText.getText();
+
+        if (direction == -1 && leftString.length() > 0) { // left caret movement
+            rightString = leftString.charAt(leftString.length() - 1) + rightString;
+            leftString = leftString.substring(0, leftString.length() - 1);
+        } else if (direction == 1 && rightString.length() > 0) { // right caret movement
+            leftString += rightString.charAt(0);
+            rightString = rightString.substring(1);
+        }
+
+        leftText.setText(leftString);
+        rightText.setText(rightString);
+        // Update inputField
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
 
     /**
@@ -88,8 +113,8 @@ public class InputTextBox {
             return;
         }
 
-        String newText = normalText.getText() + searchText.getText();
-        normalText.setText(newText);
+        String newText = leftText.getText() + searchText.getText();
+        leftText.setText(newText);
         // Empty searchText since it has been with normalText.
         searchText.setText("");
 
@@ -103,7 +128,7 @@ public class InputTextBox {
         searchText.setText(searchResultText);
 
         // Update inputField
-        textFlow.getChildren().setAll(normalText, caretText, searchText);
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
 
     /**
@@ -111,7 +136,7 @@ public class InputTextBox {
      * @return all normalText as a String.
      */
     public String getAllText() {
-        return normalText.getText();
+        return leftText.getText() + rightText.getText();
     }
 
     /**
@@ -121,10 +146,10 @@ public class InputTextBox {
         // Resets internal search parameters because user input is to be cleared
         // and so user can input all possible inputs.
         inputPredictor.reset();
-        normalText.setText("");
+        leftText.setText("");
         searchText.setText("");
 
         // Update inputField
-        textFlow.getChildren().setAll(normalText, caretText, searchText);
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
 }

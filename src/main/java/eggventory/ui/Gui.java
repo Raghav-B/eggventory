@@ -110,6 +110,15 @@ public class Gui extends Ui  {
                         inputField.appendText(CommandHistory.getCommand(1), 0);
                         break;
 
+                    case LEFT:
+                        // Used to move caret to edit text on the left.
+                        inputField.moveCaret(-1);
+                        break;
+
+                    case RIGHT:
+                        // Used to move caret to edit text on the right.
+                        inputField.moveCaret(1);
+                        break;
 
                     default:
                         // To appease mr. travis
@@ -155,7 +164,7 @@ public class Gui extends Ui  {
      * that it uses to redraw the entire table.
      * @param tableStruct Structure that holds all data to be displayed.
      */
-    public void drawTable(TableStruct tableStruct) { // TODO: Change to master list...
+    public void drawTable(TableStruct tableStruct) {
         outputTable.getColumns().clear();
         outputTable.getItems().clear();
         outputTable.refresh();
