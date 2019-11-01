@@ -100,6 +100,17 @@ public class Gui extends Ui  {
                         }
                         inputField.appendText("", 1);
                         break;
+
+                    case LEFT:
+                        // Used to move caret to edit text on the left.
+                        inputField.moveCaret(-1);
+                        break;
+
+                    case RIGHT:
+                        // Used to move caret to edit text on the right.
+                        inputField.moveCaret(1);
+                        break;
+
                     default:
                         // To appease mr. travis
                         break;

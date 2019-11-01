@@ -1,6 +1,7 @@
 package eggventory.logic.parsers;
 
 import eggventory.logic.commands.Command;
+import eggventory.logic.commands.CommandDictionary;
 import eggventory.logic.commands.FindCommand;
 import eggventory.logic.HelpCommand;
 import eggventory.logic.commands.ByeCommand;
@@ -110,7 +111,7 @@ public class Parser {
         //Commands which require string input.
         case "add": {
             if (inputArr.length == 1) { //User command only said "add" and nothing else.
-                throw new InsufficientInfoException(CommandDictionary.getCommandUsage("add"));
+                throw new InsufficientInfoException("'" + inputArr[0] + "' requires 1 or more arguments.");
             } else {
                 command = addParser.parse(inputArr[1]);
             }
