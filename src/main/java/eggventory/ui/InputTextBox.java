@@ -29,7 +29,8 @@ public class InputTextBox {
         leftText = new Text("");
         caretText = new Text("|");
         caretText.setFill(Color.BLUE);
-        rightText = new Text(null);
+        rightText = new Text("");
+        rightText.setFill(Color.LIGHTGRAY);
         searchText = new Text("");
         searchText.setFill(Color.LIGHTGRAY);
 
@@ -38,17 +39,18 @@ public class InputTextBox {
 
     /**
      * Appends text to normalText.
-     * @param appendText Character to append to text.
+     * @param appendString Character to append to text.
      * @param searchDirection Only used when method is used for cycling through
      *                        command search results. Default value to be passed
      *                        in is 0.
      */
-    public void appendText(String appendText, int searchDirection) {
-        String finalText = normalText.getText() + appendText;
+    public void appendText(String appendString, int searchDirection) {
+        String newLeftString = leftText.getText() + appendString;
+        String finalString = newLeftString + rightText.getText();
         // Getting updated search result for new text.
-        String searchResultText = inputPredictor.getPrediction(finalText, searchDirection);
+        String searchResultText = inputPredictor.getPrediction(finalString, searchDirection);
         searchText.setText(searchResultText);
-        leftText.setText(finalText);
+        leftText.setText(newLeftString);
 
         // Update inputField
         textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
@@ -58,20 +60,31 @@ public class InputTextBox {
      * Deletes tail character from normalText when backspace is pressed.
      */
     public void removeFromWord() {
-        String curText = leftText.getText();
+        String curLeftString = leftText.getText();
+        String curRightString = rightText.getText();
 
         // Additional check in case the current deletion will make
         // inputField blank.
-        if (curText.length() - 1 <= 0) {
+        if (curLeftString.length() - 1 < 0) {
+            // Handling case where rightText is not empty yet.
+            if (!curRightString.equals("")) {
+                return;
+            }
             clearAllText();
             return;
         }
 
+        if (rightText.getText().equals("")) {
+            rightText.setFill(Color.LIGHTGRAY);
+        }
+
         // Removing last character from text.
-        String newText = curText.substring(0, curText.length() - 1);
+        String newLeftString = curLeftString.substring(0, curLeftString.length() - 1);
+        String finalString = newLeftString + curRightString;
+
         // Getting updated search result for new text.
-        String searchResultText = inputPredictor.getPrediction(newText, 0);
-        leftText.setText(newText);
+        String searchResultText = inputPredictor.getPrediction(finalString, 0);
+        leftText.setText(newLeftString);
         searchText.setText(searchResultText);
 
         // Update inputField
@@ -90,6 +103,7 @@ public class InputTextBox {
         if (direction == -1 && leftString.length() > 0) { // left caret movement
             rightString = leftString.charAt(leftString.length() - 1) + rightString;
             leftString = leftString.substring(0, leftString.length() - 1);
+            //rightText.setFill(Color.BLACK);
         } else if (direction == 1 && rightString.length() > 0) { // right caret movement
             leftString += rightString.charAt(0);
             rightString = rightString.substring(1);
@@ -97,6 +111,11 @@ public class InputTextBox {
 
         leftText.setText(leftString);
         rightText.setText(rightString);
+
+        if (!rightText.getText().equals("")) {
+            rightText.setFill(Color.BLACK);
+        }
+
         // Update inputField
         textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
     }
@@ -113,8 +132,9 @@ public class InputTextBox {
             return;
         }
 
-        String newText = leftText.getText() + searchText.getText();
+        String newText = leftText.getText() + rightText.getText() + searchText.getText();
         leftText.setText(newText);
+        rightText.setText("");
         // Empty searchText since it has been with normalText.
         searchText.setText("");
 
@@ -147,6 +167,7 @@ public class InputTextBox {
         // and so user can input all possible inputs.
         inputPredictor.reset();
         leftText.setText("");
+        rightText.setText("");
         searchText.setText("");
 
         // Update inputField
