@@ -58,9 +58,9 @@ public class InputTextBox {
     }
 
     /**
-     * Deletes tail character from normalText when backspace is pressed.
+     * Deletes character on left of caret when backspace is pressed.
      */
-    public void removeFromWord() {
+    public void removeTextBackspace() {
         String curLeftString = leftText.getText();
         String curRightString = rightText.getText();
 
@@ -88,6 +88,39 @@ public class InputTextBox {
         // Getting updated search result for new text.
         String searchResultText = inputPredictor.getPrediction(finalString, 0);
         leftText.setText(newLeftString);
+        searchText.setText(searchResultText);
+
+        // Update inputField
+        textFlow.getChildren().setAll(leftText, caretText, rightText, searchText);
+    }
+
+    /**
+     * Deletes character on right of caret when delete key is pressed.
+     */
+    public void removeWordDelete() {
+        String curLeftString = leftText.getText();
+        String curRightString = rightText.getText();
+
+        // Additional check in case the current deletion is occurring
+        // at the rightmost side of the text input, therefore not deleting
+        // anything.
+        if (curRightString.length() - 1 < 0) {
+            rightText.setFill(Color.LIGHTGRAY);
+            return;
+        }
+
+        // Removing last character from text.
+        String newRightString = curRightString.substring(1);
+        String finalString = curLeftString + newRightString;
+
+        rightText.setText(newRightString);
+        // Needed to ensure colour of text is displayed properly.
+        if (rightText.getText().equals("")) {
+            rightText.setFill(Color.LIGHTGRAY);
+        }
+
+        // Getting updated search result for new text.
+        String searchResultText = inputPredictor.getPrediction(finalString, 0);
         searchText.setText(searchResultText);
 
         // Update inputField

@@ -1,6 +1,5 @@
 package eggventory.ui;
 
-import eggventory.logic.commands.Command;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
@@ -9,7 +8,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -71,11 +69,14 @@ public class Gui extends Ui  {
                             break;
                         }
                         runMethod.run();
-
                         break;
 
                     case BACK_SPACE:
-                        inputField.removeFromWord();
+                        inputField.removeTextBackspace();
+                        break;
+
+                    case DELETE:
+                        inputField.removeWordDelete();
                         break;
 
                     case TAB:
@@ -87,25 +88,11 @@ public class Gui extends Ui  {
                         break;
 
                     case UP:
-                        /*if (inputField.getAllText().equals("")) {
-                            // Can't cycle through command possibilities when
-                            // inputField is empty.
-                            break;
-                        }
-                        inputField.appendText("", -1);
-                        break;*/
                         inputField.clearAllText();
                         inputField.appendText(CommandHistory.getCommand(-1), 0);
                         break;
 
                     case DOWN:
-                        /*if (inputField.getAllText().equals("")) {
-                            // Can't cycle through command possibilities when
-                            // inputField is empty.
-                            break;
-                        }
-                        inputField.appendText("", 1);
-                        break;*/
                         inputField.clearAllText();
                         inputField.appendText(CommandHistory.getCommand(1), 0);
                         break;
