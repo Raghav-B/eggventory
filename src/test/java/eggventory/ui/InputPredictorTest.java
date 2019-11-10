@@ -16,16 +16,16 @@ public class InputPredictorTest {
     @Test
     public void testGetPrediction_Command_Succeeds() {
         String incompleteInput = "ad";
-        assertEquals(incompleteInput + inputPredictor.getPrediction(incompleteInput, 0),
-                "add stock");
+        assertEquals("add stock",
+                incompleteInput + inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput = "b";
-        assertEquals(incompleteInput + inputPredictor.getPrediction(incompleteInput, 0),
-                "bye");
+        assertEquals("bye",
+                incompleteInput + inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput = "add stockt";
-        assertEquals(incompleteInput + inputPredictor.getPrediction(incompleteInput, 0),
-                "add stocktype");
+        assertEquals("add stocktype",
+                incompleteInput + inputPredictor.getPrediction(incompleteInput, 0));
     }
 
     @Test
@@ -33,36 +33,36 @@ public class InputPredictorTest {
         String incompleteInput = "udfvjh";
         String remainString = inputPredictor.getPrediction(incompleteInput, 0);
 
-        assertEquals(remainString, "");
+        assertEquals("", remainString);
     }
 
     @Test
     void testGetPrediction_Argument_Succeeds() {
         String incompleteInput = "add stock";
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                " <StockType> <StockCode> <Quantity> <Description> [Optional: -m <Minimum quantity>]");
+        assertEquals(" <StockType> <StockCode> <Quantity> <Description> [Optional: -m <Minimum quantity>]",
+                inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput += " ";
         System.out.println(inputPredictor.getPrediction(incompleteInput, 0));
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                "<StockType> <StockCode> <Quantity> <Description> [Optional: -m <Minimum quantity>] ");
+        assertEquals("<StockType> <StockCode> <Quantity> <Description> [Optional: -m <Minimum quantity>] ",
+                inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput += "Arduino 398SH ";
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                "<Quantity> <Description> [Optional: -m <Minimum quantity>] ");
+        assertEquals("<Quantity> <Description> [Optional: -m <Minimum quantity>] ",
+                inputPredictor.getPrediction(incompleteInput, 0));
 
         inputPredictor.reset();
         incompleteInput = "edit stock";
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                " <StockCode> <Property> <NewValue>");
+        assertEquals(" <StockCode> <Property> <NewValue>",
+                inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput += " Arduino";
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                " <Property> <NewValue> ");
+        assertEquals(" <Property> <NewValue> ",
+                inputPredictor.getPrediction(incompleteInput, 0));
 
         incompleteInput += " StockCode SH983";
-        assertEquals(inputPredictor.getPrediction(incompleteInput, 0),
-                " ");
+        assertEquals(" ",
+                inputPredictor.getPrediction(incompleteInput, 0));
     }
 }
 //@@author
