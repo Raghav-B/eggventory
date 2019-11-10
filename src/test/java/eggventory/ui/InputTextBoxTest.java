@@ -39,12 +39,12 @@ public class InputTextBoxTest {
         String curText = inputTextBox.getAllText();
 
         inputTextBox.removeTextBackspace();
-        curText = curText.substring(0, curText.length()-1);
+        curText = curText.substring(0, curText.length() - 1);
         assertEquals(curText, inputTextBox.getAllText());
 
         inputTextBox.removeTextBackspace();
         inputTextBox.removeTextBackspace();
-        curText = curText.substring(0, curText.length()-2);
+        curText = curText.substring(0, curText.length() - 2);
         assertEquals(curText, inputTextBox.getAllText());
     }
 
@@ -87,11 +87,11 @@ public class InputTextBoxTest {
     public void testMoveCaret_Left_ThenBackspace() {
         testMoveCaret_Left();
         String curText = inputTextBox.getAllText();
-        String leftText = curText.substring(0,curText.length()-9);
-        String rightText = curText.substring(curText.length()-9);
+        String leftText = curText.substring(0,curText.length() - 9);
+        String rightText = curText.substring(curText.length() - 9);
 
         // Backspace 3 characters
-        leftText = leftText.substring(0, leftText.length()-3);
+        leftText = leftText.substring(0, leftText.length() - 3);
         for (int i = 0; i < 3; i++) {
             inputTextBox.removeTextBackspace();
         }
@@ -103,8 +103,8 @@ public class InputTextBoxTest {
     public void testMoveCaret_Left_ThenDelete() {
         testMoveCaret_Left();
         String curText = inputTextBox.getAllText();
-        String leftText = curText.substring(0,curText.length()-9);
-        String rightText = curText.substring(curText.length()-9);
+        String leftText = curText.substring(0,curText.length() - 9);
+        String rightText = curText.substring(curText.length() - 9);
 
         // Deleting 3 characters
         rightText = rightText.substring(3);
