@@ -1,6 +1,6 @@
 # Eggventory User Guide
 By: Team F09-03  
-Dated: 8 November 2019  
+Dated: 11 November 2019  
 
 ## Table of contents  
 
@@ -223,7 +223,7 @@ Optional Parameters: **[coming in v2.0]**
 
 Format: `add person <MatricNo> {<flag> <optional parameter>}`  
   
-eg. `add person A0187654 Raghav -c CEG -m CG2271 =m CS2113T`  
+eg. `add person A0187654 Raghav -c CEG -m CG2271 -m CS2113T`  
   
 #### 3.4.2 Deleting a Person:` delete person`  
   This removes a person from being tracked. All their outstanding loans remain in the system and have to be deleted separately.  
@@ -418,30 +418,39 @@ Eggventory supports undo-ing and redo-ing of commands you have entered by accide
   
 #### 3.10.1 Undoing a command: `undo`
   
-In the event that you have accidentally deleted an item
+Did you accidentally delete the wrong Stock? Not to worry! You can use the `undo` command to undo your error and correct any disastrous mistakes!
 
-If you accidentally entered a command by accident, the effects of any command can be reversed with the undo command. You can undo the following previous commands:
+As stated above, `undo` works for the `add`, `delete`, and `edit` commands.
 
-
-  
  Format: `undo`  
   
 #### 3.10.2 Reversing an undo command: `redo`  
     
-Undoing a command can be reversed using the redo command.  
+Did you want to delete that Stock after all? You can reverse your `undo` command using the `redo` command!
+
+As stated above, `redo` works for the `add`, `delete`, and `edit` commands.
 
 Format: `redo`  
+
+Below is an example of the `undo` and `redo` commands in use.
 
   e.g.
    ![](images/add_below_undoredo.png)
 ---  
 ### 3.11 Setting autosave options: **[coming in v2.0]**
-  Eggventory automatically saves the current inventory to the disk every time data is added, removed, or edited. You can disable this feature with this command. Eggventory will then save only when the program exits.  
+  Eggventory automatically saves the current inventory to the disk every time data is added, removed, or edited. This saves you from the paranoia of having to save after every change you make, since Eggventory handles saving for you!
+  
+  However, you can disable this feature with this command. Eggventory will then save only when the program exits.  
   
 Format: `autosave on` OR `autosave off`  
   
 ---  
 ### 3.12 Exiting the program: `bye`  
+
+Finished with your work and would like to safely quit Eggventory? Type in the `bye` command and Eggventory will save your inventory and close.
+
+Goodbye and thank you for using Eggventory! We hope to see you again!
+
 Format: `bye`  
   
 ## 4. FAQ    
