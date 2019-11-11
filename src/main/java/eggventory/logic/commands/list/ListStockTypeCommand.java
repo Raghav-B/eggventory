@@ -4,8 +4,10 @@ import eggventory.model.StockList;
 import eggventory.storage.Storage;
 import eggventory.logic.commands.Command;
 import eggventory.commons.enums.CommandType;
-import eggventory.commons.exceptions.BadInputException;
 import eggventory.ui.Ui;
+import eggventory.commons.exceptions.BadInputException;
+
+//@@author yanprosobo
 
 public class ListStockTypeCommand extends Command {
     private String query;
@@ -15,9 +17,14 @@ public class ListStockTypeCommand extends Command {
         this.query = query;
     }
 
-
+    /**
+     * Executes the list command.
+     * @param list Stocklist object.
+     * @param ui ui object.
+     * @param storage storage objcet.
+     */
     @Override
-    public String execute(StockList list, Ui ui, Storage storage) {
+    public String execute(StockList list, Ui ui, Storage storage) throws BadInputException {
         String output = "";
 
         if (query.equals("all")) { // list stocktype all command
@@ -27,20 +34,21 @@ public class ListStockTypeCommand extends Command {
             ui.print(output);
             // Drawing stock data in GUI table.
             ui.drawTable(list.getAllStockTypesStruct());
+        } else if (!list.isExistingStockType(query)) {
+            throw new BadInputException("Invalid command: No such stocktype exists!");
+        } else if (list.isStocktypeZeroQuantity(query)) {
+            output = "There is currently 0 stock with that stocktype.";
+            ui.print(output);
         } else { // list stocktype <Stock Type> command
             String listString = "";
-            listString = list.findStock(query);
+            listString = list.queryStocks(query);
             output = listString;
 
-            if (listString.equals("")) {
-                ui.print("Invalid command: No such stocktype exists!");
-            } else {
-                ui.print(output);
-                // Drawing data on stocks under specific stocktype in GUI table.
-                ui.drawTable(list.getAllStocksInStockTypeStruct(query));
-            }
+            ui.print(output);
+            // Drawing data on stocks under specific stocktype in GUI table.
+            ui.drawTable(list.getAllStocksInStockTypeStruct(query));
         }
-
         return output;
     }
 }
+//@@author

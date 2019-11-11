@@ -1,9 +1,15 @@
 package eggventory.model.items;
 
+import eggventory.commons.exceptions.BadInputException;
+
 import java.util.ArrayList;
 
-//@@author cyanoei
 
+//@@author cyanoei-unused
+
+//Unused because implementation of UniqueStock has been pushed back to v2.0.
+
+//Since 5 Nov the quantity-related features have been broken by the sanity check for negatives.
 /**
  * A child of the Stock class.
  * A UniqueStock is a group of many items (eg. Arduino Uno) that share the same stockCode, description etc.,
@@ -25,7 +31,8 @@ public class UniqueStock extends Stock {
      * @param quantity    The quantity (number of items) of this stock.
      * @param description The name of the stock. (eg. 500ohm resistor, mini breadboard)
      */
-    public UniqueStock(String stockType, String stockCode, int quantity, String description) {
+    public UniqueStock(String stockType, String stockCode, int quantity, String description)
+            throws BadInputException {
         super(stockType, stockCode, quantity, description);
         for (int i = 0; i < quantity; i++) {
             uniqueStockList.add(new Item(i + 1));
@@ -43,7 +50,7 @@ public class UniqueStock extends Stock {
             uniqueStockList.add(new Item(oldTotal + i));
         }
 
-        super.setQuantity(oldTotal + addQuantity); //Updates the quantity
+        //super.setQuantity(oldTotal + addQuantity); //Updates the quantity
     }
 
     /**
@@ -52,7 +59,7 @@ public class UniqueStock extends Stock {
      */
     public void addUnique(int index) {
         uniqueStockList.add(new Item(index));
-        super.setQuantity(super.getQuantity() + 1); //Increment quantity.
+        //super.setQuantity(super.getQuantity() + 1); //Increment quantity.
     }
 
     /**
@@ -75,12 +82,12 @@ public class UniqueStock extends Stock {
             uniqueStockList.remove(targetItem);
         }
 
-        super.setQuantity(super.getQuantity() - 1); //Decrement quantity.
+        //super.setQuantity(super.getQuantity() - 1); //Decrement quantity.
     }
 
     //Note: toString works as per normal, treating UniqueStock as a CollectiveStock.
 
-    //TODO: Provide a 'detailed' version of the print string to show individual items.
+    //Provide a 'detailed' version of the print string to show individual items.
     public void printUniqueStocks() {
        /*
            A header with all the usual info, maybe using toString.
@@ -94,8 +101,8 @@ public class UniqueStock extends Stock {
         */
     }
 
-    //TODO: Update both print and save method in Item class, and iterate through all of them here.
-    //  Should be similar to StockType printing methods.
+    //Update both print and save method in Item class, and iterate through all of them here.
+    //Should be similar to StockType printing methods.
     /**
      * Formats all stock details appropriately to be saved to file.
      * @return the string to save.

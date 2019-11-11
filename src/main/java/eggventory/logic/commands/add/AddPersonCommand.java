@@ -40,6 +40,13 @@ public class AddPersonCommand extends Command {
                 + "Matriculation No.: %s | Name: %s", matricNo, name);
 
         ui.print(output);
+        ui.drawTable(PersonList.getAllPersonStruct());
+
         return output;
+    }
+
+    //Used by load function
+    public void executeLoadPersonList(PersonList personList) throws BadInputException {
+        personList.add(matricNo, name);
     }
 }

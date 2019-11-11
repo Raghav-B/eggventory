@@ -1,5 +1,7 @@
 package eggventory.logic.commands.edit;
 
+import eggventory.commons.exceptions.BadInputException;
+import eggventory.logic.QuantityManager;
 import eggventory.model.StockList;
 import eggventory.storage.Storage;
 import eggventory.logic.commands.Command;
@@ -40,17 +42,11 @@ public class EditStockCommand extends Command {
      * @param ui Ui implementation to display output to.
      * @param storage  Storage object to handle saving and loading of any data.
      * @return String of the output, for JUnit testing.
+     * @throws BadInputException if any inputs are not accepted.
      */
     @Override
-    public String execute(StockList list, Ui ui, Storage storage) {
+    public String execute(StockList list, Ui ui, Storage storage) throws BadInputException {
         String output;
-
-        if (property == StockProperty.STOCKCODE && list.isExistingStockCode(newValue)) {
-            output = String.format("Sorry, the stock code \"%s\" is already assigned to a stock in the system. "
-                    + "Please enter a different stock code.", newValue);
-            ui.print(output);
-            return output;
-        }
 
         Stock edited = list.setStock(stockCode, property, newValue);
         output = String.format("Awesome! I have successfully updated the following stock:\n"
@@ -58,12 +54,10 @@ public class EditStockCommand extends Command {
                         + "stockcode: %s\n"
                         + "quantity: %d\n"
                         + "description: %s\n"
-                        + "minimum: %s\n"
-                        + "lost: %s\n"
-                        + "loaned: %s\n"
-                        + "available: %s",
+                        + "minimum: %s",
                 edited.getStockType(), edited.getStockCode(), edited.getQuantity(), edited.getDescription(),
-                edited.getMinimum(), edited.getLost(), edited.getLoaned(), edited.numAvailable());
+                edited.getMinimum());
+        output += QuantityManager.checkMinimum(edited);
         storage.save(list);
         ui.print(output);
         // Drawing stock data in GUI table.

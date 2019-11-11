@@ -1,7 +1,8 @@
 package eggventory.logic.commands;
 
-import java.util.ArrayList;
 import javafx.util.Pair;
+
+import java.util.ArrayList;
 
 //@@author Raghav-B
 public class CommandDictionary {
@@ -16,10 +17,11 @@ public class CommandDictionary {
      */
     public CommandDictionary() {
         // Add Commands
-        commandDict.add(new Pair<>("add stock", "<StockType> <StockCode> <Quantity> <Description>"));
+        commandDict.add(new Pair<>("add stock", "<StockType> <StockCode> <Quantity> <Description> "
+                + "[Optional: -m <Minimum quantity>]"));
         commandDict.add(new Pair<>("add stocktype", "<StockType>"));
         commandDict.add(new Pair<>("add person", "<MatricNo> <Name>"));
-        commandDict.add(new Pair<>("add template", "<TemplateName>"));
+        commandDict.add(new Pair<>("add template", "<TemplateName> {<StockCode>, <Quantity>}"));
 
         // Delete Commands
         commandDict.add(new Pair<>("delete stock", "<StockCode>"));
@@ -29,7 +31,8 @@ public class CommandDictionary {
 
         // Edit Commands
         commandDict.add(new Pair<>("edit stock", "<StockCode> <Property> <NewValue>"));
-        commandDict.add(new Pair<>("edit person", "<Property> <NewValue>"));
+        commandDict.add(new Pair<>("edit stocktype", "<StockType> <NewStockType>"));
+        commandDict.add(new Pair<>("edit person", "<MatricNo> <Property> <NewValue>"));
 
         // List Commands
         commandDict.add(new Pair<>("list stock", null));
@@ -37,24 +40,31 @@ public class CommandDictionary {
         commandDict.add(new Pair<>("list stocktype", "<StockType>"));
         commandDict.add(new Pair<>("list loan", null));
         commandDict.add(new Pair<>("list template", null));
+        commandDict.add(new Pair<>("list template", "<TemplateName>"));
         commandDict.add(new Pair<>("list lost", null));
         commandDict.add(new Pair<>("list person", null));
         commandDict.add(new Pair<>("list person", "<MatricNo>"));
 
-        // Find Commands
-        commandDict.add(new Pair<>("find stock", "<Query>"));
-        commandDict.add(new Pair<>("find stocktype", "<Query>"));
+        // List Minimum Commands
+        commandDict.add(new Pair<>("list minimum", null));
+        commandDict.add(new Pair<>("list shopping", null));
 
         // Loan Commands
-        commandDict.add(new Pair<>("loan add", "<MatricNo> <StockCode> <Quantity>"));
-        commandDict.add(new Pair<>("loan add", "<Template Name>"));
-        commandDict.add(new Pair<>("loan returned", "<MatricNo> <StockCode> <Quantity>"));
-        commandDict.add(new Pair<>("loan returned", "<MatricNo> <TemplateName>"));
+        commandDict.add(new Pair<>("add loan", "<MatricNo> <StockCode> <Quantity>"));
+        commandDict.add(new Pair<>("loan return", "<MatricNo> <StockCode> <Quantity>"));
+        commandDict.add(new Pair<>("loan returnall", "<MatricNo>"));
 
-        // Lost Commands
-        commandDict.add(new Pair<>("lost", "<StockCode> <Quantity>"));
+        // Template Commands
+        commandDict.add(new Pair<>("add template", "<TemplateName> {<StockCode> <Quantity>}"));
+        commandDict.add(new Pair<>("delete template", "<TemplateName>"));
+        commandDict.add(new Pair<>("add loan", "<Template Name>"));
 
-        // Bye Commands
+        // Find Commands
+        commandDict.add(new Pair<>("find description", "<Query>"));
+
+        // Other Commands
+        commandDict.add(new Pair<>("undo", null));
+        commandDict.add(new Pair<>("redo", null));
         commandDict.add(new Pair<>("bye", null));
     }
 

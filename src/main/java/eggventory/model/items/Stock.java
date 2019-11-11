@@ -1,8 +1,9 @@
 package eggventory.model.items;
 
 
+import eggventory.commons.exceptions.BadInputException;
+import eggventory.model.LoanList;
 import eggventory.model.loans.Loan;
-import eggventory.ui.Gui;
 
 import java.util.ArrayList;
 
@@ -36,13 +37,14 @@ public class Stock {
      * @param quantity The quantity (number of items) of this stock.
      * @param description The name of the stock. (eg. 500ohm resistor, mini breadboard.
      */
-    public Stock(String stockType, String stockCode, int quantity, String description) {
+    public Stock(String stockType, String stockCode, int quantity, String description)
+            throws BadInputException {
+        quantitySanityCheck(quantity);
         this.stockType = stockType;
         this.stockCode = stockCode;
         this.quantity = quantity;
         this.description = description;
-        this.loaned = 0;
-        this.lost = 0;
+        this.lost = 0; //For future use.
         this.minimum = 0;
     }
 
@@ -54,7 +56,13 @@ public class Stock {
         return stockType;
     }
 
-    //Should not allow updating of stockType for now (so no setter)
+    /**
+     * Updates the stockType. Only used when a stockType is renamed, to change the stockType of all Stocks under it.
+     * @param stockType the new stockType.
+     */
+    public void setStockType(String stockType) {
+        this.stockType = stockType;
+    }
 
     /** Gets the stock code.
      * @return the stock code.
@@ -90,6 +98,7 @@ public class Stock {
 
     //Note: The access to the quantity attribute might have to be changed in the future.
 
+    //@@author cyanoei
     /**
      * Gets the total number of this stock. Includes items lost and on loan.
      * @return total the total quantity of that stock.
@@ -98,30 +107,47 @@ public class Stock {
         return quantity;
     }
 
-
     /**
      * Sets the new total number of this stock. To be used by 'change' or 'qty' commands to modify the number.
      * @param newTotal the new total number of items.
      */
-    public void setQuantity(int newTotal) {
+    public void setQuantity(int newTotal) throws BadInputException {
+        quantitySanityCheck(newTotal);
+        quantityLoanCheck(newTotal);
         this.quantity = newTotal;
     }
 
     /**
-     * Gets the number of this stock that is on loan.
-     * @return loaned the number of loaned items.
+     * Checks if a quantity can be updated, based on the quantity of stock loaned out so far.
+     * @param newTotal the new quantity to change to.
+     * @throws BadInputException if there is more stock currently loaned than the new quantity being changed to.
      */
-    public int getLoaned() {
-        return loaned;
+    public void quantityLoanCheck(int newTotal) throws BadInputException {
+        int loanedQuantity = LoanList.getStockLoanedQuantity(stockCode);
+
+        if (loanedQuantity == 0) { //This means none of that stock has been loaned out, and this check doesn't matter.
+            return;
+        }
+
+        if (newTotal < loanedQuantity) {
+            throw new BadInputException(String.format("Sorry, you have %d of \"%s\" loaned out so far, "
+                            + "so the quantity cannot be changed to %d.",
+                    loanedQuantity, description, newTotal));
+        }
+
     }
 
-
     /**
-     * Sets the number of this stock on loan. To be used by the 'loan' command.
-     * @param loaned the number of items on loan.
+     * Checks if quantity input is reasonable.
+     * @param quantity the quantity of the stock.
+     * @throws BadInputException if the quantity is negative.
      */
-    public void setLoaned(int loaned) {
-        this.loaned = loaned;
+    public void quantitySanityCheck(int quantity) throws BadInputException {
+        if (quantity < 0) {
+            throw new BadInputException("Sorry, the quantity cannot be negative!");
+        } else if (quantity > 1000000) {
+            throw new BadInputException("Sorry, the quantity cannot be greater than 1 000 000!");
+        }
     }
 
     /**
@@ -151,12 +177,15 @@ public class Stock {
 
 
     /**
-     * Updates the minimum quantity of stock that the lab wishes to maintain. To be implemented in the future.
+     * Updates the minimum quantity of stock that the lab wishes to maintain.
      * @param minimum The minimum quantity.
      */
-    public void setMinimum(int minimum) {
+    public void setMinimum(int minimum) throws BadInputException {
+        quantitySanityCheck(minimum);
         this.minimum = minimum;
     }
+
+    //@@author
 
     /**
      * Calculates and returns the number of this stock available to the lab (not lost, not on loan).
@@ -164,6 +193,19 @@ public class Stock {
      */
     public int numAvailable() {
         return (quantity - loaned - lost);
+    }
+
+    /**
+     * Searches if the stock description contains the query.
+     * @param query The word to search for in the description
+     * @return True if query is within the description, else false.
+     */
+    public boolean containDescription(String query) {
+        if (this.getDescription().contains(query)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -183,45 +225,6 @@ public class Stock {
         return stockType + "," + stockCode + "," + quantity + "," + description + "," + minimum;
     }
 
-    //    /**
-    //     * Prints the complete details of all the items of this type.
-    //     * Format example: 560ohm Resistors: 280 available. 100 on loan. 20 lost. (400 total.)
-    //     * To be used with the 'stock all' command.
-    //     */
-    //    public String printAll() {
-    //        String output = description + ": " + numAvailable() + " available. " + loaned + " on loan. "
-    //                + lost + " lost. (" + quantity + " total.)";
-    //
-    //
-    //    }
-    //
-    //    /**
-    //     * Prints the name and number of available items. Used as part of printing a list of available items.
-    //     * Format example: 560ohm Resistors: 280
-    //     * To be used with the 'stock' command.
-    //     */
-    //    public void printAvailable() {
-    //        System.out.println(description + ": " + numAvailable() + " available.");
-    //    }
-    //
-    //    /**
-    //     * Prints the name and number of items on loan. Used as part of printing a list of items on loan.
-    //     * Format example: 560ohm Resistors: 100
-    //     * To be used with the 'stock loan' command.
-    //     */
-    //    public void printLoan() {
-    //        System.out.println(description + ": " + loaned + " on loan.");
-    //    }
-    //
-    //    /**
-    //     * Prints the name and number of lost items. Used as part of printing a list of lost items.
-    //     * Format example: 560ohm Resistors: 20
-    //     * To be used with the 'stock lost' command.
-    //     */
-    //    public void printLost() {
-    //        System.out.println(description + ": " + lost + " lost.");
-    //    }
-
     //@@author Raghav-B
     /**
      * Returns data of Stock in format that can be read by GUI's TableView.
@@ -233,6 +236,9 @@ public class Stock {
         dataArray.add(stockCode);
         dataArray.add(String.valueOf(quantity));
         dataArray.add(description);
+        dataArray.add(String.valueOf(minimum));
+        dataArray.add(String.valueOf(LoanList.getStockLoanedQuantity(stockCode)));
+
         return dataArray;
     }
     //@@author

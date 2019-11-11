@@ -1,5 +1,6 @@
 package eggventory.model.items;
 
+import eggventory.commons.exceptions.BadInputException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //@@author patwaririshab
 class StockTest {
     Stock testStock = new Stock("TestType", "#T",500, "Test");
+
+    StockTest() throws BadInputException {
+    }
 
     @Test
     void testGetStockType_success() {
@@ -48,18 +52,6 @@ class StockTest {
     }
 
     @Test
-    void testGetLoaned_haventBeenSetReturnsZero_success() {
-        assertEquals(0, testStock.getLoaned());
-    }
-
-    @Test
-    void testSetLoaned_ValidSetLoan_success() {
-        assertEquals(0, testStock.getLoaned());
-        testStock.setLoaned(2000);
-        assertEquals(2000, testStock.getLoaned());
-    }
-
-    @Test
     void testGetLost_haventBeenSetReturnZero_success() {
         assertEquals(0,testStock.getLost());
 
@@ -78,7 +70,7 @@ class StockTest {
     }
 
     @Test
-    void testSetMinimum_ValidNewMinimum_success() {
+    void testSetMinimum_ValidNewMinimum_success() throws BadInputException {
         assertEquals(0,testStock.getMinimum());
         testStock.setMinimum(500);
         assertEquals(500,testStock.getMinimum());
@@ -88,15 +80,6 @@ class StockTest {
     void testNumAvailable_noLostOrLoaned_returnTotal() {
         assertEquals(500,testStock.numAvailable());
 
-    }
-
-    @Test
-    void testNumAvailable_haveLostOrLoaned_returnTotal() {
-        assertEquals(500,testStock.numAvailable());
-        testStock.setLost(200);
-        assertEquals(300,testStock.numAvailable());
-        testStock.setLoaned(100);
-        assertEquals(200, testStock.numAvailable());
     }
 
     @Test

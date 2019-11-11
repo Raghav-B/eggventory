@@ -16,7 +16,6 @@ public class StockType {
     private String name;
     private ArrayList<Stock> stocks;
 
-
     /**
      * Creates a new StockType object. This overload should only be called from a Storage class.
      * @param name A unique name identifying the StockType.
@@ -50,7 +49,8 @@ public class StockType {
      * Adds a stock to the stockList.
      * @return True if item was added successfully.
      */
-    public boolean addStock(String stockType, String stockCode, int quantity, String description) {
+    public boolean addStock(String stockType, String stockCode, int quantity, String description)
+            throws BadInputException {
         stocks.add(new CollectiveStock(stockType, stockCode, quantity, description));
         return true;
     }
@@ -97,42 +97,10 @@ public class StockType {
      * @param quantity New quantity of the stock to change
      * @return Stock if stockCode is found, else null
      */
-    public Stock setStockQuantity(String stockCode, int quantity) {
+    public Stock setStockQuantity(String stockCode, int quantity) throws BadInputException {
         for (Stock stock : stocks) {
             if (stock.getStockCode().equals(stockCode)) {
                 stock.setQuantity(quantity);
-                return stock;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Accesses and updates loaned quantity of a stock.
-     * @param stockCode The current stockcode reffering to this stock
-     * @param quantity The new loaned quantity to change to
-     * @return Stock if stockCode is found, else null
-     */
-    public Stock setStockLoaned(String stockCode, int quantity) {
-        for (Stock stock : stocks) {
-            if (stock.getStockCode().equals(stockCode)) {
-                stock.setLoaned(quantity);
-                return stock;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Accesses and updates lost quantity of a stock.
-     * @param stockCode The current stockcode reffering to this stock
-     * @param quantity The new lost quantity to change to
-     * @return Stock if stockCode is found, else null
-     */
-    public Stock setStockLost(String stockCode, int quantity) {
-        for (Stock stock : stocks) {
-            if (stock.getStockCode().equals(stockCode)) {
-                stock.setLost(quantity);
                 return stock;
             }
         }
@@ -161,7 +129,7 @@ public class StockType {
      * @param quantity The new minimum quantity to change to
      * @return Stock if stockCode is found, else null
      */
-    public Stock setStockMinimum(String stockCode, int quantity) {
+    public Stock setStockMinimum(String stockCode, int quantity) throws BadInputException {
         for (Stock stock : stocks) {
             if (stock.getStockCode().equals(stockCode)) {
                 stock.setMinimum(quantity);
@@ -235,16 +203,13 @@ public class StockType {
      * @param newValue The new value of the attribute to be updated.
      * @return The unedited Stock, for printing purpose.
      */
-    public Stock setStock(String stockCode, StockProperty property, String newValue) {
+    public Stock setStock(String stockCode, StockProperty property, String newValue)
+            throws BadInputException {
         switch (property) {
         case STOCKCODE:
             return this.setStockCode(stockCode, newValue);
         case QUANTITY:
             return this.setStockQuantity(stockCode, Integer.parseInt(newValue));
-        case LOANED:
-            return this.setStockLoaned(stockCode, Integer.parseInt(newValue));
-        case LOST:
-            return this.setStockLost(stockCode, Integer.parseInt(newValue));
         case DESCRIPTION:
             return this.setStockDescription(stockCode, newValue);
         case MINIMUM:
@@ -269,15 +234,39 @@ public class StockType {
         return false; //If none of the stocks had the same code.
     }
 
+    //@@author yanprosobo
+    /**
+     * Checks the entire StockType if any of the stocks contains a description equal to query.
+     * @param query The word to search for in the description
+     * @return An ArrayList of stock objects for the stock whose query is within the description.
+     *         If there are no stock which matches, an empty ArrayList is returned.
+     *
+     */
+    public ArrayList<Stock> queryAllStocksDescription(String query) {
+        ArrayList<Stock> outputList = new ArrayList<>();;
+        for (Stock stock: stocks) {
+            if (stock.containDescription(query)) {
+                outputList.add(stock);
+            }
+        }
+        return outputList;
+    }
+
     //@@author Deculsion
     /**
      * A string of all the stock objects within this stocktype. Should only be called by Cli and StockList.
      * @return A string list of all the stock objects and their details.
      */
     public String toString() {
-        StringBuilder ret = new StringBuilder();
-        int i = 1;
 
+        //Do not show empty stockTypes.
+        if (stocks.size() == 0) {
+            return "";
+        }
+
+        StringBuilder ret = new StringBuilder();
+
+        int i = 1;
         for (Stock stock : stocks) {
             ret.append(String.format("%d. ", i++)).append(stock.toString()).append("\n");
         }

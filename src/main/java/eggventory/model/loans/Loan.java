@@ -1,8 +1,8 @@
 package eggventory.model.loans;
 
 import eggventory.model.PersonList;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 
 //@@author cyanoei
 public class Loan {
@@ -10,39 +10,29 @@ public class Loan {
     private String stockCode;
     private String matricNo;
     private int quantity;
-    private Calendar loanDate;
-    private Calendar returnDate;
 
     /**
      * Temporary shorter constructor used to test the non-date attributes.
-     * @param stockCode the stockCode of the stock being loaned.
      * @param matricNo the matric number of the person making the loan.
+     * @param stockCode the stockCode of the stock being loaned.
      * @param quantity the quantity being loaned out.
      */
-    public Loan(String stockCode, String matricNo, int quantity) {
+    public Loan(String matricNo, String stockCode, int quantity) {
         //AddLoanCommand should have determined beforehand that the Person and Stock being referred to
         //are existing entries.
-        this.stockCode = stockCode;
         this.matricNo = matricNo;
+        this.stockCode = stockCode;
         this.quantity = quantity;
     }
 
     /**
-     * Constructor for Loan class.
-     * @param stockCode the stockCode of the stock being loaned.
-     * @param matricNo the matric number of the person making the loan.
-     * @param quantity the quantity being loaned out.
-     * @param loanDate the date the loan was processed.
-     * @param returnDate the date the loans have to be returned by.
+     * Constructor for creating templates.
+     * @param stockCode Stockcode of the loan.
+     * @param quantity Quantity to be loaned out.
      */
-    public Loan(String stockCode, String matricNo, int quantity, Calendar loanDate, Calendar returnDate) {
-        //AddLoanCommand should have determined beforehand that the Person and Stock being referred to
-        //are existing entries.
+    public Loan(String stockCode, String quantity) {
         this.stockCode = stockCode;
-        this.matricNo = matricNo;
-        this.quantity = quantity;
-        this.loanDate = loanDate;
-        this.returnDate = returnDate;
+        this.quantity = Integer.parseInt(quantity);
     }
 
     /**
@@ -75,6 +65,16 @@ public class Loan {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * Determines if this Loan matches both the queried Stock and Person.
+     * @param stockCode the stockCode of the Stock.
+     * @param matricNo the matric number of the Person.
+     * @return whether they are both equal.
+     */
+    public boolean loanEquals(String matricNo, String stockCode) {
+        return this.matricNo.equals(matricNo) && this.stockCode.equals(stockCode);
     }
 
     /**
@@ -111,6 +111,10 @@ public class Loan {
         dataArray.add(Integer.toString(quantity));
 
         return dataArray;
+    }
+
+    public String savedLoanString() {
+        return String.format("%s,%s,%s",matricNo, stockCode,quantity);
     }
     //@@author
 

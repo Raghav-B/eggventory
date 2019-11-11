@@ -1,11 +1,11 @@
 package eggventory;
 
+import eggventory.logic.commands.ByeCommand;
 import eggventory.logic.commands.Command;
 import eggventory.commons.enums.CommandType;
 import eggventory.logic.parsers.Parser;
-import eggventory.model.LoanList;
-import eggventory.model.PersonList;
-import eggventory.model.StockList;
+
+import eggventory.model.StateInterface;
 import eggventory.storage.Storage;
 import eggventory.ui.Cli;
 import eggventory.ui.Gui;
@@ -21,10 +21,7 @@ public class Eggventory {
     private static Storage storage;
     private static Parser parser;
     private static Ui ui;
-    private static StockList stockList;
-    private static LoanList loanList;
-    private static PersonList personList;
-    //private static LoanList loanList;
+    private static StateInterface stateInterface;
 
     /**
      * Sets up the frontend, the Gui and the event handlers. This will create an instance of the
@@ -35,25 +32,15 @@ public class Eggventory {
         String currentDir = System.getProperty("user.dir");
         String stockFilePath = currentDir + "/data/saved_stocks.csv";
         String stockTypesFilePath = currentDir + "/data/saved_stocktypes.csv";
+        String loanListFilePath = currentDir + "/data/saved_loanlist.csv";
+        String personListFilePath = currentDir + "/data/saved_personlist.csv";
+        String templateListFilePath = currentDir + "/data/saved_templatelist.csv";
 
-        storage = new Storage(stockFilePath, stockTypesFilePath);
+        storage = new Storage(stockFilePath, stockTypesFilePath, loanListFilePath, personListFilePath,
+                templateListFilePath);
         parser = new Parser();
-        stockList = storage.load();
-        loanList = new LoanList();
-        personList = new PersonList();
-
-        /*
-        Calendar date = Calendar.getInstance();
-        loanList.addLoan("R500", "A123", 100, date, date);
-        loanList.addLoan("R500", "A6000", 100, date, date);
-        loanList.addLoan("ARDUINO", "A123", 100, date, date);
-        loanList.addLoan("NO", "A12", 100, date, date);
-
-        System.out.print("All: \n" + loanList.printLoans());
-        System.out.print("A123: \n" + loanList.printPersonLoans("A123"));
-        System.out.print("R500: \n" + loanList.printStockLoans("R500"));
-        */
-
+        stateInterface = new StateInterface(storage.load(), storage.loadLoanList(), storage.loadPersonList(),
+                storage.loadTemplateList());
 
         if (args.length >= 1 && args[0].equals("cli")) {
             ui = new Cli();
@@ -71,9 +58,17 @@ public class Eggventory {
         try {
 
             String userInput = ui.read();
-
+            //TODO: Check whether SLAP is violated
             Command command = parser.parse(userInput);
-            command.execute(stockList, ui, storage);
+            if (command.getType().equals(CommandType.BYE)) {
+                ((ByeCommand) command).executeSaveMoreLists(stateInterface.getStockList(), ui, storage,
+                        stateInterface.getLoanList(), stateInterface.getPersonList(),
+                        stateInterface.getTemplateList());
+            }
+            command.updateState(stateInterface);
+            command.execute(stateInterface.getStockList(), ui, storage);
+            storage.save(stateInterface.getStockList(), stateInterface.getLoanList(), stateInterface.getPersonList(),
+                    stateInterface.getTemplateList());
 
             if (command.getType() == CommandType.BYE) {
                 System.exit(0);

@@ -9,27 +9,40 @@ import eggventory.commons.enums.StockProperty;
 import eggventory.commons.exceptions.BadInputException;
 import eggventory.commons.exceptions.InsufficientInfoException;
 
-//@@author patwaririshab
-public class ParseEdit {
-    private Command processEditStock(String input) throws BadInputException {
-        String[] addInput = input.split(" +", 3); //<stockCode> <property> <newValue>
 
-        String stockCode = addInput[0];
-        switch (addInput[1]) {
+public class ParseEdit {
+
+    //@@author cyanoei
+    private void checkStockCode(String stockCode) throws BadInputException {
+        if (stockCode.contains(" ")) {
+            throw new BadInputException("Sorry, the new StockCode cannot contain spaces!");
+        }
+    }
+    //@@author
+
+    //@@author patwaririshab
+    private Command processEditStock(String input) throws BadInputException {
+        String[] editInput = input.split(" +", 3); //<stockCode> <property> <newValue>
+
+        String stockCode = editInput[0];
+        switch (editInput[1]) {
         case "stockcode":
-            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.STOCKCODE,
-                    addInput[2].toLowerCase());
+            throw new BadInputException("Sorry, stockCode cannot be edited in v1.4.");
+
         case "quantity":
-            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.QUANTITY, addInput[2].toLowerCase());
-        case "loaned":
-            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.LOANED, addInput[2].toLowerCase());
-        case "lost":
-            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.LOST, addInput[2].toLowerCase());
+            Parser.isCheckIsInteger(editInput[2], "quantity");
+            Parser.isNotNegative(Integer.parseInt(editInput[2]), "quantity");
+
+            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.QUANTITY,
+                    editInput[2]);
         case "description":
             return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.DESCRIPTION,
-                    addInput[2].toLowerCase());
+                    editInput[2]);
         case "minimum":
-            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.MINIMUM, addInput[2].toLowerCase());
+            Parser.isCheckIsInteger(editInput[2], "minimum quantity");
+            Parser.isNotNegative(Integer.parseInt(editInput[2]), "minimum quantity");
+
+            return new EditStockCommand(CommandType.EDIT, stockCode, StockProperty.MINIMUM, editInput[2]);
         default:
             throw new BadInputException("The property you are trying to edit does not exist.");
         }
@@ -64,6 +77,7 @@ public class ParseEdit {
 
         switch (addInput[0]) {
         case "stock":
+            //Required: stock <stockCode> <property> <new>
             if (!Parser.isCommandComplete(inputString, 3)) {
                 throw new InsufficientInfoException(CommandDictionary.getCommandUsage("edit stock"));
             }
@@ -71,6 +85,7 @@ public class ParseEdit {
             break;
 
         case "stocktype":
+            //Required: stockType <name> <new>
             if (!Parser.isCommandComplete(inputString, 2)) {
                 throw new InsufficientInfoException(CommandDictionary.getCommandUsage("edit stocktype"));
             }

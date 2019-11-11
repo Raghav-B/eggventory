@@ -81,14 +81,18 @@ class ParseAddTest {
                 exception.getMessage());
     }
 
-    @Test
-    public void testParseAddLoan_ReservedArgument_ThrowsBadInputException() {
-        assertDoesNotThrow(() -> testParser.parse("loan arg1 arg2 500"));
-        BadInputException exception =  assertThrows(BadInputException.class,
-            () -> testParser.parse("loan all all2 500"));
+    //@@author cyanoei
 
-        assertEquals("'all' is an invalid name as it is a keyword for an existing command.",
-                exception.getMessage());
+    @Test
+    public void testParse_NonIntegerQuantity_ThrowsBadInputException()  {
+        //add stock, quantity requires integer input
+        assertDoesNotThrow(() -> testParser.parse("stock resistor r500 500 desc"));
+        assertThrows(BadInputException.class, () -> testParser.parse("stock resistor r500 abc desc"));
+
+        //add loan, quantity requires integer input
+        assertDoesNotThrow(() -> testParser.parse("loan A1 r500 500"));
+        assertThrows(BadInputException.class, () -> testParser.parse("loan A1 r500 abc"));
     }
-    //@@author
+
+
 }

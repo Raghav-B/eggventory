@@ -1,13 +1,14 @@
 package eggventory.logic.parsers;
 
-import eggventory.logic.commands.Command;
-import eggventory.logic.commands.CommandDictionary;
-import eggventory.logic.commands.FindCommand;
-import eggventory.logic.HelpCommand;
-import eggventory.logic.commands.ByeCommand;
 import eggventory.commons.enums.CommandType;
 import eggventory.commons.exceptions.BadInputException;
 import eggventory.commons.exceptions.InsufficientInfoException;
+import eggventory.logic.commands.ByeCommand;
+import eggventory.logic.commands.Command;
+import eggventory.logic.commands.CommandDictionary;
+import eggventory.logic.commands.HelpCommand;
+import eggventory.logic.commands.RedoCommand;
+import eggventory.logic.commands.UndoCommand;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,6 +27,11 @@ public class Parser {
     private ParseDelete deleteParser;
     private ParseEdit editParser;
     private ParseList listParser;
+    private ParseFind findParser;
+
+    public static HashSet<String> getReservedNames() {
+        return reservedNames;
+    }
 
     /**
      * Parser object contains submodules for parsing commands with many different options.
@@ -35,6 +41,7 @@ public class Parser {
         deleteParser = new ParseDelete();
         editParser = new ParseEdit();
         listParser = new ParseList();
+        findParser = new ParseFind();
     }
 
     //@@author Raghav-B
@@ -45,22 +52,62 @@ public class Parser {
      * @return True if invalid, false otherwise.
      */
     public static boolean isReserved(String input) {
-        return reservedNames.contains(input);
+        String lowercaseInput = input.toLowerCase();
+        return reservedNames.contains(lowercaseInput);
     }
 
     /**
      * Checks if a command is complete by checking for existence of its arguments.
+     * This method should only be used within the ParseX.parse method, not processX methods.
      * @param command String passed into one of the subparsers, e.g. "stock ...", "stocktype ...".
      *                Checks if command entered by user are valid by comparing against
      *                ideal argument count for command in question.
+     *                This DOES NOT include the first word in the command, eg. "stock".
      * @param reqArguments Least number of arguments required by command in question.
      * @return True if user input matches required number of arguments, false otherwise.
      */
     public static boolean isCommandComplete(String command, int reqArguments) {
+        command = command.strip();
         String[] commandArr = command.split(" ");
         return commandArr.length - 1 >= reqArguments;
     }
+    //@@author
+
     //@@author cyanoei
+    /**
+     * Checks if a string input is an integer.
+     * @param testInteger the input to test.
+     * @throws BadInputException if the input is not an integer.
+     */
+    public static void isCheckIsInteger(String testInteger, String inputName) throws BadInputException {
+        try {
+            Integer.parseInt(testInteger);
+        } catch (NumberFormatException e) {
+            throw new BadInputException(String.format("Sorry, the input for %s has to be an integer!", inputName));
+        }
+    }
+
+    /**
+     * Checks if a int input is negative.
+     * @param testInteger the input to test.
+     * @throws BadInputException if the input is negative.
+     */
+    public static void isNotNegative(int testInteger, String inputName) throws BadInputException {
+        if (testInteger < 0) {
+            throw new BadInputException(String.format("Sorry, the input for %s cannot be negative!", inputName));
+        }
+    }
+
+    /**
+     * Checks if a int input is zero.
+     * @param testInteger the input to test.
+     * @throws BadInputException if the input is zero.
+     */
+    public static void isNotZero(int testInteger, String inputName) throws BadInputException {
+        if (testInteger == 0) {
+            throw new BadInputException(String.format("Sorry, the input for %s cannot be 0!", inputName));
+        }
+    }
 
     /**
      * Checks if the command keyword (first word is valid).
@@ -117,13 +164,8 @@ public class Parser {
         case "find": {
             if (inputArr.length == 1) {
                 throw new InsufficientInfoException(CommandDictionary.getCommandUsage("find"));
-            }
-
-            String description = inputArr[1].trim(); //Might need to catch empty string exceptions?
-            if (!description.isBlank()) {
-                command = new FindCommand(CommandType.FIND, description);
             } else {
-                throw new InsufficientInfoException("Please enter the search description.");
+                command = findParser.parse(inputArr[1]);
             }
             break;
         }
@@ -143,6 +185,14 @@ public class Parser {
                 //display full help.
                 command = new HelpCommand(CommandType.HELP, inputArr[1]);
             }
+            break;
+        }
+        case "undo": {
+            command = new UndoCommand(CommandType.UNDO);
+            break;
+        }
+        case "redo": {
+            command = new RedoCommand(CommandType.REDO);
             break;
         }
         default:
