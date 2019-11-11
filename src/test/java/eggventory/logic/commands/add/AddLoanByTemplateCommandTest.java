@@ -73,8 +73,8 @@ class AddLoanByTemplateCommandTest {
 
     @Test
     void execute_HasTemplate_ReturnSuccessString() throws BadInputException {
-        String expectedOutput = "The following loans have been added to " + testMatric + ":"
-                + testStockCode + ": " + testQuantity;
+        String expectedOutput = "The following loans have been added to " + testMatric + ":\n"
+                + testStockCode + ": " + testQuantity + "\n";
 
         TemplateList.addTemplate(testTemplateName, loans);
         PersonList.add(testMatric, "");
@@ -95,4 +95,5 @@ class AddLoanByTemplateCommandTest {
 
         assertEquals(expectedOutput, commandUnderTest.execute(testStockList, testCli, testStorage));
     }
+    //@@author
 }
