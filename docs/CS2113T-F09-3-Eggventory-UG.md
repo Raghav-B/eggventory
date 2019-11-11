@@ -19,9 +19,8 @@ Dated: 11 November 2019
 ##### [3.10 Using Undo and Redo Commands ](#310-using-undo-and-redo-commands-coming-in-v20)  
 ##### [3.11 Setting autosave options ](#311-setting-autosave-options-coming-in-v20)  
 ##### [3.12 Exiting the program: bye ](#312-exiting-the-program-bye)  
-### [4. FAQ ](#4-faq)  
-### [5. Command Summary ](#5-command-summary)  
-### [6. Glossary ](#6-glossary)  
+### [4. Command Summary ](#4-command-summary)  
+### [5. Glossary ](#5-glossary)  
   
   
 ## 1. Introduction  
@@ -452,10 +451,8 @@ Finished with your work and would like to safely quit Eggventory? Type in the `b
 Goodbye and thank you for using Eggventory! We hope to see you again!
 
 Format: `bye`  
-  
-## 4. FAQ    
 
-## 5. Command Summary  
+## 4. Command Summary  
 ### Add Commands  
 
 |Command| Syntax  
@@ -531,7 +528,7 @@ undo last command | `undo`
 redo previous command | `redo`  
 exit application | `bye`
  
-## 6. Glossary  
+## 5. Glossary  
 |Item|Description|
 | --- | --- |
 Matric No. | Matriculation number of student to be added  
