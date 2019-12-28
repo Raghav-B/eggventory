@@ -1,7 +1,6 @@
-//@@author Raghav-B
-
 package eggventory.ui;
 
+//@@author Raghav-B
 public abstract class Ui {
 
     public abstract void initialize(Runnable runMethod);
@@ -47,7 +46,7 @@ public abstract class Ui {
      * Prints error message to CLI.
      */
     public void printError(Exception e) {
-        print("Parser error: \n" + e);
+        print("Parser error: \n" + e.getMessage());
     }
 
     /**
@@ -71,5 +70,14 @@ public abstract class Ui {
      */
     String addLine() {
         return "____________________________________________________________";
+    }
+
+
+
+    public void clearTable() {
+
+    }
+
+    public void drawTable(TableStruct tableStruct) {
     }
 }

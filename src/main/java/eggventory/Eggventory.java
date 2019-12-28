@@ -1,11 +1,16 @@
 package eggventory;
 
-import eggventory.commands.Command;
-import eggventory.enums.CommandType;
-import eggventory.parsers.Parser;
+import eggventory.logic.commands.ByeCommand;
+import eggventory.logic.commands.Command;
+import eggventory.commons.enums.CommandType;
+import eggventory.logic.parsers.Parser;
+
+import eggventory.model.StateInterface;
+import eggventory.storage.Storage;
 import eggventory.ui.Cli;
-import eggventory.ui.Ui;
 import eggventory.ui.Gui;
+import eggventory.ui.Ui;
+
 
 /**
  * Eggventory is a task list that supports 3 types of classes - Todos, deadlines and events.
@@ -16,7 +21,7 @@ public class Eggventory {
     private static Storage storage;
     private static Parser parser;
     private static Ui ui;
-    private static StockList stockList;
+    private static StateInterface stateInterface;
 
     /**
      * Sets up the frontend, the Gui and the event handlers. This will create an instance of the
@@ -24,12 +29,17 @@ public class Eggventory {
      * @param args Can input `--args=cli` after `gradlew run` to startup in Cli mode.
      */
     public static void main(String[] args) {
-        String currentDir = System.getProperty("user.dir");
-        String filePath = currentDir + "/data/saved_tasks.txt";
+        String stockFilePath = "saved_stocks.csv";
+        String stockTypesFilePath = "saved_stocktypes.csv";
+        String loanListFilePath = "saved_loanlist.csv";
+        String personListFilePath = "saved_personlist.csv";
+        String templateListFilePath = "saved_templatelist.csv";
 
-        storage = new Storage(filePath);
+        storage = new Storage(stockFilePath, stockTypesFilePath, loanListFilePath, personListFilePath,
+                templateListFilePath);
         parser = new Parser();
-        stockList = storage.load();
+        stateInterface = new StateInterface(storage.load(), storage.loadLoanList(), storage.loadPersonList(),
+                storage.loadTemplateList());
 
         if (args.length >= 1 && args[0].equals("cli")) {
             ui = new Cli();
@@ -45,10 +55,18 @@ public class Eggventory {
      */
     private static void userInteraction() {
         try {
-            String userInput = ui.read();
 
+            String userInput = ui.read();
             Command command = parser.parse(userInput);
-            command.execute(stockList, ui, storage);
+            if (command.getType().equals(CommandType.BYE)) {
+                ((ByeCommand) command).executeSaveMoreLists(stateInterface.getStockList(), ui, storage,
+                        stateInterface.getLoanList(), stateInterface.getPersonList(),
+                        stateInterface.getTemplateList());
+            }
+            command.updateState(stateInterface);
+            command.execute(stateInterface.getStockList(), ui, storage);
+            storage.save(stateInterface.getStockList(), stateInterface.getLoanList(), stateInterface.getPersonList(),
+                    stateInterface.getTemplateList());
 
             if (command.getType() == CommandType.BYE) {
                 System.exit(0);
